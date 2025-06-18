@@ -1,7 +1,17 @@
 {
   "files": [],
+  "extends": "@gd/typescript-config/react-library.json",
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@gd-components/*": ["shared/components/*"],
+      "@gd-constants/*": ["shared/constants/*"],
+      "@gd-utils/*": ["shared/utils/*"],
+      "@gd-types/*": ["shared/types/*"],
+    }
+  }
 }

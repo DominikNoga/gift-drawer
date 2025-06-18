@@ -1,0 +1,37 @@
+.btn {
+  color: $text-white;
+  padding: $spacing-2;
+  border: none;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  transition: $transition-all;
+}
+
+.btn-primary {
+  @extend .btn;
+  transition: .9s background, .4s box-shadow;
+  background-image: linear-gradient(to right, $red-500, $red-600);
+
+  @include hover-effect() {
+    background-image: linear-gradient(to right, $red-600, $red-700);
+    box-shadow: $shadow-lg;
+  }
+}
+
+.btn-secondary {
+  @extend .btn;
+  background-image: linear-gradient(to right, $green-500, $green-600);
+  
+  @include hover-effect() {
+    background-image: linear-gradient(to right, $green-600, $green-700);
+  }
+}
+
+.btn-tertiary {
+  @extend .btn;
+  background-image: linear-gradient(to right, $blue-500, $blue-600);
+
+  @include hover-effect() {
+    background-image: linear-gradient(to right, $blue-600, $blue-700);
+  }
+}

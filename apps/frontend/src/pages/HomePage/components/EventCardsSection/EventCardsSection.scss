@@ -1,0 +1,8 @@
+.event-cards-section {
+  @include flex-layout(row, center, center, 2rem);
+}
+
+.event-card-btn {
+  width: 100%;
+  font-size: $font-size-lg;
+}
