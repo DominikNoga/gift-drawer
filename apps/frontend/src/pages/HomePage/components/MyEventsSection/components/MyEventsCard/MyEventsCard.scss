@@ -1,0 +1,59 @@
+.my-events-card {
+  @include flex-layout(column, flex-start, flex-start);
+  &-row {
+    @include flex-layout(row, center, space-between);
+    width: 100%;
+
+    h3 {
+      @include reset-spacing();
+    }
+
+    &-link-icon {
+      font-size: $font-size-sm;
+      color: $text-secondary;
+    }
+  }
+
+  &-description {
+    color: $text-secondary;
+    font-size: $font-size-sm;
+  }
+
+  &-info {
+    @include flex-layout(column, $gap: .5rem);
+    color: $text-secondary;
+    &-item {
+      @include flex-layout(row, center, flex-start);
+    }
+
+    &-icon {
+      font-size: $font-size-base;
+    }
+
+    &-icon-green {
+      @extend .my-events-card-info-icon;
+      color: $green-600;
+    }
+    
+    &-icon-blue {
+      @extend .my-events-card-info-icon;
+      color: $blue-600;
+    }
+    
+    &-icon-purple {
+      @extend .my-events-card-info-icon;
+      color: $purple-600;
+    }
+  }
+
+  &-footer {
+    border-top: $border-width-1 solid $border-color-light;
+    width: 100%;
+    padding: $spacing-2 0;
+    span {
+      // TODO: add mixin for less important text
+      font-size: $font-size-sm;
+      color: $text-secondary;
+    }
+  }
+}

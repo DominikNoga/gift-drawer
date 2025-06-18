@@ -1,6 +1,6 @@
 import CircleIcon from '@gd/shared/components/icons/CircleIcon/CircleIcon';
 import './EventCardsSection.scss';
-import EventCard from '../EventCard/EventCard';
+import EventCard from './components/EventCard/EventCard';
 import { createEventProps, joinEventProps } from './EventCardsSection.config';
 import { NavigationIcons, UserIcons } from '@gd/shared/constants/icons';
 import Button from '@gd/shared/components/Button/Button';
