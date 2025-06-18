@@ -1,0 +1,107 @@
+@use './variables'as *;
+
+@mixin hover-effect($cursor: pointer) {
+  &:hover {
+    cursor: $cursor;
+    @content;
+  }
+}
+
+@mixin rectangle($size-x, $size-y) {
+  width: $size-x;
+  height: $size-y;
+}
+
+@mixin square($size) {
+  @include rectangle($size, $size);
+}
+
+@mixin circle($size) {
+  border-radius: 50%;
+  @include square($size);
+}
+
+@mixin reset-spacing() {
+  padding: 0;
+  margin: 0;
+}
+
+@mixin center() {
+  display: grid;
+  place-items: center;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin flex-layout($direction: column, $align-items: default, $justify-content: default, $gap: $default-gap) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align-items;
+  justify-content: $justify-content;
+  gap: $gap;
+}
+
+@mixin simple-transition($property, $time: .3s, $before-transition-value, $after-transition-value, $cursor: pointer) {
+  transition: #{$property} $time;
+  #{$property}: $before-transition-value;
+  will-change: #{$property};
+
+  @include hover-effect($cursor) {
+    #{$property}: $after-transition-value;
+  }
+}
+
+@mixin opacity-transition($time: .3s, $before-transition-value: 1, $after-transition-value: .9, $cursor: pointer) {
+  @include simple-transition(opacity, $time, $before-transition-value, $after-transition-value, $cursor);
+}
+
+// Screen reader only
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Truncate text
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Line clamp
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Focus ring
+@mixin focus-ring($color: $primary) {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px $color;
+}
+
+// Button reset
+@mixin button-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}

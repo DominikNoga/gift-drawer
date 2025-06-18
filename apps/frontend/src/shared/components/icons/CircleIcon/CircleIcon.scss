@@ -1,0 +1,8 @@
+.circle-icon {
+  @include circle(4rem);
+  @include flex-layout(row, center, center, 0);
+  padding: $spacing-2;
+  * {
+    @include square(2rem);
+  }
+}
