@@ -1,4 +1,4 @@
-import type { EventCardProps } from "../EventCard/EventCard";
+import type { EventCardProps } from "./components/EventCard/EventCard";
 
 
 export const createEventProps: Omit<EventCardProps, 'icon'> = {
