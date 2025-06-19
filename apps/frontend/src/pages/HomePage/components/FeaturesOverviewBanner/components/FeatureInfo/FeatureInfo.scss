@@ -1,0 +1,7 @@
+.feature-info {
+  @include flex-layout(column, center, center);
+  p {
+    @include reset-spacing();
+    text-align: center;
+  }
+}

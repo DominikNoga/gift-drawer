@@ -60,7 +60,6 @@
   @include simple-transition(opacity, $time, $before-transition-value, $after-transition-value, $cursor);
 }
 
-// Screen reader only
 @mixin sr-only {
   position: absolute;
   width: 1px;
@@ -73,14 +72,12 @@
   border: 0;
 }
 
-// Truncate text
 @mixin truncate {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-// Line clamp
 @mixin line-clamp($lines) {
   display: -webkit-box;
   -webkit-line-clamp: $lines;
@@ -88,14 +85,12 @@
   overflow: hidden;
 }
 
-// Focus ring
 @mixin focus-ring($color: $primary) {
   outline: 2px solid transparent;
   outline-offset: 2px;
   box-shadow: 0 0 0 2px $color;
 }
 
-// Button reset
 @mixin button-reset {
   background: none;
   border: none;
@@ -104,4 +99,9 @@
   font: inherit;
   cursor: pointer;
   outline: inherit;
+}
+
+@mixin text-less-important() {
+  color: $text-secondary;
+  font-size: $font-size-sm;
 }
