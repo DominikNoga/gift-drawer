@@ -1,0 +1,14 @@
+.my-events-section {
+  margin-bottom: $spacing-8;
+  &-title {
+    @include reset-spacing();
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    @include flex-layout(row, center, flex-start, .5rem);
+
+    &-icon {
+      @include square(1.5rem);
+      color: $text-secondary;
+    }
+  }
+}

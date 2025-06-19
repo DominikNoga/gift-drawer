@@ -1,3 +1,5 @@
 .my-events-list {
-  @include flex-layout(row, flex-start, flex-start);
+  gap: $default-gap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }

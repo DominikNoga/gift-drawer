@@ -1,0 +1,11 @@
+.features-overview-banner {
+  @include flex-layout(column, center, default, $spacing-8);
+  margin-bottom: $spacing-12;
+  h2 {
+    font-size: $font-size-xl;
+  }
+
+  &-content {
+    @include flex-layout(row)
+  }
+}
