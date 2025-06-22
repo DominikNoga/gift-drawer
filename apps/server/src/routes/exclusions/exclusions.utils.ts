@@ -1,19 +1,18 @@
-// import { toDbSchema } from "../../utils/change-case.utils";
-// import { generateId } from "../../utils/generate-id.utils";
-// import { CreateParticipantRequestDto, ParticipantDbRecord, participantsTable } from "./participants.model";
+import { toDbSchema } from "../../utils/change-case.utils";
+import { generateId } from "../../utils/generate-id.utils";
+import { CreateExclusionRequestDto, ExclusionDbRecord, exclusionsTable } from "./exclusions.model";
 
-// export const getParticipantRow = (createParticipantRequest: CreateParticipantRequestDto): ParticipantDbRecord => {
-//   const id = generateId();
+export const getExclusionRow = (createExclusionRequest: CreateExclusionRequestDto): ExclusionDbRecord => {
+  const id = generateId();
 
-//   return toDbSchema({
-//     ...createParticipantRequest,
-//     id,
-//     password: null,
-//   });
-// };
+  return toDbSchema({
+    ...createExclusionRequest,
+    id,
+  });
+};
 
-// export const createParticipantRecord = async (createParticipantRequest: CreateParticipantRequestDto) => {
-//   const participantRow = getParticipantRow(createParticipantRequest);
-//   await participantsTable().insert(participantRow);
-//   return participantRow.id;
-// };
+export const createExclusionRecord = async (createExclusionRequest: CreateExclusionRequestDto) => {
+  const exclusionRow = getExclusionRow(createExclusionRequest);
+  await exclusionsTable().insert(exclusionRow);
+  return exclusionRow.id;
+};
