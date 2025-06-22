@@ -1,7 +1,5 @@
 import { z } from "zod";
-import { SnakeCaseKeys } from "../../utils/type.utils";
-import { db } from "../../db/db";
-import { TABLE_NAMES } from "../../constants/table-names";
+import { SnakeCaseKeys } from "../utils/types.utils";
 
 export const ExclusionSchema = z.object({
   id: z.string(),
@@ -22,5 +20,3 @@ export type CreateExclusionFromEventRequest = {
 };
 
 export type ExclusionDbRecord = SnakeCaseKeys<Exclusion>;
-
-export const exclusionsTable = () => db<ExclusionDbRecord>(TABLE_NAMES.EXCLUSIONS);

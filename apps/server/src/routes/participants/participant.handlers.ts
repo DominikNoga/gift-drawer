@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import { CreateParticipantRequestDto, ParticipantCreateSchema, participantsTable } from './participants.model';
+import { CreateParticipantRequestDto, ParticipantCreateSchema } from '@gd/types/src/models/participants.model';
 import { HTTP_STATUS } from '../../constants/status-codes';
 import { getParticipantRow } from './participant.utils';
+import { participantsTable } from './participants.db';
 
 
 export const createParticipant = async (request: Request<{}, {}, CreateParticipantRequestDto>, response: Response) => {
