@@ -8,7 +8,9 @@
 		"build": "tsc --build",
 		"start": "node ./dist/index.js",
 		"dev": "nodemon ./src/index.ts",
-    "migrate": "knex migrate:latest --knexfile src/db/knex.ts"
+		"migrate": "knex migrate:latest --knexfile src/db/knex.ts",
+		"create-migration": "knex migrate:make --migrations-directory ./migrations  --knexfile src/db/knexfile.ts",
+		"cm": "knex migrate:make --migrations-directory ./migrations  --knexfile src/db/knexfile.ts"
 	},
 	"keywords": [],
 	"author": "",
@@ -24,6 +26,7 @@
 		"multer": "^2.0.1",
 		"passport": "^0.7.0",
 		"sqlite3": "^5.1.7",
+		"type-fest": "^4.41.0",
 		"zod": "^3.25.67"
 	},
 	"devDependencies": {
