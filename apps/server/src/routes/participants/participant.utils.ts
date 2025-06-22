@@ -1,6 +1,7 @@
 import { toDbSchema } from "../../utils/change-case.utils";
 import { generateId } from "../../utils/generate-id.utils";
-import { CreateParticipantRequestDto, ParticipantDbRecord, participantsTable } from "./participants.model";
+import { CreateParticipantRequestDto, ParticipantDbRecord } from "@gd/types/src/models/participants.model";
+import { participantsTable } from "./participants.db";
 
 export const getParticipantRow = (createParticipantRequest: CreateParticipantRequestDto): ParticipantDbRecord => {
   const id = generateId();
