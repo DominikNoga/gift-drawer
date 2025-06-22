@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createEvent, getEventById } from '../../handlers/events.handlers';
+import { createEvent, getEventById } from './events.handlers';
 
 const eventsRouter = Router();
 
