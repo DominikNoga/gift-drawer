@@ -18,5 +18,5 @@ export const ParticipantCreateSchema = ParticipantSchema.pick({
 export type Participant = z.infer<typeof ParticipantSchema>;
 export type CreateParticipantRequestDto = z.infer<typeof ParticipantCreateSchema>;
 export type ParticipantDbRecord = SnakeCaseKeys<Participant>;
-
+export type CreateExclusionsFromParticipantDto = Pick<Participant, 'id' | 'name'>;
 export const participantsTable = () => db<ParticipantDbRecord>(TABLE_NAMES.PARTICIPANTS);
