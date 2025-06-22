@@ -1,7 +1,5 @@
 import { z } from 'zod';
-import { SnakeCaseKeys } from '../../utils/type.utils';
-import { TABLE_NAMES } from '../../constants/table-names';
-import { db } from '../../db/db';
+import { SnakeCaseKeys } from '../utils/types.utils';
 
 export const ParticipantSchema = z.object({
   id: z.string(),
@@ -19,4 +17,3 @@ export type Participant = z.infer<typeof ParticipantSchema>;
 export type CreateParticipantRequestDto = z.infer<typeof ParticipantCreateSchema>;
 export type ParticipantDbRecord = SnakeCaseKeys<Participant>;
 export type CreateExclusionsFromParticipantDto = Pick<Participant, 'id' | 'name'>;
-export const participantsTable = () => db<ParticipantDbRecord>(TABLE_NAMES.PARTICIPANTS);

@@ -4,9 +4,9 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   btnType: 'primary' | 'secondary' | 'tertiary';
 };
 
-export default function Button(props: ButtonProps) {
+export default function Button({btnType, ...props}: ButtonProps) {
   return (
-    <button {...props} className={`btn btn-${props.btnType} ${props.className || ''}`}>
+    <button {...props} className={`btn btn-${btnType} ${props.className || ''}`}>
       {
         props.children
       }

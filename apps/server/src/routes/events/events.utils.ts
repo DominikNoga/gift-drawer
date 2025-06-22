@@ -1,10 +1,10 @@
 import { toDbSchema } from "../../utils/change-case.utils";
 import { generateId } from "../../utils/generate-id.utils";
-import { CreateExclusionFromEventRequest, CreateExclusionRequestDto } from "../exclusions/exclusions.model";
+import { CreateExclusionFromEventRequest, CreateExclusionRequestDto } from "@gd/types/src/models/exclusions.model";
 import { createExclusionRecord } from "../exclusions/exclusions.utils";
 import { createParticipantRecord } from "../participants/participant.utils";
-import { CreateExclusionsFromParticipantDto, Participant } from "../participants/participants.model";
-import { CreateEventRequestWithoutRelations, EventDbRecord } from "./events.model";
+import { CreateExclusionsFromParticipantDto } from "@gd/types/src/models/participants.model";
+import { CreateEventRequestWithoutRelations, EventDbRecord } from "@gd/types/src/models/events.model";
 
 const generateJoinCode = (length = 8): string => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
