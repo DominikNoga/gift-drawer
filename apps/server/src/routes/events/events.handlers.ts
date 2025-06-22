@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
-import { CreateEventRequestDto, EventCreateSchema, EventDbRecord, eventsTable } from './events.model';
-import { ParticipantDbRecord, participantsTable } from '../participants/participants.model';
-import { ExclusionDbRecord, exclusionsTable } from '../exclusions/exclusions.model';
+import { eventsTable } from './events.db';
+import { CreateEventRequestDto, EventCreateSchema, EventDbRecord } from '@gd/types/src/models/events.model';
+import { participantsTable } from '../participants/participants.db';
+import { ParticipantDbRecord } from '@gd/types/src/models/participants.model';
+import { exclusionsTable } from '../exclusions/exclusions.db';
+import { ExclusionDbRecord } from '@gd/types/src/models/exclusions.model';
 import { toApiSchema } from '../../utils/change-case.utils';
 import { HTTP_STATUS } from '../../constants/status-codes';
 import { createExclusions, createParticipants, getEventRow } from './events.utils';
@@ -55,6 +58,9 @@ export const createEvent = () => async (request: Request<{}, {}, CreateEventRequ
       } 
     }
   }
+
+  console.log(request.body);
+  console.log(dbData);
 
   return response.status(HTTP_STATUS.CREATED).json({
     id: dbData.id,

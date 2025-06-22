@@ -4,8 +4,12 @@ import EventCard from './components/EventCard/EventCard';
 import { createEventProps, joinEventProps } from './EventCardsSection.config';
 import { NavigationIcons, UserIcons } from '@gd/shared/constants/icons';
 import Button from '@gd/shared/components/Button/Button';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES_NAMES } from '../../../../routes';
 
 export default function EventCardsSection() {
+  const navigate = useNavigate();
+
   return (
     <section className="event-cards-section">
       <EventCard
@@ -19,7 +23,10 @@ export default function EventCardsSection() {
         { ...createEventProps }
       >
         <Button 
-          type="button" 
+          type="button"
+          onClick={() => {
+            navigate(ROUTES_NAMES.CREATE_EVENT);
+          }}
           btnType="primary" 
           className="event-card-btn">
           Create Event

@@ -1,6 +1,7 @@
 import { toDbSchema } from "../../utils/change-case.utils";
 import { generateId } from "../../utils/generate-id.utils";
-import { CreateExclusionRequestDto, ExclusionDbRecord, exclusionsTable } from "./exclusions.model";
+import { exclusionsTable } from "./exclusions.db";
+import { CreateExclusionRequestDto, ExclusionDbRecord } from '@gd/types/src/models/exclusions.model';
 
 export const getExclusionRow = (createExclusionRequest: CreateExclusionRequestDto): ExclusionDbRecord => {
   const id = generateId();

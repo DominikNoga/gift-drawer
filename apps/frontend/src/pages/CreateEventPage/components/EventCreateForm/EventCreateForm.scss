@@ -1,0 +1,7 @@
+.event-create-form {
+  @include flex-layout();
+
+  * {
+    padding: $spacing-2 $spacing-1;
+  }
+}
