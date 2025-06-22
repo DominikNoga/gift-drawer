@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { SnakeCaseKeys } from "../utils/type.utils";
-import { db } from "../db/db";
-import { TABLE_NAMES } from "../constants/table-names";
+import { SnakeCaseKeys } from "../../utils/type.utils";
+import { db } from "../../db/db";
+import { TABLE_NAMES } from "../../constants/table-names";
 
 export const ExclusionSchema = z.object({
   id: z.string(),
