@@ -20,8 +20,6 @@ export default function MyEventsCard({event }: MyEventsCardProps) {
     return <div className="my-events-card-error">No event data available</div>;
   }
 
-  console.log(event);
-
   return (
     <Card className='my-events-card'>
       <div className="my-events-card-row">
