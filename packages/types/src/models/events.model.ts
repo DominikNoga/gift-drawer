@@ -1,9 +1,6 @@
 import { z } from 'zod';
-import { SnakeCaseKeys } from '../../utils/type.utils';
-import { Participant, ParticipantSchema } from '../participants/participants.model';
-import { Exclusion, ExclusionSchema } from '../exclusions/exclusions.model';
-import { db } from '../../db/db';
-import { TABLE_NAMES } from '../../constants/table-names';
+import { SnakeCaseKeys } from '../utils/types.utils';
+import { ParticipantSchema } from './participants.model';
 
 export const EventSchema = z.object({
   id: z.string(),
@@ -47,5 +44,3 @@ export type CreateEventRequestWithoutRelations = Omit<CreateEventRequestDto, 'pa
 export type CreateEventDto = Omit<Event, 'participants' | 'exclusions'>;
 
 export type EventDbRecord = SnakeCaseKeys<z.infer<typeof EventDbSchema>>;
-
-export const eventsTable = () => db<EventDbRecord>(TABLE_NAMES.EVENTS);
