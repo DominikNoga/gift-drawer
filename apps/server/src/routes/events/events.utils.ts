@@ -1,6 +1,9 @@
 import { toDbSchema } from "../../utils/change-case.utils";
 import { generateId } from "../../utils/generate-id.utils";
+import { CreateExclusionFromEventRequest, CreateExclusionRequestDto } from "../exclusions/exclusions.model";
+import { createExclusionRecord } from "../exclusions/exclusions.utils";
 import { createParticipantRecord } from "../participants/participant.utils";
+import { CreateExclusionsFromParticipantDto, Participant } from "../participants/participants.model";
 import { CreateEventRequestWithoutRelations, EventDbRecord } from "./events.model";
 
 const generateJoinCode = (length = 8): string => {
@@ -30,7 +33,7 @@ export const getEventRow = (createEventRequest: CreateEventRequestWithoutRelatio
 };
 
 export const createParticipants = async (participantsNames: string[], eventId: string) => {
-  const createdParticipants: {name: string, id: string}[] = [];
+  const createdParticipants: CreateExclusionsFromParticipantDto[] = [];
   for (const participantName of participantsNames) {
     try {
       const participantId = await createParticipantRecord({
@@ -45,4 +48,47 @@ export const createParticipants = async (participantsNames: string[], eventId: s
       console.error(error);
     }
   }
+  return createdParticipants;
+};
+
+const mapToExclusionRequest = (
+  exclusions: CreateExclusionFromEventRequest[], 
+  createdParticipants: CreateExclusionsFromParticipantDto[],
+  eventId: string
+): CreateExclusionRequestDto[] | string => {
+  let isError = false;
+  const mappedExclusions = exclusions.map(exclusion => {
+    const { excludedParticipantName, participantName } = exclusion;
+    const excludedParticipantId = createdParticipants
+      .find(p => p.name === excludedParticipantName)?.id;
+    const participantId = createdParticipants
+      .find(p => p.name === participantName)?.id;;
+
+    if (excludedParticipantId && participantId) {
+      return {
+        eventId,
+        excludedParticipantId,
+        participantId 
+      };
+    }
+    isError = true;
+  });
+  return !isError ? 
+    (mappedExclusions as CreateExclusionRequestDto[]) : 
+    'There was an error when creating exclusions'; 
+};
+
+export const createExclusions = async (
+  exclusions: CreateExclusionFromEventRequest[], 
+  createdParticipants: CreateExclusionsFromParticipantDto[], 
+  eventId: string
+) => {
+  const exclusionsCreateRequests = mapToExclusionRequest(exclusions, createdParticipants, eventId);
+  if (typeof exclusionsCreateRequests !== 'string') {
+    for (const exclusionCreateRequest of exclusionsCreateRequests) {
+      await createExclusionRecord(exclusionCreateRequest);
+    }
+    return;
+  }
+  return exclusionsCreateRequests;
 };

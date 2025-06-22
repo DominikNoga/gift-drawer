@@ -4,15 +4,14 @@ import { ParticipantDbRecord, participantsTable } from '../participants/particip
 import { ExclusionDbRecord, exclusionsTable } from '../exclusions/exclusions.model';
 import { toApiSchema } from '../../utils/change-case.utils';
 import { HTTP_STATUS } from '../../constants/status-codes';
-import { createParticipants, getEventRow } from './events.utils';
+import { createExclusions, createParticipants, getEventRow } from './events.utils';
 
 export const getEventById = () => async (request: Request, response: Response) => {
   const { id } = request.body;
-
   const eventRow = await eventsTable().where({ id }).first();
 
   if (!eventRow) {
-    return response.status(404).json({ message: 'Event not found' });
+    return response.status(HTTP_STATUS.NOT_FOUND).json({ message: 'Event not found' });
   }
 
   const participants = await participantsTable().where({ event_id: id });
@@ -27,9 +26,8 @@ export const getEventById = () => async (request: Request, response: Response) =
     }),
   };
 
-  return response.status(200).json(eventData);
+  return response.status(HTTP_STATUS.OK).json(eventData);
 };
-
 
 export const createEvent = () => async (request: Request<{}, {}, CreateEventRequestDto>, response: Response) => {
   const parseResult = EventCreateSchema.safeParse(request.body);
@@ -49,13 +47,16 @@ export const createEvent = () => async (request: Request<{}, {}, CreateEventRequ
     const createdParticipants = await createParticipants(participants.map(p => p.name), dbData.id);
 
     if (exclusions && exclusions.length) {
-      
+      const exclusionsCreateResults = await createExclusions(exclusions, createdParticipants, dbData.id);
+      if (typeof exclusionsCreateResults === 'string') {
+        return response.status(HTTP_STATUS.BAD_REQUEST).json({
+          message: exclusionsCreateResults
+        });
+      } 
     }
   }
 
-
-
-  return response.status(201).json({
+  return response.status(HTTP_STATUS.CREATED).json({
     id: dbData.id,
   });
 };
