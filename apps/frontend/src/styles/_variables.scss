@@ -3,6 +3,8 @@ $background-gradient: linear-gradient(to bottom right, #fef2f2, #ffffff, #f0fdf4
 $default-gap: 1rem;
 
 $page-content-width: min(90%, 72rem); // 1152px max width
+$full-page-card-base-width: 700px;
+$full-page-card-responsive-width: 90%;
 
 // =============================================================================
 // SECRET SANTA APP - DESIGN SYSTEM VARIABLES
@@ -358,6 +360,8 @@ $card-shadow: $shadow-base;
 $card-shadow-hover: $shadow-lg;
 
 // Forms
+$input-padding-top: $spacing-3;
+$input-padding-left: $spacing-4;
 $input-padding: $spacing-3 $spacing-4;
 $input-border: $border-width-1 solid $border-color-medium;
 $input-border-focus: $border-width-1 solid $primary;
