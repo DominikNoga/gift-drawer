@@ -1,6 +1,15 @@
 .event-cards-section {
   @include flex-layout(row, center, center, 2rem);
   margin-bottom: $spacing-16;
+
+  .event-cards-create-icon {
+    background-color: $red-100;
+    color: $red-600;
+  }
+  .event-cards-join-icon {
+    background-color: $green-100;
+    color: $green-600;
+  }
 }
 
 .event-card-btn {
