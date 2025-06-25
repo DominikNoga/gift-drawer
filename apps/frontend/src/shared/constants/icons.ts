@@ -39,6 +39,8 @@ import {
   
   // Actions & Tools
   Shuffle,
+  EarthIcon,
+  TextIcon,
 } from 'lucide-react';
 
 // =============================================================================
@@ -89,6 +91,8 @@ export const InterfaceIcons = {
   Money: DollarSign,
   Link: LinkIcon,
   QrCode: QrCode,
+  World: EarthIcon,
+  Description: TextIcon,
 } as const;
 
 // =============================================================================

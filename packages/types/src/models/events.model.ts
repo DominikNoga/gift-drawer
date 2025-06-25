@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SnakeCaseKeys } from '../utils/types.utils';
+import type { SnakeCaseKeys } from '../utils/types.utils';
 import { ParticipantSchema } from './participants.model';
 
 export const EventSchema = z.object({
