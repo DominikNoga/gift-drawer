@@ -15,9 +15,8 @@ export default function EventCardsSection() {
       <EventCard
         icon={
           <CircleIcon 
-            icon={<NavigationIcons.Create />} 
-            backgroundColor="#fee2e2" 
-            iconColor="#dc2626" 
+            icon={<NavigationIcons.Create />}
+            className='event-cards-create-icon'
           />
         }
         { ...createEventProps }
@@ -35,9 +34,8 @@ export default function EventCardsSection() {
       <EventCard
         icon={
           <CircleIcon 
-            icon={<UserIcons.Users />} 
-            backgroundColor="#dcfce7" 
-            iconColor="#16a34a" 
+            icon={<UserIcons.Users />}
+            className='event-cards-join-icon' 
           />
         }
         { ...joinEventProps }

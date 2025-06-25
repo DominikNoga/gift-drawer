@@ -41,6 +41,8 @@ import {
   Shuffle,
   EarthIcon,
   TextIcon,
+  BanIcon,
+  InfoIcon,
 } from 'lucide-react';
 
 // =============================================================================
@@ -93,6 +95,8 @@ export const InterfaceIcons = {
   QrCode: QrCode,
   World: EarthIcon,
   Description: TextIcon,
+  Exclusion: BanIcon,
+  Info: InfoIcon,
 } as const;
 
 // =============================================================================

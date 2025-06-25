@@ -60,7 +60,6 @@ export default function EventCreateForm() {
   return (
     <Card className='event-create-form-card'>
       <form onSubmit={handleSubmit} className='event-create-form'>
-        <h2>Create Event</h2>
         <Input
           label='Event name'
           id='name'
@@ -79,7 +78,7 @@ export default function EventCreateForm() {
           value={form.description}
           onChange={handleChange}
           icon={<InterfaceIcons.Description />}
-          placeholder='Describe the event'
+          placeholder='Tell the participants more about the upcoming event'
           required
         />
         <Input
@@ -93,16 +92,6 @@ export default function EventCreateForm() {
           required
         />
         <Input
-          label='Gift Budget'
-          id='giftBudget'
-          name='giftBudget'
-          type='number'
-          value={form.giftBudget}
-          icon={<InterfaceIcons.Money />}
-          onChange={handleChange}
-          placeholder='How much paricipants can spend on the gift?'
-        />
-        <Input
           label='Location'
           id='location'
           name='location'
@@ -111,17 +100,28 @@ export default function EventCreateForm() {
           onChange={handleChange}
           placeholder='Where is it taking place?'
         />
-        <Input
-          label='Exchange Date'
-          id='exchangeDate'
-          name='exchangeDate'
-          type='datetime-local'
-          value={form.exchangeDate}
-          icon={<InterfaceIcons.Calendar />}
-          onChange={handleChange}
-          placeholder='When is the gift exchange?'
-        />
-        
+        <div className="input-row">
+          <Input
+            label='Gift Budget'
+            id='giftBudget'
+            name='giftBudget'
+            type='number'
+            value={form.giftBudget}
+            icon={<InterfaceIcons.Money />}
+            onChange={handleChange}
+            placeholder='How much paricipants can spend on the gift?'
+          />
+          <Input
+            label='Exchange Date'
+            id='exchangeDate'
+            name='exchangeDate'
+            type='datetime-local'
+            value={form.exchangeDate}
+            icon={<InterfaceIcons.Calendar />}
+            onChange={handleChange}
+            placeholder='When is the gift exchange?'
+          />
+        </div>
         <Button
           className='event-create-form-btn'
           btnType='primary'
