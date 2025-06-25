@@ -1,7 +1,8 @@
+.event-create-form-card {
+  width: min(700px, 90%);
+  margin: 0 auto;
+}
+
 .event-create-form {
   @include flex-layout();
-
-  * {
-    padding: $spacing-2 $spacing-1;
-  }
 }

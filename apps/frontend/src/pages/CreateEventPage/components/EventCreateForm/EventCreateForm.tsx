@@ -1,29 +1,25 @@
 import './EventCreateForm.scss';
 import { useState } from 'react';
 import { post } from '@gd/shared/utils/api.utils';
+import type { CreateEventRequestDto } from '@gd/types/src/models/events.model';
+import Button from '@gd/shared/components/Button/Button';
+import Input from './components/Input/Input';
+import Card from '@gd/shared/components/Card/Card';
+import { InterfaceIcons, UserIcons } from '@gd/shared/constants/icons';
 
-type FormState = {
-  name: string;
-  description: string;
-  organizerName: string;
-  giftBudget: number;
-  location: string;
-  exchangeDate: string;
-  participants: string[]; // participant names, comma-separated input
-};
-
-const initialFormState: FormState = {
+const initialFormState: CreateEventRequestDto = {
   name: '',
   description: '',
   organizerName: '',
-  giftBudget: 50,
+  giftBudget: undefined,
   location: '',
   exchangeDate: '',
   participants: [],
+  exclusions: [],
 };
 
 export default function EventCreateForm() {
-  const [form, setForm] = useState<FormState>(initialFormState);
+  const [form, setForm] = useState<CreateEventRequestDto>(initialFormState);
   const [message, setMessage] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -37,7 +33,7 @@ export default function EventCreateForm() {
 
   const handleParticipantsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const names = value.split(',').map(name => name.trim()).filter(Boolean);
+    const names = value.split(',').map(name => ({ name: name.trim() })).filter(Boolean);
     setForm(prev => ({
       ...prev,
       participants: names,
@@ -62,20 +58,78 @@ export default function EventCreateForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="event-create-form">
-      <h2>Create Event</h2>
-
-      <input name="name" placeholder="Event Name" value={form.name} onChange={handleChange} required />
-      <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} required />
-      <input name="organizerName" placeholder="Organizer Name" value={form.organizerName} onChange={handleChange} required />
-      <input name="giftBudget" type="number" placeholder="Gift Budget" value={form.giftBudget} onChange={handleChange} />
-      <input name="location" placeholder="Location" value={form.location} onChange={handleChange} />
-      <input name="exchangeDate" type="datetime-local" value={form.exchangeDate} onChange={handleChange} />
-      <input name="participants" placeholder="Participants (comma separated)" onChange={handleParticipantsChange} />
-
-      <button type="submit">Create Event</button>
-
-      {message && <p>{message}</p>}
-    </form>
+    <Card className='event-create-form-card'>
+      <form onSubmit={handleSubmit} className='event-create-form'>
+        <h2>Create Event</h2>
+        <Input
+          label='Event name'
+          id='name'
+          name='name'
+          onChange={handleChange}
+          value={form.name}
+          autoComplete='off'
+          placeholder='Give some awesome name to your event'
+          required
+        />
+        <Input
+          label='Description'
+          id='description'
+          name='description'
+          isTextarea={true}
+          value={form.description}
+          onChange={handleChange}
+          icon={<InterfaceIcons.Description />}
+          placeholder='Describe the event'
+          required
+        />
+        <Input
+          label='Organizer Name'
+          id='organizerName'
+          name='organizerName'
+          icon={<UserIcons.User />}
+          value={form.organizerName}
+          onChange={handleChange}
+          placeholder='What is your name?'
+          required
+        />
+        <Input
+          label='Gift Budget'
+          id='giftBudget'
+          name='giftBudget'
+          type='number'
+          value={form.giftBudget}
+          icon={<InterfaceIcons.Money />}
+          onChange={handleChange}
+          placeholder='How much paricipants can spend on the gift?'
+        />
+        <Input
+          label='Location'
+          id='location'
+          name='location'
+          value={form.location}
+          icon={<InterfaceIcons.World />}
+          onChange={handleChange}
+          placeholder='Where is it taking place?'
+        />
+        <Input
+          label='Exchange Date'
+          id='exchangeDate'
+          name='exchangeDate'
+          type='datetime-local'
+          value={form.exchangeDate}
+          icon={<InterfaceIcons.Calendar />}
+          onChange={handleChange}
+          placeholder='When is the gift exchange?'
+        />
+        
+        <Button
+          className='event-create-form-btn'
+          btnType='primary'
+          type='submit'>
+          Create Event
+        </Button>
+        {message && <p>{message}</p>}
+      </form>
+    </Card>
   );
 }
