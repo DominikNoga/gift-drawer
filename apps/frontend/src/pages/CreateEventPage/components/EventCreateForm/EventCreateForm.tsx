@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { post } from '@gd/shared/utils/api.utils';
 import type { CreateEventRequestDto } from '@gd/types/src/models/events.model';
 import Button from '@gd/shared/components/Button/Button';
-import Input from './components/Input/Input';
+import Input from '../Input/Input';
 import Card from '@gd/shared/components/Card/Card';
 import { InterfaceIcons, UserIcons } from '@gd/shared/constants/icons';
 
@@ -20,7 +20,6 @@ const initialFormState: CreateEventRequestDto = {
 
 export default function EventCreateForm() {
   const [form, setForm] = useState<CreateEventRequestDto>(initialFormState);
-  const [message, setMessage] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -31,30 +30,9 @@ export default function EventCreateForm() {
     }));
   };
 
-  const handleParticipantsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const names = value.split(',').map(name => ({ name: name.trim() })).filter(Boolean);
-    setForm(prev => ({
-      ...prev,
-      participants: names,
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      await post('/events', {
-        ...form,
-        participants: form.participants.map(name => ({ name })),
-        exclusions: [],
-      });
-
-      setMessage('Event created successfully!');
-    } catch (err) {
-      console.error(err);
-      setMessage('Failed to create event.');
-    }
+    // TODO: pass handling this to index component
   };
 
   return (
@@ -128,7 +106,6 @@ export default function EventCreateForm() {
           type='submit'>
           Create Event
         </Button>
-        {message && <p>{message}</p>}
       </form>
     </Card>
   );

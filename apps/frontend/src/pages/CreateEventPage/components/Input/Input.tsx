@@ -6,11 +6,15 @@ import { isDateInput } from './utils/Input.utils';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> & {
   isTextarea?: boolean;
-  label: string;
   classes?: string;
-  id: string;
   icon?: ReactElement;
-};
+} & ({
+  label?: undefined;
+  id?: string;
+} | {
+  label: string;
+  id: string;
+});
 
 export default function Input({ label, isTextarea = false, classes = '', icon, ...props }: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);

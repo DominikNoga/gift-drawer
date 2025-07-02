@@ -1,6 +1,7 @@
 import { InterfaceIcons, UserIcons } from '@gd/shared/constants/icons';
 import './EventCreateSteps.scss';
 import CircleIcon from '@gd/shared/components/icons/CircleIcon/CircleIcon';
+import type { CurrentStep } from '../../types/types';
 
 const STEPS = [
   {
@@ -18,7 +19,7 @@ const STEPS = [
 ];
 
 type EventCreateStepsProps = {
-  currentStep: 0 | 1 | 2;
+  currentStep: CurrentStep;
 };
 
 export default function EventCreateSteps({ currentStep = 0 }: EventCreateStepsProps) {
