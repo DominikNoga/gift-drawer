@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import './AddParticipantsForm.scss';
 import Input from '../Input/Input';
+import type { EventCreateFormComponentProps, ParticipantsCreateRequest } from '../../types/types';
+import Card from '@gd/shared/components/Card/Card';
 
 const INITIAL_QUANTITY = 3;
 
-export default function AddParticipantsForm() {
+export default function AddParticipantsForm({ onSubmit }: EventCreateFormComponentProps<ParticipantsCreateRequest>) {
   const [participants, setParticipants] = useState<string[]>(['', '', '']);
-  const inputs = new Array(INITIAL_QUANTITY + participants.length + 1);
+  const inputs = participants.map((_, i) => i);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const name = event.target.value;
     setParticipants(prevParticipants => prevParticipants.map((participant, i) => {
@@ -19,18 +21,20 @@ export default function AddParticipantsForm() {
 
   return (
     <>
-      {
-        inputs.map((_, index) => (
-          <Input
-            key={`participant-input-${index}`}
-            name={`participant-input-${index}`}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
-            value={participants[index]}
-            autoComplete='off'
-            placeholder={`Set participant ${index + 1} name`}
-          />
-        ))
-      }
+      <form onSubmit={(e: FormEvent) => onSubmit(e, participants)}>
+        {
+          inputs.map((_, index) => (
+            <Input
+              key={`participant-input-${index}`}
+              name={`participant-input-${index}`}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
+              value={participants[index]}
+              autoComplete='off'
+              placeholder={`Set participant ${index + 1} name`}
+            />
+          ))
+        }
+      </form>
     </>
   );
 }

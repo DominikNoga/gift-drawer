@@ -17,4 +17,4 @@ export const createEvent = async (
   } catch (err) {
     console.error(err);
   }
-}
+};
