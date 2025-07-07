@@ -1,12 +1,11 @@
-import { useState, type FormEvent } from 'react';
+import { useContext, useState, type FormEvent } from 'react';
 import './AddParticipantsForm.scss';
 import Input from '../Input/Input';
-import type { EventCreateFormComponentProps, ParticipantsCreateRequest } from '../../types/types';
-import Card from '@gd/shared/components/Card/Card';
+import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
 
-const INITIAL_QUANTITY = 3;
 
-export default function AddParticipantsForm({ onSubmit }: EventCreateFormComponentProps<ParticipantsCreateRequest>) {
+export default function AddParticipantsForm() {
+  const { handleAddParticipants } = useContext(CreateEventContext);
   const [participants, setParticipants] = useState<string[]>(['', '', '']);
   const inputs = participants.map((_, i) => i);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -21,7 +20,7 @@ export default function AddParticipantsForm({ onSubmit }: EventCreateFormCompone
 
   return (
     <>
-      <form onSubmit={(e: FormEvent) => onSubmit(e, participants)}>
+      <form onSubmit={(e: FormEvent) => handleAddParticipants(e, participants)}>
         {
           inputs.map((_, index) => (
             <Input
@@ -34,6 +33,7 @@ export default function AddParticipantsForm({ onSubmit }: EventCreateFormCompone
             />
           ))
         }
+        <button type='submit'>Next step</button>
       </form>
     </>
   );

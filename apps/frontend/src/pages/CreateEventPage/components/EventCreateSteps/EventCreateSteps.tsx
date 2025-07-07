@@ -1,7 +1,8 @@
 import { InterfaceIcons, UserIcons } from '@gd/shared/constants/icons';
 import './EventCreateSteps.scss';
 import CircleIcon from '@gd/shared/components/icons/CircleIcon/CircleIcon';
-import type { CurrentStep } from '../../types/types';
+import { useContext } from 'react';
+import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
 
 const STEPS = [
   {
@@ -18,11 +19,8 @@ const STEPS = [
   }
 ];
 
-type EventCreateStepsProps = {
-  currentStep: CurrentStep;
-};
-
-export default function EventCreateSteps({ currentStep = 0 }: EventCreateStepsProps) {
+export default function EventCreateSteps() {
+  const { currentStep } = useContext(CreateEventContext);
   return (
     <div className="create-event-steps">
       <div className={`progress-line-1 ${currentStep >= 1 && 'progress-line-filled'}`}></div>
