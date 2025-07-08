@@ -24,7 +24,7 @@ export default function EventCreateSteps() {
   return (
     <div className="create-event-steps">
       <div className={`progress-line-1 ${currentStep >= 1 && 'progress-line-filled'}`}></div>
-      <div className={`progress-line-2 ${currentStep === 2 && 'progress-line-filled'}`}></div>
+      <div className={`progress-line-2 ${currentStep >= 2 && 'progress-line-filled'}`}></div>
       {
         STEPS.map(step => (
           <div key={step.title} className="create-event-step">

@@ -1,5 +1,5 @@
 .event-create-form-card {
-  .event-create-form-btn {
+  button[type='submit'] {
     font-weight: $font-weight-bold;
     font-size: $font-size-base;
   }
