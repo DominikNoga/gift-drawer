@@ -19,6 +19,7 @@ export default function EventCreateForm() {
 
   return (
     <Card className='event-create-form-card'>
+      <button>Previous step</button>
       <Component />
     </Card>
   );
