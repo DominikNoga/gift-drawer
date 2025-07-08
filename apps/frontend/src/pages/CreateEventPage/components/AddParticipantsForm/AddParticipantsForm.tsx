@@ -30,6 +30,7 @@ export default function AddParticipantsForm() {
               value={participants[index]}
               autoComplete='off'
               placeholder={`Set participant ${index + 1} name`}
+              required
             />
           ))
         }
