@@ -1,0 +1,26 @@
+.event-create-form-back-btn {
+  padding: $spacing-2;
+  border-radius: $border-radius-base;
+  border: none;
+  box-shadow: $shadow-md;
+  background-color: transparent;
+  width: fit-content;
+  transition: $transition-shadow;
+  @include center();
+  &-icon {
+    @include square(1.5rem);
+  }
+
+  @include hover-effect() {
+    box-shadow: $shadow-lg;
+  }
+}
+
+.event-create-form-back-btn-disabled {
+  @extend .event-create-form-back-btn;
+  opacity: .8;
+  @include hover-effect() {
+    cursor: not-allowed;
+    box-shadow: $shadow-md;
+  }
+}

@@ -33,7 +33,7 @@ export default function Input({ label, isTextarea = false, classes = '', icon, .
       <label className='input-group-label' htmlFor={props.id}>
           {icon}
           {label}
-          {props.required ? ' *' : ' (Optional)'}
+          {label  ? (props.required ? ' *' : ' (Optional)') : ''}
       </label>
       {isTextarea ? (
         <textarea
@@ -52,7 +52,7 @@ export default function Input({ label, isTextarea = false, classes = '', icon, .
       )}
       {
         !props.value && !isDateInput(props.type) && props.placeholder &&
-        <span className="input-placeholder" onClick={focusInput}>
+        <span className={`input-placeholder${!label ? '-no-label' : '' }`} onClick={focusInput}>
           {props.placeholder}
         </span>
       }
