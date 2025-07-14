@@ -4,11 +4,12 @@ import type { AddParticipantsPayload, BasicInfoPayload, CreateEventContextType, 
 import { createEventReducer } from "./reducers/create-event/create-event-reducer";
 import { INITIAL_CREATE_EVENT_STATE } from "./constants/constants";
 import { CREATE_EVENT_ACTIONS } from "../../constants/constants";
+import { getInitialFormValue } from "../../utils/data/event-data.utils";
 
 export const CreateEventContext = createContext<CreateEventContextType>(INITIAL_CREATE_EVENT_STATE);
 
 export default function CreateEventContextProvider({ children }: { children: React.ReactNode }) {
-  const [createEventState, createEventDispatch] = useReducer(createEventReducer, INITIAL_CREATE_EVENT_STATE);
+  const [createEventState, createEventDispatch] = useReducer(createEventReducer, getInitialFormValue());
 
   const handleAddBasicData = (e: FormEvent, formData: BasicInfoPayload) => {
     e.preventDefault();
@@ -34,11 +35,26 @@ export default function CreateEventContextProvider({ children }: { children: Rea
     });
   };
 
+  const handlePrevStep = () => {
+    createEventDispatch({
+      type: CREATE_EVENT_ACTIONS.PREV_STEP,
+    });
+  };
+
+  const handleSetErrors = (errors: string[]) => {
+    createEventDispatch({
+      payload: errors,
+      type: CREATE_EVENT_ACTIONS.SET_ERRORS,
+    });
+  };
+
   const ctxValue = {
     ...createEventState,
     handleAddExclusions,
     handleAddParticipants,
-    handleAddBasicData
+    handleAddBasicData,
+    handlePrevStep,
+    handleSetErrors,
   };
 
   return (

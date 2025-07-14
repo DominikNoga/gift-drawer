@@ -43,6 +43,10 @@
     transition: $transition-opacity; 
   }
 
+  .input-placeholder-no-label {
+    @extend .input-placeholder;
+    top: calc(50% + $input-padding-top*0.5);
+  }
 
   .input-field:focus {
     border-color: $primary;

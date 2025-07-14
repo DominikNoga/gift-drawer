@@ -1,16 +1,15 @@
 import './BasicDataForm.scss';
 import { useContext, useState, type FormEvent } from 'react';
 import type { CreateEventRequestDto } from '@gd/types/src/models/events.model';
-import Button from '@gd/shared/components/Button/Button';
+import Button from '@gd/shared/components/buttons/Button/Button';
 import Input from '../Input/Input';
 import { InterfaceIcons, UserIcons } from '@gd/shared/constants/icons';
-import { INITIAL_CREATE_EVENT_FORM_STATE } from '../../constants/constants';
 import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
 
 
 export default function BasicDataForm() {
-  const { handleAddBasicData } = useContext(CreateEventContext);
-  const [form, setForm] = useState<CreateEventRequestDto>(INITIAL_CREATE_EVENT_FORM_STATE);
+  const { handleAddBasicData, createEventData } = useContext(CreateEventContext);
+  const [form, setForm] = useState<CreateEventRequestDto>(createEventData);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -89,7 +88,7 @@ export default function BasicDataForm() {
         className='event-create-form-btn'
         btnType='primary'
         type='submit'>
-        Create Event
+        Next step
       </Button>
     </form>
   );

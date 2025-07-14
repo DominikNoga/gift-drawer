@@ -18,6 +18,8 @@ export type CreateEventAction = (
   { type: typeof CREATE_EVENT_ACTIONS['BASIC_INFO']; payload: BasicInfoPayload }
   | { type: typeof CREATE_EVENT_ACTIONS['ADD_PARTICIPANTS']; payload: AddParticipantsPayload }
   | { type: typeof CREATE_EVENT_ACTIONS['SET_EXCLUSIONS']; payload: SetExclusionsPayload }
+  | { type: typeof CREATE_EVENT_ACTIONS['PREV_STEP']; }
+  | { type: typeof CREATE_EVENT_ACTIONS['SET_ERRORS']; payload: string[] }
 );
 
 export type CreateEventContextType = {
@@ -26,4 +28,7 @@ export type CreateEventContextType = {
   handleAddBasicData: (e: FormEvent, formData: BasicInfoPayload) => void,
   handleAddParticipants: (e: FormEvent, participants: AddParticipantsPayload) => void,
   handleAddExclusions: (e: FormEvent, exclusions: SetExclusionsPayload) => void,
+  handlePrevStep: () => void;
+  handleSetErrors: (errors: string[]) => void;
+  errors?: string[];
 };

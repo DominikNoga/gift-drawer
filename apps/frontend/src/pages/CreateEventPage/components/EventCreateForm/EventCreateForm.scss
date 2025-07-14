@@ -1,6 +1,8 @@
 .event-create-form-card {
-  button[type='submit'] {
-    font-weight: $font-weight-bold;
-    font-size: $font-size-base;
-  }
+  @include flex-layout();
+}
+
+.event-create-form-btn {
+  font-weight: $font-weight-bold;
+  font-size: $font-size-base;
 }

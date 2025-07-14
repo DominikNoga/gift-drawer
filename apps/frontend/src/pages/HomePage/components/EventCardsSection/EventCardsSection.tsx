@@ -3,7 +3,7 @@ import './EventCardsSection.scss';
 import EventCard from './components/EventCard/EventCard';
 import { createEventProps, joinEventProps } from './EventCardsSection.config';
 import { NavigationIcons, UserIcons } from '@gd/shared/constants/icons';
-import Button from '@gd/shared/components/Button/Button';
+import Button from '@gd/shared/components/buttons/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_NAMES } from '../../../../routes';
 
