@@ -1,0 +1,16 @@
+.set-exclusions-input-row {
+  display: grid;
+  align-items: center;
+  column-gap: $spacing-4;
+  row-gap: $spacing-2;
+  grid-template-columns: 1fr auto 1fr;
+  &-text {
+    color: $text-secondary;
+  }
+}
+
+.set-exclusions-vice-versa {
+  justify-self: end;
+  grid-column: 3;
+  color: $text-secondary;
+}
