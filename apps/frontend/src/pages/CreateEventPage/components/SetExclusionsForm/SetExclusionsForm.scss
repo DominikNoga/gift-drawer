@@ -1,0 +1,14 @@
+.set-exclusions-add-more-btn {
+  @include flex-layout(row, center, center, $spacing-1);
+  padding: $button-padding-sm;
+  background-color: transparent;
+  border: none;
+  width: fit-content;
+  border-radius: $border-radius-md;
+  align-self: center;
+  box-shadow: 0 0 $spacing-2 rgba($blue-600, .1);
+  transition: $transition-shadow;
+  @include hover-effect() {
+    box-shadow: 0 0 $spacing-2 rgba($blue-600, .3);
+  }
+}
