@@ -14,17 +14,29 @@ const EMPTY_EXCLUSION = {
 
 export default function SetExclusionsForm() {
   const { handleAddExclusions, createEventData } = useContext(CreateEventContext);
-  const [exclusions, setExclusions] = useState<SetExclusionsPayload>(createEventData.exclusions || [EMPTY_EXCLUSION]);
+  const [exclusions, setExclusions] = useState<SetExclusionsPayload>(createEventData.exclusions || [{...EMPTY_EXCLUSION}]);
   const participants = createEventData.participants.map(p => p.name) || [];
 
   const addMoreExclusions = () => {
-    setExclusions(prevExclusions => [...prevExclusions, EMPTY_EXCLUSION]);
+    setExclusions(prevExclusions => [...prevExclusions, {...EMPTY_EXCLUSION}]);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>, index: number, input: 0 | 1) => {
+    const { value } = e.target;
+    setExclusions(prevExclusions => {
+      const newExclusions = [...prevExclusions];
+      if (input === 0) {
+        newExclusions[index].participantName = value;
+      } else {
+        newExclusions[index].excludedParticipantName = value;
+      }
+      return newExclusions;
+    });
   };
 
   const handleSubmit = (e: FormEvent) => {
     const validExclusions = getValidExclusions(exclusions);
     console.log(validExclusions);
-    debugger;
     handleAddExclusions(e, validExclusions);
   };
 
@@ -38,10 +50,11 @@ export default function SetExclusionsForm() {
       {
         exclusions.map((exclusion, index) => (
           <CreateExclusionRow
-            key={`${exclusion.participantName}-${exclusion.excludedParticipantName}`}
+            key={Math.random().toString(36).substring(2, 15) + index}
             participants={participants}
             index={index}
             values={[exclusion.participantName, exclusion.excludedParticipantName]}
+            handleChange={handleChange}
           />
         ))
       }
