@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SnakeCaseKeys } from "../utils/types.utils";
+import { type SnakeCaseKeys } from "../utils/types.utils";
 
 export const ExclusionSchema = z.object({
   id: z.string(),

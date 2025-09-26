@@ -39,6 +39,11 @@ import {
   
   // Actions & Tools
   Shuffle,
+  EarthIcon,
+  TextIcon,
+  BanIcon,
+  InfoIcon,
+  Minus,
 } from 'lucide-react';
 
 // =============================================================================
@@ -48,12 +53,10 @@ import {
 export const NavigationIcons = {
   Back: ArrowLeft,
   ExternalLink: ExternalLink,
-  Create: Plus,
   Delete: X,
   Confirm: Check,
   Copy: Copy,
   Search: Search,
-  
   Settings: Settings,
 } as const;
 
@@ -89,6 +92,12 @@ export const InterfaceIcons = {
   Money: DollarSign,
   Link: LinkIcon,
   QrCode: QrCode,
+  World: EarthIcon,
+  Description: TextIcon,
+  Exclusion: BanIcon,
+  Info: InfoIcon,
+  Create: Plus,
+  Remove: Minus,
 } as const;
 
 // =============================================================================

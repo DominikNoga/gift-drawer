@@ -1,0 +1,41 @@
+$progress-line-width: 280px;
+$progress-line-start: 85px;
+.create-event-steps {
+  @include flex-layout(row, center, space-between, 0);
+  position: relative;
+  .progress-line-1 {
+    position: absolute;
+    top: 25%;
+    left: $progress-line-start;
+    z-index: 1;
+    @include rectangle($progress-line-width, 8px);
+    background-color: $gray-300;
+    border-radius: $border-radius-base;
+  }
+  
+  .progress-line-2 {
+    @extend .progress-line-1;
+    left: calc($progress-line-start + $progress-line-width);
+  }
+  
+  .progress-line-filled {
+    background-color: $red-600;
+  }
+
+  .create-event-step {
+    z-index: 2;
+    @include flex-layout(column, center, $gap: $spacing-2);
+    &-icon {
+      background-color: $red-100;
+      color: $red-600;
+      @include circle(3rem);
+      svg {
+        @include square(1.5rem);
+      }
+    }
+
+    &-title {
+      font-weight: $font-weight-bold;
+    }
+  }
+}
