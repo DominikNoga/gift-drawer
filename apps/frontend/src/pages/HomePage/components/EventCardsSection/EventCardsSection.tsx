@@ -2,8 +2,8 @@ import CircleIcon from '@gd/shared/components/icons/CircleIcon/CircleIcon';
 import './EventCardsSection.scss';
 import EventCard from './components/EventCard/EventCard';
 import { createEventProps, joinEventProps } from './EventCardsSection.config';
-import { NavigationIcons, UserIcons } from '@gd/shared/constants/icons';
-import Button from '@gd/shared/components/Button/Button';
+import { NavigationIcons, UserIcons, InterfaceIcons } from '@gd/shared/constants/icons';
+import Button from '@gd/shared/components/buttons/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_NAMES } from '../../../../routes';
 
@@ -15,9 +15,8 @@ export default function EventCardsSection() {
       <EventCard
         icon={
           <CircleIcon 
-            icon={<NavigationIcons.Create />} 
-            backgroundColor="#fee2e2" 
-            iconColor="#dc2626" 
+            icon={<InterfaceIcons.Create />}
+            className='event-cards-create-icon'
           />
         }
         { ...createEventProps }
@@ -35,9 +34,8 @@ export default function EventCardsSection() {
       <EventCard
         icon={
           <CircleIcon 
-            icon={<UserIcons.Users />} 
-            backgroundColor="#dcfce7" 
-            iconColor="#16a34a" 
+            icon={<UserIcons.Users />}
+            className='event-cards-join-icon' 
           />
         }
         { ...joinEventProps }
