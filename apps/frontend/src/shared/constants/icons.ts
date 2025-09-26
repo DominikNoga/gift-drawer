@@ -44,6 +44,8 @@ import {
   BanIcon,
   InfoIcon,
   Minus,
+
+  Eye,
 } from 'lucide-react';
 
 // =============================================================================
@@ -98,6 +100,7 @@ export const InterfaceIcons = {
   Info: InfoIcon,
   Create: Plus,
   Remove: Minus,
+  Preview: Eye,
 } as const;
 
 // =============================================================================
