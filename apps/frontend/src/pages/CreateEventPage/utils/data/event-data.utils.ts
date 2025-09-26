@@ -4,14 +4,16 @@ import { CREATE_EVENT_FORM_VALUE_KEY } from "../../constants/constants";
 import { INITIAL_CREATE_EVENT_STATE } from "../../store/CreateEventContext/constants/constants";
 import type { CreateEventContextType } from "../../store/CreateEventContext/types/types";
 
-export const createEvent = async (formData: CreateEventRequestDto) => {
+export const createEvent = async (formData: CreateEventRequestDto): Promise<{ id: string }> => {
   try {
-    await post<CreateEventDto, CreateEventRequestDto>('/events', {
+    const { id } = await post<{id: string}, CreateEventRequestDto>('/events', {
       ...formData,
     });
+    return { id };
 
   } catch (err) {
     console.error(err);
+    throw err;
   }
 };
 
@@ -23,4 +25,8 @@ export const getInitialFormValue = (): CreateEventContextType => {
 
 export const cacheFormValue = (formState: CreateEventContextType): void => {
   localStorage.setItem(CREATE_EVENT_FORM_VALUE_KEY, JSON.stringify(formState));
+};
+
+export const clearFormDataCache = (): void => {
+  localStorage.removeItem(CREATE_EVENT_FORM_VALUE_KEY);
 };

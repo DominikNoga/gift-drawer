@@ -1,4 +1,4 @@
-$progress-line-width: 280px;
+$progress-line-width: 180px;
 $progress-line-start: 85px;
 .create-event-steps {
   @include flex-layout(row, center, space-between, 0);
@@ -16,6 +16,11 @@ $progress-line-start: 85px;
   .progress-line-2 {
     @extend .progress-line-1;
     left: calc($progress-line-start + $progress-line-width);
+  }
+
+  .progress-line-3 {
+    @extend .progress-line-1;
+    left: calc($progress-line-start + 2 * $progress-line-width);
   }
   
   .progress-line-filled {
