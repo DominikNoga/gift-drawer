@@ -1,7 +1,8 @@
-.event-create-form {
+.event-create-form-card {
   @include flex-layout();
+}
 
-  * {
-    padding: $spacing-2 $spacing-1;
-  }
+.event-create-form-btn {
+  font-weight: $font-weight-bold;
+  font-size: $font-size-base;
 }

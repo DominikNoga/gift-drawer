@@ -1,0 +1,7 @@
+.event-create-form-errors-list {
+  @include flex-layout();
+  padding: 0 $card-padding;
+  &-item {
+    color: $text-secondary;
+  }
+}

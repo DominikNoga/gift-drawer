@@ -2,7 +2,7 @@
   @include circle(4rem);
   @include flex-layout(row, center, center, 0);
   padding: $spacing-2;
-  * {
+  svg {
     @include square(2rem);
   }
 }

@@ -3,15 +3,12 @@ import './CircleIcon.scss';
 
 type CircleIconProps = {
   icon: React.ReactNode;
-  backgroundColor: string;
-  iconColor: string;
+  className: string;
 };
 
-export default function CircleIcon({ icon, backgroundColor, iconColor }: CircleIconProps) {
+export default function CircleIcon({ icon, className }: CircleIconProps) {
   return (
-    <div className='circle-icon' style={{
-      backgroundColor: backgroundColor,
-      color: iconColor}}>
+    <div className={`circle-icon ${className}`}>
       { icon }
     </div>
   );
