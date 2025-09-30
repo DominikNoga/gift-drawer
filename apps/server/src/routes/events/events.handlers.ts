@@ -10,7 +10,7 @@ import { HTTP_STATUS } from '../../constants/status-codes';
 import { createExclusions, createParticipants, getEventRow } from './events.utils';
 
 export const getEventById = () => async (request: Request, response: Response) => {
-  const { id } = request.body;
+  const { id } = request.params;
   const eventRow = await eventsTable().where({ id }).first();
 
   if (!eventRow) {
@@ -31,6 +31,26 @@ export const getEventById = () => async (request: Request, response: Response) =
 
   return response.status(HTTP_STATUS.OK).json(eventData);
 };
+
+export const getAllEvents = () => async (request: Request, response: Response) => {
+  const eventRows = await eventsTable().select();
+
+  const eventsData = await Promise.all(eventRows.map(async (eventRow) => {
+    const participants = await participantsTable().where({ event_id: eventRow.id });
+    const exclusions = await exclusionsTable().where({ event_id: eventRow.id });
+
+    return {
+      ...toApiSchema<EventDbRecord>(eventRow),
+      participants: participants.map(toApiSchema<ParticipantDbRecord>),
+      exclusions: exclusions.map((ex) => {
+        const { id, eventId, ...rest } = toApiSchema<ExclusionDbRecord>(ex);
+        return rest;
+      }),
+    };
+  }));
+
+  return response.status(HTTP_STATUS.OK).json(eventsData);
+}
 
 export const createEvent = () => async (request: Request<{}, {}, CreateEventRequestDto>, response: Response) => {
   const parseResult = EventCreateSchema.safeParse(request.body);
