@@ -1,0 +1,19 @@
+.event-page-info-card {
+  @include flex-layout(row, center);
+  width: 100%;
+  
+  &-label {
+    color: $text-secondary;
+    font-size: $font-size-sm;
+  }
+
+  &-value {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+  }
+
+  div {
+    @include flex-layout(column, flex-start, $gap: $spacing-1);
+
+  }
+}

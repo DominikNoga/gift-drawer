@@ -1,4 +1,4 @@
-import type { Event } from '@gd/shared/types';
+import type { Event } from '@gd/types/src/models/events.model';
 import './MyEventsList.scss';
 import MyEventsCard from '../MyEventsCard/MyEventsCard';
 

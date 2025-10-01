@@ -1,25 +1,12 @@
-import type { Event } from '@gd/shared/types';
+import type { Event } from '@gd/types/src/models/events.model';
 import './MyEventsCard.scss';
 import Card from '@gd/shared/components/Card/Card';
 import { ChristmasIcons, InterfaceIcons, NavigationIcons, UserIcons } from '@gd/shared/constants/icons';
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from '@gd/shared/utils/date.utils';
 
 type Props = {
   event: Event;
-};
-
-const formatDate = (date: Date | string) => {
-  if (!date || date === '') return 'N/A';
-  
-  if (typeof date === 'string') {
-    date = new Date(date);
-  }
-  
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
 };
 
 export default function MyEventsCard({ event }: Props) {
