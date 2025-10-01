@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { get } from '@gd/shared/utils/api.utils';
-import type { Event } from '@gd/shared/types';
+import type { Event } from '@gd/types/src/models/events.model';
 
 export default function useUserEvents() {
   const [events, setEvents] = useState<Event[]>([]);

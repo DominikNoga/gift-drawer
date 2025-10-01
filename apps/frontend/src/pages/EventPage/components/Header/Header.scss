@@ -1,0 +1,30 @@
+.event-page-header {
+  @include flex-layout(row, center, $gap: $spacing-6);
+  main {
+    @include flex-layout(column, flex-start, $gap: $spacing-3);
+
+    .event-page-header-title {
+      font-size: $font-size-2xl;
+      font-weight: 600;
+    }
+
+    .event-page-header-details {
+      @include flex-layout(row, flex-start, center);
+      color: $text-secondary;
+      font-size: $font-size-sm;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+  .event-page-header-phase {
+    margin-left: auto;
+    border-radius: $border-radius-xl;
+    background-color: $amber-100;
+    color: $amber-900;
+    font-weight: 500;
+    font-size: $font-size-sm;
+    padding: $spacing-2 $spacing-3;
+  }
+}
