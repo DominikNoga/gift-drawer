@@ -6,29 +6,15 @@ import { createParticipantRecord } from "../participants/participant.utils";
 import { CreateExclusionsFromParticipantDto } from "@gd/types/src/models/participants.model";
 import { CreateEventRequestWithoutRelations, EventDbRecord } from "@gd/types/src/models/events.model";
 
-const generateJoinCode = (length = 8): string => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = '';
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * chars.length);
-    code += chars[randomIndex];
-  }
-
-  return code;
-};
-
 export const getEventRow = (createEventRequest: CreateEventRequestWithoutRelations): EventDbRecord => {
   const id = generateId();
   const createdAt = new Date().toISOString();
-  const joinCode = generateJoinCode();
 
   return toDbSchema({
     ...createEventRequest,
     id,
     createdAt,
     isReady: false,
-    joinCode,
   });
 };
 

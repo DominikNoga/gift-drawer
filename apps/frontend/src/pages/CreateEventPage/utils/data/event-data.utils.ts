@@ -1,5 +1,5 @@
 import { post } from "@gd/shared/utils/api.utils";
-import type { CreateEventDto, CreateEventRequestDto } from "@gd/types/src/models/events.model";
+import type { CreateEventRequestDto } from "@gd/types/src/models/events.model";
 import { CREATE_EVENT_FORM_VALUE_KEY } from "../../constants/constants";
 import { INITIAL_CREATE_EVENT_STATE } from "../../store/CreateEventContext/constants/constants";
 import type { CreateEventContextType } from "../../store/CreateEventContext/types/types";

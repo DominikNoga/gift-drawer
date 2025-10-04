@@ -10,6 +10,8 @@ export type BasicInfoPayload = CreateEventRequestDto;
 
 export type AddParticipantsPayload = string[];
 
+export type NewExclusion = CreateExclusionFromEventRequest & { viceVersa: boolean };
+
 export type SetExclusionsPayload = CreateExclusionFromEventRequest[];
 
 export type CreateEventPayload = CreateEventRequestDto;
