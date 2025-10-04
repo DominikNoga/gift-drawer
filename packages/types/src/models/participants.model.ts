@@ -4,8 +4,8 @@ import { type SnakeCaseKeys } from '../utils/types.utils';
 export const ParticipantSchema = z.object({
   id: z.string(),
   name: z.string(),
-  password: z.string().nullable(),
-  eventId: z.string()
+  eventId: z.string(),
+  joinCode: z.string(),
 });
 
 export const ParticipantCreateSchema = ParticipantSchema.pick({

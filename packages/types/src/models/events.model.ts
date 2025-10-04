@@ -16,9 +16,8 @@ export const EventSchema = z.object({
   exchangeDate: z.string()
     .optional(),
   isReady: z.boolean(),
-  joinCode: z.string().length(8),
   createdAt: z.string(),
-  participants: z.array(ParticipantSchema.pick({name: true, id: true})),
+  participants: z.array(ParticipantSchema.pick({name: true, id: true, joinCode: true})),
   exclusions: z.array(z.object({
     participantName: z.string(),
     excludedParticipantName: z.string(),
@@ -28,8 +27,9 @@ export const EventSchema = z.object({
 export const EventCreateSchema = EventSchema.omit({
   createdAt: true,
   id: true,
-  joinCode: true,
   isReady: true,
+}).extend({
+  participants: z.array(ParticipantSchema.pick({ name: true })),
 });
 
 export const EventDbSchema = EventSchema.omit({
