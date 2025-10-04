@@ -53,6 +53,7 @@ export const getAllEvents = () => async (request: Request, response: Response) =
 }
 
 export const createEvent = () => async (request: Request<{}, {}, CreateEventRequestDto>, response: Response) => {
+  console.log('Creating event with data:', request.body);
   const parseResult = EventCreateSchema.safeParse(request.body);
 
   if (!parseResult.success) {
