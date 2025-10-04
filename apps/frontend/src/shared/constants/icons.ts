@@ -44,6 +44,7 @@ import {
   BanIcon,
   InfoIcon,
   Minus,
+  ListChecks,
 
   Eye,
 } from 'lucide-react';
@@ -86,6 +87,7 @@ export const CommunicationIcons = {
 
 export const ChristmasIcons = {
   Gift: Gift,
+  Wishlist: ListChecks,
 } as const;
 
 
@@ -101,6 +103,7 @@ export const InterfaceIcons = {
   Create: Plus,
   Remove: Minus,
   Preview: Eye,
+  Copy: Copy,
 } as const;
 
 // =============================================================================

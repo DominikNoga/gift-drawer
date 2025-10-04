@@ -1,0 +1,29 @@
+.participant-tab-item {
+  width: 100%;
+  // box-shadow: $shadow-base;
+  border: 1px solid $gray-200;
+  @include flex-layout(row, center, flex-start, $spacing-4);
+  padding: $spacing-2;
+  border-radius: $border-radius-md;
+
+  span {
+    font-weight: $font-weight-semibold;
+  }
+
+  &-copy-btn{
+    border: none;
+    color: $purple-600;
+    border-radius: $border-radius-lg;
+    padding: $spacing-2 $spacing-2;
+    font-size: $font-size-xs;
+    @include simple-transition(background-color, .2s, $purple-100, $purple-200);
+    margin-left: auto;
+    @include flex-layout(row, center, center, $spacing-1);
+    &-icon {
+      * {
+        @include square(.75rem);
+      }
+    }
+
+  }
+}

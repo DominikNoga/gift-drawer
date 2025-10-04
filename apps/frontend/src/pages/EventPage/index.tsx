@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import type { Event } from "@gd/types/src/models/events.model";
 import Card from "@gd/shared/components/Card/Card";
 import InfoCards from './components/InfoCards/InfoCards';
+import MainSection from './components/MainSection/MainSection';
 
 export default function EventPage() {
   const { eventId } = useParams<{ eventId: string }>();
@@ -34,9 +35,10 @@ export default function EventPage() {
           </Card>
           <InfoCards 
             participantsQuantity={event.participants.length}
-            assignedQuantity={0} // To be implemented
+            assignedQuantity={0} //TODO: To be implemented
             joinCode={event.joinCode}
           />
+          <MainSection event={event} />
         </>
 
       )}
