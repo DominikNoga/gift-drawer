@@ -1,4 +1,4 @@
-import type { CreateEventRequestDto } from "@gd/types/src/models/events.model";
+import type { CreateEventRequest } from "@gd/types/src/api/api.events.types";
 import type { CurrentStep } from "../../../types/types";
 import type { CREATE_EVENT_ACTIONS } from "../../../constants/constants";
 import type { CreateExclusionFromEventRequest } from "@gd/types/src/models/exclusions.model";
@@ -6,13 +6,15 @@ import type { FormEvent } from "react";
 
 export type CreateEventActionType = 'basic-info' | 'add-participants' | 'set-exclusions' | 'create-event';
 
-export type BasicInfoPayload = CreateEventRequestDto;
+export type BasicInfoPayload = CreateEventRequest;
 
 export type AddParticipantsPayload = string[];
 
+export type NewExclusion = CreateExclusionFromEventRequest & { viceVersa: boolean };
+
 export type SetExclusionsPayload = CreateExclusionFromEventRequest[];
 
-export type CreateEventPayload = CreateEventRequestDto;
+export type CreateEventPayload = CreateEventRequest;
 
 export type CreateEventAction = (
   { type: typeof CREATE_EVENT_ACTIONS['BASIC_INFO']; payload: BasicInfoPayload }
@@ -23,7 +25,7 @@ export type CreateEventAction = (
 );
 
 export type CreateEventContextType = {
-  createEventData: CreateEventRequestDto;
+  createEventData: CreateEventRequest;
   currentStep: CurrentStep;
   handleAddBasicData: (e: FormEvent, formData: BasicInfoPayload) => void,
   handleAddParticipants: (e: FormEvent, participants: AddParticipantsPayload) => void,

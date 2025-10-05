@@ -7,7 +7,7 @@ import EventPage from "./pages/EventPage";
 export const ROUTES_NAMES = {
   HOME: '/',
   CREATE_EVENT: 'create-event',
-  EVENT: 'event/:eventId',
+  EVENT: 'event',
 } as const;
 
 export const router = createBrowserRouter([
@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
         element: <CreateEventPage />,
       },
       {
-        path: ROUTES_NAMES.EVENT,
+        path: `${ROUTES_NAMES.EVENT}/:eventId/:joinCode`,
         element: <EventPage />,
       }
     ],

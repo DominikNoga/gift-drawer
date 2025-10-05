@@ -1,0 +1,31 @@
+.tab-view-header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top-left-radius: $card-radius;
+  border-top-right-radius: $card-radius;
+  overflow: hidden;
+
+  &-item {
+    @include flex-layout(row, center, center, $spacing-2);
+    color: $text-secondary;
+    border-bottom: 1px solid $gray-200;
+    padding: $spacing-4;
+    @include simple-transition(background-color, .2s, transpaerent, $gray-100);
+    font-size: $font-size-xs;
+
+    &.active {
+      background-color: $red-100;
+      color: $red-600;
+      border-bottom: $red-600 2px solid;
+    }
+
+    &-icon {
+
+      @include square(.5rem);
+    }
+
+    &-title {
+      font-size: $font-size-base;
+    }
+  } 
+}
