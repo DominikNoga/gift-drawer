@@ -7,9 +7,10 @@ import type { Event } from "@gd/types/src/models/events.model";
 import Card from "@gd/shared/components/Card/Card";
 import InfoCards from './components/InfoCards/InfoCards';
 import MainSection from './components/MainSection/MainSection';
+import { formatDate } from '@gd/shared/utils/date.utils';
 
 export default function EventPage() {
-  const { eventId } = useParams<{ eventId: string }>();
+  const { eventId, joinCode } = useParams<{ eventId: string, joinCode: string }>();
   const [event, setEvent] = useState<Event | null>(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +37,7 @@ export default function EventPage() {
           <InfoCards 
             participantsQuantity={event.participants.length}
             assignedQuantity={0} //TODO: To be implemented
-            joinCode={event.joinCode}
+            eventDate={formatDate(event.exchangeDate) || 'Not set'}
           />
           <MainSection event={event} />
         </>

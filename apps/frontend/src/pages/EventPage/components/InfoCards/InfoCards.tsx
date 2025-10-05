@@ -7,12 +7,12 @@ import SquareIcon from '@gd/shared/components/icons/SquareIcon/SquareIcon';
 type Props = {
   participantsQuantity: number;
   assignedQuantity: number;
-  joinCode: string;
+  eventDate: string;
 };
 
 const ICON_SIZE = 2.25;
 
-export default function InfoCards({ participantsQuantity, assignedQuantity, joinCode }: Props) {
+export default function InfoCards({ participantsQuantity, assignedQuantity, eventDate }: Props) {
   // 
   const cardsData = [
     {
@@ -36,10 +36,10 @@ export default function InfoCards({ participantsQuantity, assignedQuantity, join
       />,
     },
     {
-      value: joinCode,
-      label: 'Join Code',
+      value: eventDate,
+      label: 'Event Date',
       icon: <SquareIcon
-        icon={<InterfaceIcons.Link />}
+        icon={<InterfaceIcons.Calendar />}
         iconColor={colors.purple[600]}
         backgroundColor={colors.purple[100]}
         size={ICON_SIZE}

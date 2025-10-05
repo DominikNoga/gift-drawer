@@ -10,7 +10,11 @@ export default function ParticipantsTab({ participants }: Props) {
   return (
     <div className='participants-tab'>
       {participants?.map((participant) => (
-        <ParticipantsTabItem key={participant.name} name={participant.name} />
+        <ParticipantsTabItem
+          key={participant.name}
+          name={participant.name}
+          joinCode={participant.joinCode}
+        />
       ))}
     </div>
   );
