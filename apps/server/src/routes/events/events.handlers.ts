@@ -1,18 +1,15 @@
 import { Request, Response } from 'express';
 import { eventsTable } from './events.db';
-import { EventCreateSchema, EventDbRecord } from '@gd/types/src/models/events.model';
-import { EventIdResponse, GetEventByJoinCodeRequest, CreateEventResponse, CreateEventRequest } from '@gd/types/src/api/api.events.types';
+import { EventCreateSchema } from '@gd/types/src/models/events.model';
+import { EventIdResponse, GetEventByJoinCodeRequest, CreateEventResponse, CreateEventRequest, GetEventRequest, GetEventResponse } from '@gd/types/src/api/api.events.types';
 import { ApiResponse } from '@gd/types/src/api/api.types';
 import { participantsTable } from '../participants/participants.db';
-import { ParticipantDbRecord } from '@gd/types/src/models/participants.model';
-import { exclusionsTable } from '../exclusions/exclusions.db';
-import { ExclusionDbRecord } from '@gd/types/src/models/exclusions.model';
-import { toApiSchema } from '../../utils/change-case.utils';
 import { HTTP_STATUS } from '../../constants/status-codes';
 import { createExclusions, createParticipants, getEventData, getEventRow } from './events.utils';
 
-export const getEventById = () => async (request: Request, response: Response) => {
-  const { id } = request.params;
+export const getEvent = () => async (request: Request<GetEventRequest>, response: Response<ApiResponse<GetEventResponse>>) => {
+  const { id, joinCode } = request.params;
+  console.log(request.params);
   const eventRow = await eventsTable()
     .where({ id })
     .first();
@@ -21,32 +18,10 @@ export const getEventById = () => async (request: Request, response: Response) =
     return response.status(HTTP_STATUS.NOT_FOUND).json({ message: 'Event not found' });
   }
 
-  const eventData = await getEventData(id, eventRow);
+  const eventData = await getEventData(id, eventRow, joinCode);
 
   return response.status(HTTP_STATUS.OK).json(eventData);
 };
-
-export const getAllEvents = () => async (request: Request, response: Response) => {
-  const eventRows = await eventsTable().select();
-
-  const eventsData = await Promise.all(eventRows.map(async (eventRow) => {
-    const participants = await participantsTable()
-      .where({ event_id: eventRow.id });
-    const exclusions = await exclusionsTable()
-      .where({ event_id: eventRow.id });
-
-    return {
-      ...toApiSchema<EventDbRecord>(eventRow),
-      participants: participants.map(toApiSchema<ParticipantDbRecord>),
-      exclusions: exclusions.map((ex) => {
-        const { id, eventId, ...rest } = toApiSchema<ExclusionDbRecord>(ex);
-        return rest;
-      }),
-    };
-  }));
-
-  return response.status(HTTP_STATUS.OK).json(eventsData);
-}
 
 export const createEvent = () => async (request: Request<{}, {}, CreateEventRequest>, response: Response<ApiResponse<CreateEventResponse>>) => {
   const parseResult = EventCreateSchema.safeParse(request.body);
@@ -72,7 +47,7 @@ export const createEvent = () => async (request: Request<{}, {}, CreateEventRequ
         return response.status(HTTP_STATUS.BAD_REQUEST).json({
           message: exclusionsCreateResults
         });
-      } 
+      }
     }
   }
 
@@ -99,6 +74,14 @@ export const getEventIdByParticipantCode = () => async (request: Request<GetEven
   if (!eventRow) {
     return response.status(HTTP_STATUS.NOT_FOUND).json({ message: 'Event not found' });
   }
-
+  
   return response.status(HTTP_STATUS.OK).json({ id: eventRow.id });
 };
+
+// export const getAllEvents = () => async (request: Request, response: Response) => {
+//   const eventRows = await eventsTable().select();
+
+//   const eventsData = await Promise.all(eventRows.map(async (eventRow) => getEventData(eventRow.id, eventRow)));
+
+//   return response.status(HTTP_STATUS.OK).json(eventsData);
+// };

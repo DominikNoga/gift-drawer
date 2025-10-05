@@ -22,6 +22,7 @@ export const EventSchema = z.object({
     participantName: z.string(),
     excludedParticipantName: z.string(),
   })),
+  currentParticipant: ParticipantSchema.pick({ name: true, id: true, joinCode: true }),
 });
 
 export const EventCreateSchema = EventSchema.omit({

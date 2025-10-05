@@ -1,6 +1,6 @@
 
 import { get, post } from "@gd/shared/utils/api.utils";
-import type { CreateEventRequest, CreateEventResponse, EventIdResponse } from "@gd/types/src/api/api.events.types";
+import type { CreateEventRequest, CreateEventResponse, EventIdResponse, GetEventResponse } from "@gd/types/src/api/api.events.types";
 
 const API_URL = '/events';
 
@@ -11,6 +11,16 @@ export const createEvent = async (formData: CreateEventRequest): Promise<CreateE
     });
     return { id, organizerCode };
 
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const getEvent = async (eventId: string, joinCode: string): Promise<GetEventResponse> => {
+  try {
+    const response = await get<GetEventResponse>(`${API_URL}/${eventId}/${joinCode}`);
+    return response;
   } catch (err) {
     console.error(err);
     throw err;
