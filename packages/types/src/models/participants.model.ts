@@ -6,7 +6,7 @@ export const ParticipantSchema = z.object({
   name: z.string(),
   eventId: z.string(),
   joinCode: z.string(),
-  drawParticipantId: z.string().nullable(),
+  drawnParticipantId: z.string().nullable(),
 });
 
 export const ParticipantCreateSchema = ParticipantSchema.pick({

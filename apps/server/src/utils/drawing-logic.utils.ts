@@ -2,6 +2,11 @@
 import { Participant } from "@gd/types/src/models/participants.model";
 import { Exclusion } from "@gd/types/src/models/exclusions.model";
 
+type Assignment = {
+  giverId: string;
+  receiverId: string;
+}
+
 type DrawResultFailed = {
   ok: false;
   reasons: string[];
@@ -13,7 +18,7 @@ type DrawResultFailed = {
 
 type DrawResultSuccess = {
   ok: true;
-  assignment: Record<string, string>
+  assignments: Assignment[];
 };
 
 export type DrawResult = DrawResultSuccess | DrawResultFailed;
@@ -179,12 +184,11 @@ export function drawSecretSanta(
     };
   }
 
-  // Build final giverId -> receiverId assignment
-  const assignment: Record<string, string> = {};
+  const assignments: Assignment[] = [];
   for (const [receiverId, giverId] of receiverToGiverMatchMap.entries()) {
-    assignment[giverId] = receiverId;
+    assignments.push({ giverId, receiverId });
   }
-  return { ok: true, assignment };
+  return { ok: true, assignments };
 }
 
 /** Optional helper: return a copy with drawParticipantId filled from an assignment */
