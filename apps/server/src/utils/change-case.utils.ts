@@ -1,6 +1,4 @@
 import { CamelCaseKeys, SnakeCaseKeys } from "./type.utils";
-const isObject = (val: any): val is Record<string, any> =>
-  val !== null && typeof val === "object" && !Array.isArray(val);
 
 const toCamelCase = (str: string): string =>
   str.replace(/[_-](\w)/g, (_, c) => c.toUpperCase());

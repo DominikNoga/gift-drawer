@@ -6,8 +6,12 @@ import { ApiResponse } from '@gd/types/src/api/api.types';
 import { participantsTable } from '../participants/participants.db';
 import { HTTP_STATUS } from '../../constants/status-codes';
 import { createExclusions, createParticipants, getEventData, getEventRow } from './events.utils';
+import { toApiSchema } from '../../utils/change-case.utils';
+import { drawSecretSanta } from '../../utils/drawing-logic.utils';
+import { exclusionsTable } from '../exclusions/exclusions.db';
+import { DrawAssignmentsRequest } from '@gd/types/src/api/api.participants.types';
 
-export const getEvent = () => async (request: Request<GetEventRequest>, response: Response<ApiResponse<GetEventResponse>>) => {
+export const getEvent = async (request: Request<GetEventRequest>, response: Response<ApiResponse<GetEventResponse>>) => {
   const { id, joinCode } = request.params;
   console.log(request.params);
   const eventRow = await eventsTable()
@@ -23,7 +27,7 @@ export const getEvent = () => async (request: Request<GetEventRequest>, response
   return response.status(HTTP_STATUS.OK).json(eventData);
 };
 
-export const createEvent = () => async (request: Request<{}, {}, CreateEventRequest>, response: Response<ApiResponse<CreateEventResponse>>) => {
+export const createEvent = async (request: Request<{}, {}, CreateEventRequest>, response: Response<ApiResponse<CreateEventResponse>>) => {
   const parseResult = EventCreateSchema.safeParse(request.body);
 
   if (!parseResult.success) {
@@ -57,7 +61,7 @@ export const createEvent = () => async (request: Request<{}, {}, CreateEventRequ
   });
 };
 
-export const getEventIdByParticipantCode = () => async (request: Request<GetEventByJoinCodeRequest>, response: Response<ApiResponse<EventIdResponse>>) => {
+export const getEventIdByParticipantCode = async (request: Request<GetEventByJoinCodeRequest>, response: Response<ApiResponse<EventIdResponse>>) => {
   const { joinCode } = request.params;
   const participant = await participantsTable()
     .where({ join_code: joinCode }).first();
@@ -76,6 +80,31 @@ export const getEventIdByParticipantCode = () => async (request: Request<GetEven
   }
   
   return response.status(HTTP_STATUS.OK).json({ id: eventRow.id });
+};
+
+export const drawAssignments = async (request: Request<{}, DrawAssignmentsRequest>, response: Response) => {
+  const { eventId } = request.body;
+  const participants = await participantsTable()
+    .where({ event_id: eventId })
+    .select('*');
+  const exclusions = await exclusionsTable()
+    .where({ event_id: eventId })
+    .select('*');
+
+  const validParticipants = participants.map(toApiSchema);
+  const validExclusions = exclusions.map(toApiSchema);
+  const drawingResult = drawSecretSanta(validParticipants, validExclusions);
+
+  if (!drawingResult.ok) {
+    return response.status(HTTP_STATUS.BAD_REQUEST).json({
+      message: 'Drawing failed',
+      reasons: drawingResult.reasons,
+      debug: drawingResult.debug,
+    });
+  }
+
+  console.log(drawingResult.assignment);
+  return response.status(HTTP_STATUS.OK).json({ drawingResult });
 };
 
 // export const getAllEvents = () => async (request: Request, response: Response) => {

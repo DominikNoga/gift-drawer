@@ -12,10 +12,6 @@ type Props = {
 export default function MyEventsCard({ event }: Props) {
   const navigate = useNavigate();
 
-  if (!event) {
-    return <div className="my-events-card-error">No event data available</div>;
-  }
-
   function handleCardClick() {
     navigate(`/event/${event.id}/${event.participantJoinCode}`);
   }

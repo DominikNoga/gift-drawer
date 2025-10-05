@@ -6,12 +6,13 @@ export const ParticipantSchema = z.object({
   name: z.string(),
   eventId: z.string(),
   joinCode: z.string(),
+  drawParticipantId: z.string().nullable(),
 });
 
 export const ParticipantCreateSchema = ParticipantSchema.pick({
   name: true,
   eventId: true,
-})
+});
 
 export type Participant = z.infer<typeof ParticipantSchema>;
 export type ParticipantUI = Pick<Participant, 'name' | 'id' | 'joinCode'>;

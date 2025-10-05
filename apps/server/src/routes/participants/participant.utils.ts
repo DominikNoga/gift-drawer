@@ -15,6 +15,7 @@ export const getParticipantRow = (createParticipantRequest: CreateParticipantReq
     ...createParticipantRequest,
     id,
     joinCode: generateJoinCode(),
+    drawParticipantId: null,
   });
 };
 
