@@ -1,0 +1,4 @@
+.event-page-info-cards {
+  width: 100%;
+  @include flex-layout(row, center, space-between);
+}

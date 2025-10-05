@@ -1,5 +1,7 @@
 .event-cards-section {
-  @include flex-layout(row, center, center, 2rem);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: $spacing-8;
   margin-bottom: $spacing-16;
 
   .event-cards-create-icon {
@@ -10,6 +12,10 @@
     background-color: $green-100;
     color: $green-600;
   }
+}
+
+.event-card-input {
+  width: 100%;
 }
 
 .event-card-btn {

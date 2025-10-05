@@ -1,4 +1,4 @@
-.event-create-form-back-btn {
+.back-btn {
   padding: $spacing-2;
   border-radius: $border-radius-base;
   border: none;
@@ -16,8 +16,17 @@
   }
 }
 
-.event-create-form-back-btn-disabled {
-  @extend .event-create-form-back-btn;
+.back-btn-filled {
+  @extend .back-btn;
+  box-shadow: none;
+
+  @include hover-effect() {
+    box-shadow: $shadow-lg;
+  }
+}
+
+.back-btn-disabled {
+  @extend .back-btn;
   opacity: .8;
   @include hover-effect() {
     cursor: not-allowed;

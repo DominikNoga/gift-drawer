@@ -1,48 +1,39 @@
-import { toDbSchema } from "../../utils/change-case.utils";
+import { toApiSchema, toDbSchema } from "../../utils/change-case.utils";
 import { generateId } from "../../utils/generate-id.utils";
-import { CreateExclusionFromEventRequest, CreateExclusionRequestDto } from "@gd/types/src/models/exclusions.model";
+import { CreateExclusionFromEventRequest, CreateExclusionRequestDto, ExclusionDbRecord } from "@gd/types/src/models/exclusions.model";
 import { createExclusionRecord } from "../exclusions/exclusions.utils";
 import { createParticipantRecord } from "../participants/participant.utils";
-import { CreateExclusionsFromParticipantDto } from "@gd/types/src/models/participants.model";
-import { CreateEventRequestWithoutRelations, EventDbRecord } from "@gd/types/src/models/events.model";
-
-const generateJoinCode = (length = 8): string => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = '';
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * chars.length);
-    code += chars[randomIndex];
-  }
-
-  return code;
-};
+import { CreateExclusionsFromParticipantDto, ParticipantDbRecord } from "@gd/types/src/models/participants.model";
+import { EventDbRecord } from "@gd/types/src/models/events.model";
+import { CreateEventRequestWithoutRelations, GetEventResponse } from "@gd/types/src/api/api.events.types";
+import { GetParticipantForEventResponse } from "@gd/types/src/api/api.participants.types";
+import { participantsTable } from "../participants/participants.db";
+import { exclusionsTable } from "../exclusions/exclusions.db";
 
 export const getEventRow = (createEventRequest: CreateEventRequestWithoutRelations): EventDbRecord => {
   const id = generateId();
   const createdAt = new Date().toISOString();
-  const joinCode = generateJoinCode();
 
   return toDbSchema({
     ...createEventRequest,
     id,
     createdAt,
     isReady: false,
-    joinCode,
   });
 };
 
 export const createParticipants = async (participantsNames: string[], eventId: string) => {
-  const createdParticipants: CreateExclusionsFromParticipantDto[] = [];
+  const createdParticipants: GetParticipantForEventResponse[] = [];
   for (const participantName of participantsNames) {
     try {
-      const participantId = await createParticipantRecord({
+      const { id: participantId, joinCode } = await createParticipantRecord({
         name: participantName,
         eventId,
       });
       createdParticipants.push({
         name: participantName,
         id: participantId,
+        joinCode,
       })
     } catch (error) {
       console.error(error);
@@ -52,7 +43,7 @@ export const createParticipants = async (participantsNames: string[], eventId: s
 };
 
 const mapToExclusionRequest = (
-  exclusions: CreateExclusionFromEventRequest[], 
+  exclusions: CreateExclusionFromEventRequest[],
   createdParticipants: CreateExclusionsFromParticipantDto[],
   eventId: string
 ): CreateExclusionRequestDto[] | string => {
@@ -68,19 +59,19 @@ const mapToExclusionRequest = (
       return {
         eventId,
         excludedParticipantId,
-        participantId 
+        participantId
       };
     }
     isError = true;
   });
-  return !isError ? 
-    (mappedExclusions as CreateExclusionRequestDto[]) : 
-    'There was an error when creating exclusions'; 
+  return !isError ?
+    (mappedExclusions as CreateExclusionRequestDto[]) :
+    'There was an error when creating exclusions';
 };
 
 export const createExclusions = async (
-  exclusions: CreateExclusionFromEventRequest[], 
-  createdParticipants: CreateExclusionsFromParticipantDto[], 
+  exclusions: CreateExclusionFromEventRequest[],
+  createdParticipants: CreateExclusionsFromParticipantDto[],
   eventId: string
 ) => {
   const exclusionsCreateRequests = mapToExclusionRequest(exclusions, createdParticipants, eventId);
@@ -91,4 +82,36 @@ export const createExclusions = async (
     return;
   }
   return exclusionsCreateRequests;
+};
+
+const getMappedExclusions = (exclusions: ExclusionDbRecord[], participants: GetParticipantForEventResponse[]): GetEventResponse['exclusions'] => {
+  return exclusions.map((ex) => {
+    const { id, eventId, ...rest } = toApiSchema<ExclusionDbRecord>(ex);
+    return rest;
+  }).map((exclusion) => {
+    const participant = participants.find(p => p.id === exclusion.participantId);
+    const excludedParticipant = participants.find(p => p.id === exclusion.excludedParticipantId);
+    return {
+      ...exclusion,
+      participantName: participant?.name || '',
+      excludedParticipantName: excludedParticipant?.name || '',
+    }
+  });
+};
+
+export const getEventData = async (eventId: string, eventRow: EventDbRecord, joinCode: string): Promise<GetEventResponse> => {
+  const participants = await participantsTable().where({ event_id: eventId });
+  const exclusions = await exclusionsTable().where({ event_id: eventId });
+  const mappedParticipants = participants.map((p) => {
+      const { eventId, ...rest } = toApiSchema<ParticipantDbRecord>(p);
+      return rest;
+  });
+  const mappedExclusions = getMappedExclusions(exclusions, mappedParticipants);
+
+  return {
+    ...toApiSchema<EventDbRecord>(eventRow),
+    participants: mappedParticipants,
+    currentParticipant: mappedParticipants.find(p => p.joinCode === joinCode)!,
+    exclusions: mappedExclusions,
+  };
 };

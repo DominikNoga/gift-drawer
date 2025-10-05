@@ -1,15 +1,15 @@
 import './BasicDataForm.scss';
 import { useContext, useState, type FormEvent } from 'react';
-import type { CreateEventRequestDto } from '@gd/types/src/models/events.model';
+import type { CreateEventRequest } from '@gd/types/src/api/api.events.types';
 import Button from '@gd/shared/components/buttons/Button/Button';
-import Input from '../Input/Input';
+import Input from '@gd/shared/components/Input/Input';
 import { InterfaceIcons, UserIcons } from '@gd/shared/constants/icons';
 import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
 
 
 export default function BasicDataForm() {
   const { handleAddBasicData, createEventData } = useContext(CreateEventContext);
-  const [form, setForm] = useState<CreateEventRequestDto>(createEventData);
+  const [form, setForm] = useState<CreateEventRequest>(createEventData);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

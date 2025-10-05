@@ -1,7 +1,7 @@
-import type { CreateEventRequestDto } from '@gd/types/src/models/events.model';
+import type { CreateEventRequest } from '@gd/types/src/api/api.events.types';
 import './BasicInfoSection.scss';
 
-type Props = Omit<CreateEventRequestDto, 'exclusions' | 'participants'>
+type Props = Omit<CreateEventRequest, 'exclusions' | 'participants'>
 
 export default function BasicInfoSection({ name, organizerName, exchangeDate, giftBudget, description, location }: Props) {
   return (

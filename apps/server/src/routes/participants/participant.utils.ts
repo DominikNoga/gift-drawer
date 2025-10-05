@@ -2,6 +2,11 @@ import { toDbSchema } from "../../utils/change-case.utils";
 import { generateId } from "../../utils/generate-id.utils";
 import { CreateParticipantRequestDto, ParticipantDbRecord } from "@gd/types/src/models/participants.model";
 import { participantsTable } from "./participants.db";
+import crypto from 'crypto';
+
+function generateJoinCode() {
+  return crypto.randomBytes(16).toString('base64url'); 
+}
 
 export const getParticipantRow = (createParticipantRequest: CreateParticipantRequestDto): ParticipantDbRecord => {
   const id = generateId();
@@ -9,12 +14,15 @@ export const getParticipantRow = (createParticipantRequest: CreateParticipantReq
   return toDbSchema({
     ...createParticipantRequest,
     id,
-    password: null,
+    joinCode: generateJoinCode(),
   });
 };
 
 export const createParticipantRecord = async (createParticipantRequest: CreateParticipantRequestDto) => {
   const participantRow = getParticipantRow(createParticipantRequest);
   await participantsTable().insert(participantRow);
-  return participantRow.id;
+  return {
+    id: participantRow.id,
+    joinCode: participantRow.join_code,
+  };
 };

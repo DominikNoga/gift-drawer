@@ -1,6 +1,6 @@
 import { CREATE_EVENT_ACTIONS, CREATE_EVENT_STEPS } from "../../../../constants/constants";
 import type { CurrentStep } from "../../../../types/types";
-import { cacheFormValue } from "../../../../utils/data/event-data.utils";
+import { cacheFormValue } from "../../../../utils/create-event.utils";
 import type { CreateEventAction, CreateEventContextType } from "../../types/types";
 
 export const createEventReducer = (state: CreateEventContextType, action: CreateEventAction) => {
