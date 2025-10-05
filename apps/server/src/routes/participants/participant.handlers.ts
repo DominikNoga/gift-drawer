@@ -4,7 +4,6 @@ import { HTTP_STATUS } from '../../constants/status-codes';
 import { getParticipantRow } from './participant.utils';
 import { participantsTable } from './participants.db';
 
-
 export const createParticipant = async (request: Request<{}, {}, CreateParticipantRequestDto>, response: Response) => {
   const parseResult = ParticipantCreateSchema.safeParse(request.body);
 

@@ -3,3 +3,7 @@ export type GetParticipantForEventResponse = {
   name: string;
   joinCode: string;
 };
+
+export type DrawAssignmentsRequest = {
+  eventId: string;
+};
