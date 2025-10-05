@@ -1,12 +1,12 @@
-import type { Event } from '@gd/types/src/models/events.model';
 import './MyEventsCard.scss';
 import Card from '@gd/shared/components/Card/Card';
 import { ChristmasIcons, InterfaceIcons, NavigationIcons, UserIcons } from '@gd/shared/constants/icons';
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from '@gd/shared/utils/date.utils';
+import type { CachedEvent } from '@gd/shared/types/events.types';
 
 type Props = {
-  event: Event;
+  event: CachedEvent;
 };
 
 export default function MyEventsCard({ event }: Props) {
@@ -17,7 +17,7 @@ export default function MyEventsCard({ event }: Props) {
   }
 
   function handleCardClick() {
-    navigate(`/event/${event.id}`);
+    navigate(`/event/${event.id}/${event.participantJoinCode}`);
   }
 
   return (
@@ -32,7 +32,7 @@ export default function MyEventsCard({ event }: Props) {
       <section className='my-events-card-info'>
         <span className='my-events-card-info-item'>
           <UserIcons.User className='my-events-card-info-icon-green' />
-          {event.participants.length} Participants
+          {event.participantsCount} Participants
         </span>
         <span className='my-events-card-info-item'>
           <InterfaceIcons.Calendar className='my-events-card-info-icon-blue' />
