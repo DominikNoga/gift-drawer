@@ -4,6 +4,7 @@ import './MainSection.scss';
 import type { Event } from '@gd/types/src/models/events.model';
 import ParticipantsTab from './components/TabView/components/ParticipantsTab/ParticipantsTab';
 import OrganizerTab from './components/TabView/components/OrganizerTab/OrganizerTab';
+import YourAssignmentTab from './components/TabView/components/YourAssignmentTab/YourAssignmentTab';
 
 type Props = {
   event: Event;
@@ -16,9 +17,16 @@ export default function MainSection({ event }: Props) {
     setActiveTab(tabIndex);
   };
 
+  const getUserAssignment = (): string | undefined => {
+    if (event.currentParticipant.drawnParticipantId) {
+      return event.participants.find(p => p.id === event.currentParticipant.drawnParticipantId)?.name;
+    }
+    return undefined;
+  }
+
   const tabs = [
     <ParticipantsTab key='participants' participants={event.participants} />,
-    <h1 key='assignments'>Assignments</h1>,
+    <YourAssignmentTab key='assignments' assignment={getUserAssignment()} />,
     <h1 key='wishlist'>Wishlist</h1>,
     <OrganizerTab key='organizer' eventId={event.id} />
   ];

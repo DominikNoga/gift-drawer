@@ -103,7 +103,12 @@ export const drawAssignments = async (request: Request<{}, DrawAssignmentsReques
     });
   }
 
-  console.log(drawingResult.assignment);
+  const { assignments } = drawingResult;
+  console.log(assignments);
+  await Promise.all(assignments.map(a => participantsTable()
+    .where({ id: a.giverId })
+    .update({ drawn_participant_id: a.receiverId })));
+
   return response.status(HTTP_STATUS.OK).json({ drawingResult });
 };
 
