@@ -1,4 +1,4 @@
-import { getEventIdByJoinCode } from "@gd/shared/services/events.service";
+import { getEventIdByJoinCode } from "@gd/shared/services/events-services/events.service";
 
 export const createEvent = () => {
 

@@ -19,7 +19,7 @@ export default function Header({ event }: Props) {
     <header className='event-page-header'>
       <BackButton onClick={onBackClick} isDisabled={false} filled />
       <main>
-        <span className='event-page-header-title'>{event.name}</span>
+        <span className='event-page-header-title'>Hello {event.currentParticipant.name} 👋</span>
         <section className='event-page-header-details'>
           <p>
             Organized by {event.organizerName}

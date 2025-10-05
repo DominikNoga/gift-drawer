@@ -8,18 +8,22 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES_NAMES } from '../../../../routes';
 import Input from '@gd/shared/components/Input/Input';
 import { joinEvent } from './EventCardsSection.utils';
+import { useState } from 'react';
 
 export default function EventCardsSection() {
   const navigate = useNavigate();
+  const [joinCode, setJoinCode] = useState<string>('');
 
   const handleJoinEvent = async () => {
-    const joinCodeInput = document.getElementById('join-code-input') as HTMLInputElement;
-    const joinCode = joinCodeInput.value;
     if (!joinCode) return;
     const eventId = await joinEvent(joinCode);
     if (eventId) {
       navigate(`${ROUTES_NAMES.EVENT}/${eventId}/${joinCode}`);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setJoinCode(e.target.value);
   };
 
   return (
@@ -56,6 +60,9 @@ export default function EventCardsSection() {
           id='join-code-input'
           className='input-field-green event-card-input'
           placeholder='Enter a join code'
+          value={joinCode}
+          onChange={handleChange}
+          minLength={22}
         />
         <Button
           type="button"

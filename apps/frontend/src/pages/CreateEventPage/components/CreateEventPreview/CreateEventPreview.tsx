@@ -2,7 +2,7 @@ import { useContext, type FormEvent } from 'react';
 import './CreateEventPreview.scss';
 import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
 import { clearFormDataCache } from '../../utils/create-event.utils';
-import { createEvent } from '@gd/shared/services/events.service';
+import { createEvent } from '@gd/shared/services/events-services/events.service';
 import Button from '@gd/shared/components/buttons/Button/Button';
 import BasicInfoSection from './BasicInfoSection/BasicInfoSection';
 import ParticipantsSection from './ParticipantsSection/ParticipantsSection';

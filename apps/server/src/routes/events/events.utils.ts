@@ -3,9 +3,10 @@ import { generateId } from "../../utils/generate-id.utils";
 import { CreateExclusionFromEventRequest, CreateExclusionRequestDto, ExclusionDbRecord } from "@gd/types/src/models/exclusions.model";
 import { createExclusionRecord } from "../exclusions/exclusions.utils";
 import { createParticipantRecord } from "../participants/participant.utils";
-import { CreateExclusionsFromParticipantDto, ParticipantDbRecord, ParticipantUI } from "@gd/types/src/models/participants.model";
+import { CreateExclusionsFromParticipantDto, ParticipantDbRecord } from "@gd/types/src/models/participants.model";
 import { EventDbRecord } from "@gd/types/src/models/events.model";
-import { CreateEventRequestWithoutRelations } from "@gd/types/src/api/api.events.types";
+import { CreateEventRequestWithoutRelations, GetEventResponse } from "@gd/types/src/api/api.events.types";
+import { GetParticipantForEventResponse } from "@gd/types/src/api/api.participants.types";
 import { participantsTable } from "../participants/participants.db";
 import { exclusionsTable } from "../exclusions/exclusions.db";
 
@@ -22,7 +23,7 @@ export const getEventRow = (createEventRequest: CreateEventRequestWithoutRelatio
 };
 
 export const createParticipants = async (participantsNames: string[], eventId: string) => {
-  const createdParticipants: ParticipantUI[] = [];
+  const createdParticipants: GetParticipantForEventResponse[] = [];
   for (const participantName of participantsNames) {
     try {
       const { id: participantId, joinCode } = await createParticipantRecord({
@@ -83,16 +84,34 @@ export const createExclusions = async (
   return exclusionsCreateRequests;
 };
 
-export const getEventData = async (eventId: string, eventRow: EventDbRecord) => {
+const getMappedExclusions = (exclusions: ExclusionDbRecord[], participants: GetParticipantForEventResponse[]): GetEventResponse['exclusions'] => {
+  return exclusions.map((ex) => {
+    const { id, eventId, ...rest } = toApiSchema<ExclusionDbRecord>(ex);
+    return rest;
+  }).map((exclusion) => {
+    const participant = participants.find(p => p.id === exclusion.participantId);
+    const excludedParticipant = participants.find(p => p.id === exclusion.excludedParticipantId);
+    return {
+      ...exclusion,
+      participantName: participant?.name || '',
+      excludedParticipantName: excludedParticipant?.name || '',
+    }
+  });
+};
+
+export const getEventData = async (eventId: string, eventRow: EventDbRecord, joinCode: string): Promise<GetEventResponse> => {
   const participants = await participantsTable().where({ event_id: eventId });
   const exclusions = await exclusionsTable().where({ event_id: eventId });
+  const mappedParticipants = participants.map((p) => {
+      const { eventId, ...rest } = toApiSchema<ParticipantDbRecord>(p);
+      return rest;
+  });
+  const mappedExclusions = getMappedExclusions(exclusions, mappedParticipants);
 
   return {
     ...toApiSchema<EventDbRecord>(eventRow),
-    participants: participants.map(toApiSchema<ParticipantDbRecord>),
-    exclusions: exclusions.map((ex) => {
-      const { id, eventId, ...rest } = toApiSchema<ExclusionDbRecord>(ex);
-      return rest;
-    }),
+    participants: mappedParticipants,
+    currentParticipant: mappedParticipants.find(p => p.joinCode === joinCode)!,
+    exclusions: mappedExclusions,
   };
 };
