@@ -4,7 +4,7 @@ import React, { useRef, type ReactElement } from 'react';
 import { isDateInput } from './utils/Input.utils';
 
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> & {
+type Props = React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> & {
   isTextarea?: boolean;
   classes?: string;
   icon?: ReactElement;
@@ -16,7 +16,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEleme
   id: string;
 });
 
-export default function Input({ label, isTextarea = false, classes = '', icon, ...props }: InputProps) {
+export default function Input({ label, isTextarea = false, classes = '', icon, ...props }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -30,11 +30,13 @@ export default function Input({ label, isTextarea = false, classes = '', icon, .
 
   return (
     <div className="input-group">
-      <label className='input-group-label' htmlFor={props.id}>
-          {icon}
-          {label}
-          {label  ? (props.required ? ' *' : ' (Optional)') : ''}
-      </label>
+      {label &&
+        <label className='input-group-label' htmlFor={props.id}>
+            {icon}
+            {label}
+            {label  ? (props.required ? ' *' : ' (Optional)') : ''}
+        </label>
+      }
       {isTextarea ? (
         <textarea
           ref={textareaRef}

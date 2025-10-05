@@ -10,8 +10,8 @@ export const api = axios.create({
 });
 
 
-export const get = async <T>(url: string, params?: Record<string, unknown>): Promise<T> => {
-  const response = await api.get<T>(url, { params });
+export const get = async <ResponseType>(url: string, params?: Record<string, unknown>): Promise<ResponseType> => {
+  const response = await api.get<ResponseType>(url, { params });
   return response.data;
 };
 

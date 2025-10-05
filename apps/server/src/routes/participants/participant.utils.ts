@@ -21,5 +21,8 @@ export const getParticipantRow = (createParticipantRequest: CreateParticipantReq
 export const createParticipantRecord = async (createParticipantRequest: CreateParticipantRequestDto) => {
   const participantRow = getParticipantRow(createParticipantRequest);
   await participantsTable().insert(participantRow);
-  return participantRow.id;
+  return {
+    id: participantRow.id,
+    joinCode: participantRow.join_code,
+  };
 };

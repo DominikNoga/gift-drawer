@@ -5,6 +5,10 @@
     font-size: $font-size-xl;
     @include reset-spacing();
   }
+
+  .input-group {
+    width: 100%;
+  }
   
   &-description {
     text-align: center;

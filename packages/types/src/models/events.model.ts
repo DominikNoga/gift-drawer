@@ -39,8 +39,4 @@ export const EventDbSchema = EventSchema.omit({
 
 export type Event = z.infer<typeof EventSchema>;
 
-export type CreateEventRequestDto = z.infer<typeof EventCreateSchema>;
-export type CreateEventRequestWithoutRelations = Omit<CreateEventRequestDto, 'participants' | 'exclusions'>;
-export type CreateEventDto = Omit<Event, 'participants' | 'exclusions'>;
-
 export type EventDbRecord = SnakeCaseKeys<z.infer<typeof EventDbSchema>>;

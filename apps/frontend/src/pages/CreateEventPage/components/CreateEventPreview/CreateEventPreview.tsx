@@ -1,7 +1,8 @@
 import { useContext, type FormEvent } from 'react';
 import './CreateEventPreview.scss';
 import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
-import { clearFormDataCache, createEvent } from '../../utils/data/event-data.utils';
+import { clearFormDataCache } from '../../utils/create-event.utils';
+import { createEvent } from '@gd/shared/services/events.service';
 import Button from '@gd/shared/components/buttons/Button/Button';
 import BasicInfoSection from './BasicInfoSection/BasicInfoSection';
 import ParticipantsSection from './ParticipantsSection/ParticipantsSection';
@@ -15,9 +16,9 @@ export default function CreateEventPreview() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const { id } = await createEvent(createEventData);
+      const { id, organizerCode } = await createEvent(createEventData);
       clearFormDataCache();
-      navigate(`/event/${id}`);
+      navigate(`/event/${id}/${organizerCode}`);
     } catch (err) {
       console.error(err);
     }

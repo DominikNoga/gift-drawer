@@ -11,7 +11,7 @@ export default function MyEventsSection() {
         <NavigationIcons.Search className='my-events-section-title-icon' /> My Events
       </span>
       { error && <p className='my-events-section-error'>{ error }</p> }
-      <MyEventsList events={events || []} />
+      <MyEventsList events={[]} />
     </section>
   );
 }
