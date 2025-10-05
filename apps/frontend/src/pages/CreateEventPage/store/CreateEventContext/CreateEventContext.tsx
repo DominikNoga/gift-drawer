@@ -4,7 +4,7 @@ import type { AddParticipantsPayload, BasicInfoPayload, CreateEventContextType, 
 import { createEventReducer } from "./reducers/create-event/create-event-reducer";
 import { INITIAL_CREATE_EVENT_STATE } from "./constants/constants";
 import { CREATE_EVENT_ACTIONS } from "../../constants/constants";
-import { getInitialFormValue } from "../../utils/data/event-data.utils";
+import { getInitialFormValue } from "../../utils/create-event.utils";
 
 export const CreateEventContext = createContext<CreateEventContextType>(INITIAL_CREATE_EVENT_STATE);
 

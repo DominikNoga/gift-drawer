@@ -1,9 +1,9 @@
-import type { Event } from '@gd/shared/types';
 import './MyEventsList.scss';
 import MyEventsCard from '../MyEventsCard/MyEventsCard';
+import type { CachedEvent } from '@gd/shared/types/events.types';
 
 type MyEventsListProps = {
-  events: Event[];
+  events: CachedEvent[];
 };
 
 export default function MyEventsList({events = []}: MyEventsListProps) {

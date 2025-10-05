@@ -19,7 +19,6 @@
     border: none;
     padding: $input-padding;
     border-radius: $border-radius-sm;
-    // background-color: $gray-100;
     outline: none;
     border: $border-color-medium 2px solid;
     transition: border-color $transition-base;
@@ -45,11 +44,19 @@
 
   .input-placeholder-no-label {
     @extend .input-placeholder;
-    top: calc(50% + $input-padding-top*0.5);
+    top: calc(50% + $input-padding-top*0.1);
   }
 
   .input-field:focus {
     border-color: $primary;
+  }
+
+  .input-field-green {
+    @extend .input-field;
+  }
+
+  .input-field-green:focus {
+    border-color: $green-600;
   }
 
   .input-field:focus + .input-placeholder {

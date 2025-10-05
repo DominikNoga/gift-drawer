@@ -16,20 +16,21 @@ export const EventSchema = z.object({
   exchangeDate: z.string()
     .optional(),
   isReady: z.boolean(),
-  joinCode: z.string().length(8),
   createdAt: z.string(),
-  participants: z.array(ParticipantSchema.pick({name: true})),
+  participants: z.array(ParticipantSchema.pick({name: true, id: true, joinCode: true})),
   exclusions: z.array(z.object({
     participantName: z.string(),
     excludedParticipantName: z.string(),
   })),
+  currentParticipant: ParticipantSchema.pick({ name: true, id: true, joinCode: true }),
 });
 
 export const EventCreateSchema = EventSchema.omit({
   createdAt: true,
   id: true,
-  joinCode: true,
   isReady: true,
+}).extend({
+  participants: z.array(ParticipantSchema.pick({ name: true })),
 });
 
 export const EventDbSchema = EventSchema.omit({
@@ -38,9 +39,5 @@ export const EventDbSchema = EventSchema.omit({
 })
 
 export type Event = z.infer<typeof EventSchema>;
-
-export type CreateEventRequestDto = z.infer<typeof EventCreateSchema>;
-export type CreateEventRequestWithoutRelations = Omit<CreateEventRequestDto, 'participants' | 'exclusions'>;
-export type CreateEventDto = Omit<Event, 'participants' | 'exclusions'>;
 
 export type EventDbRecord = SnakeCaseKeys<z.infer<typeof EventDbSchema>>;

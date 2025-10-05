@@ -1,0 +1,6 @@
+.event-page {
+  padding: $spacing-4;
+  @include flex-layout(column, $gap: $spacing-10);
+  max-width: 900px;
+  margin: 0 auto;
+}

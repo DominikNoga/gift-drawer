@@ -6,9 +6,11 @@ type Props = {
   index: number;
   values: [string?, string?];
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>, index: number, input: 0 | 1) => void;
+  handleViceVersaChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+  isViceVersaChecked?: boolean;
 };
 
-export default function CreateExclusionRow({ participants, index, values, handleChange }: Props) {
+export default function CreateExclusionRow({ participants, index, values, handleChange, handleViceVersaChange, isViceVersaChecked }: Props) {
 
   return (
     <>
@@ -25,7 +27,7 @@ export default function CreateExclusionRow({ participants, index, values, handle
           onChange={(e) => handleChange(e, index, 1)}
         />
         <div className="set-exclusions-vice-versa">
-          <input type='checkbox' id={`check-${index}`} />
+          <input type='checkbox' id={`check-${index}`} onChange={(e) => handleViceVersaChange(e, index)} checked={isViceVersaChecked} />
           <label htmlFor={`check-${index}`}>and vice versa</label>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useContext, useState, type FormEvent } from 'react';
 import './AddParticipantsForm.scss';
-import Input from '../Input/Input';
+import Input from '@gd/shared/components/Input/Input';
 import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
 import Button from '@gd/shared/components/buttons/Button/Button';
 import ButtonWithIcon from '@gd/shared/components/buttons/ButtonWithIcon/ButtonWithIcon';

@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import { SnakeCaseKeys } from '../utils/types.utils';
+import { type SnakeCaseKeys } from '../utils/types.utils';
 
 export const ParticipantSchema = z.object({
   id: z.string(),
   name: z.string(),
-  password: z.string().nullable(),
-  eventId: z.string()
+  eventId: z.string(),
+  joinCode: z.string(),
 });
 
 export const ParticipantCreateSchema = ParticipantSchema.pick({
@@ -14,6 +14,7 @@ export const ParticipantCreateSchema = ParticipantSchema.pick({
 })
 
 export type Participant = z.infer<typeof ParticipantSchema>;
+export type ParticipantUI = Pick<Participant, 'name' | 'id' | 'joinCode'>;
 export type CreateParticipantRequestDto = z.infer<typeof ParticipantCreateSchema>;
 export type ParticipantDbRecord = SnakeCaseKeys<Participant>;
 export type CreateExclusionsFromParticipantDto = Pick<Participant, 'id' | 'name'>;
