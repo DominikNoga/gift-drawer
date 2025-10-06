@@ -1,0 +1,19 @@
+.draw-names-info {
+  color: $text-secondary;
+  text-align: center;
+}
+
+.draw-assignments-button {
+  padding: $spacing-4;
+  color: white;
+  border: none;
+  background: linear-gradient(to right, $red-500, $red-700);
+  border-radius: $border-radius-lg;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  transition: $transition-shadow, scale $transition-base;
+  @include hover-effect() {
+    box-shadow: $shadow-lg;
+    scale: 1.1;
+  }
+}
