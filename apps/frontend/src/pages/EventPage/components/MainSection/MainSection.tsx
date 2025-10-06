@@ -3,12 +3,12 @@ import TabView from './components/TabView/TabView';
 import './MainSection.scss';
 import type { Event } from '@gd/types/src/models/events.model';
 import ParticipantsTab from './components/TabView/components/ParticipantsTab/ParticipantsTab';
-import OrganizerTab from './components/TabView/components/OrganizerTab/OrganizerTab';
+import DrawNamesTab from './components/TabView/components/DrawNamesTab/DrawNamesTab';
 import YourAssignmentTab from './components/TabView/components/YourAssignmentTab/YourAssignmentTab';
 
 type Props = {
   event: Event;
-}
+};
 
 export default function MainSection({ event }: Props) {
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -22,13 +22,13 @@ export default function MainSection({ event }: Props) {
       return event.participants.find(p => p.id === event.currentParticipant.drawnParticipantId)?.name;
     }
     return undefined;
-  }
+  };
 
   const tabs = [
     <ParticipantsTab key='participants' participants={event.participants} />,
     <YourAssignmentTab key='assignments' assignment={getUserAssignment()} />,
     <h1 key='wishlist'>Wishlist</h1>,
-    <OrganizerTab key='organizer' eventId={event.id} />
+    <DrawNamesTab key='organizer' eventId={event.id} />
   ];
 
   return (
