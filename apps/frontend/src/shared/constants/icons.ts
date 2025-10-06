@@ -14,7 +14,7 @@ import {
   Copy,
   Search,
   Settings,
-  
+  Heart,
   // User & People
   User,
   Users,
@@ -88,6 +88,8 @@ export const CommunicationIcons = {
 export const ChristmasIcons = {
   Gift: Gift,
   Wishlist: ListChecks,
+  Shuffle: Shuffle,
+  Heart: Heart,
 } as const;
 
 
@@ -116,10 +118,3 @@ export const StatusIcons = {
   Error: AlertTriangle,
 } as const;
 
-// =============================================================================
-// ACTIONS & TOOLS
-// =============================================================================
-
-export const ActionIcons = {
-  Shuffle: Shuffle,
-} as const;
