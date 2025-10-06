@@ -88,6 +88,7 @@ export const CommunicationIcons = {
 export const ChristmasIcons = {
   Gift: Gift,
   Wishlist: ListChecks,
+  Shuffle: Shuffle,
 } as const;
 
 
@@ -116,10 +117,3 @@ export const StatusIcons = {
   Error: AlertTriangle,
 } as const;
 
-// =============================================================================
-// ACTIONS & TOOLS
-// =============================================================================
-
-export const ActionIcons = {
-  Shuffle: Shuffle,
-} as const;
