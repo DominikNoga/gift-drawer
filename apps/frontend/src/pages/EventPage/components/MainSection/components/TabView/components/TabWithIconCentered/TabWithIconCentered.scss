@@ -1,0 +1,29 @@
+.tab-content-wrapper {
+  @include flex-layout(column, center);
+  width: 100%;
+  div {
+    width: min(100%, 500px);
+  }
+}
+
+.tab-content {
+  @include flex-layout(column, center);
+
+  &-header {
+    @include flex-layout(column, center);
+
+    &-icon {
+      color: $gray-400;
+      @include flex-layout(column, center);
+
+      svg {
+        @include square(5rem);
+      }
+    }
+
+    &-title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+    }
+  }
+}

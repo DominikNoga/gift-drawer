@@ -5,5 +5,5 @@ export const tabViewOptions: Omit<HeaderProps, 'onClick'>[] = [
   { isActive: true, title: 'Participants', icon: <UserIcons.Users /> },
   { isActive: false, title: 'Your assignment', icon: <ChristmasIcons.Gift /> },
   { isActive: false, title: 'Your wishlist', icon: <ChristmasIcons.Wishlist /> },
-  { isActive: false, title: 'Organizer section', icon: <UserIcons.User /> },
+  { isActive: false, title: 'Draw names', icon: <ChristmasIcons.Shuffle /> },
 ];
