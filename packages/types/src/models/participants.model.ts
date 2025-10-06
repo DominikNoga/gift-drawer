@@ -14,11 +14,6 @@ export const ParticipantCreateSchema = ParticipantSchema.pick({
   eventId: true,
 });
 
-export type WishlistItem = {
-  name: string;
-  link?: string;
-};
-
 export type Participant = z.infer<typeof ParticipantSchema>;
 export type ParticipantUI = Pick<Participant, 'name' | 'id' | 'joinCode'>;
 export type CreateParticipantRequestDto = z.infer<typeof ParticipantCreateSchema>;
