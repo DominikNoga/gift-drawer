@@ -1,0 +1,16 @@
+.wishlist-tab-content {
+  @include flex-layout(column);
+  header {
+    @include flex-layout(row, center, space-between);
+    
+    .add-item-button {
+      font-weight: $font-weight-medium;
+      font-size: $font-size-sm;
+    }
+
+    span {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
