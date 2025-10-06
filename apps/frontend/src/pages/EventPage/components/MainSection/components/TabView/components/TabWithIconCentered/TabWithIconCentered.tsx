@@ -4,9 +4,10 @@ type Props = {
   title: string;
   icon: React.ReactNode;
   children: React.ReactNode;
+  subtitle?: string;
 }
 
-export default function TabWithIconCentered({ title, icon, children }: Props) {
+export default function TabWithIconCentered({ title, icon, children, subtitle }: Props) {
   return (
     <div className='tab-content-wrapper'>
       <div className="tab-content">
@@ -16,6 +17,9 @@ export default function TabWithIconCentered({ title, icon, children }: Props) {
           </div>
           <span className='tab-content-header-title'>{title}</span>
         </div>
+        { 
+          subtitle && <span className='tab-content-subtitle'>{subtitle}</span>
+        }
         {
           children
         }
