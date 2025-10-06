@@ -3,10 +3,14 @@ import './AddItemForm.scss';
 import Input from '@gd/shared/components/Input/Input';
 import Button from '@gd/shared/components/buttons/Button/Button';
 import { useState } from 'react';
-import type { WishlistItem } from '@gd/types/src/models/participants.model';
 
 type Props = {
   onCancel: () => void;
+}
+
+type WishlistItem = {
+  name: string;
+  link?: string;
 }
 
 export default function AddItemForm({ onCancel }: Props) {

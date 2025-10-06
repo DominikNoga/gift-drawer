@@ -1,3 +1,5 @@
+import { type WishlistItem } from '../models/wish.model'
+
 export type GetParticipantForEventResponse = {
   id: string;
   name: string;
@@ -6,4 +8,9 @@ export type GetParticipantForEventResponse = {
 
 export type DrawAssignmentsRequest = {
   eventId: string;
+};
+
+export type EditParticipantWishlistRequest = {
+  participantId: string;
+  wishlistItems: WishlistItem[];
 };
