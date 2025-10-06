@@ -2,7 +2,7 @@
   @include flex-layout(column, center);
   width: 100%;
   div {
-    width: min(100%, 500px);
+    width: min(100%, 600px);
   }
 }
 
@@ -26,4 +26,8 @@
       font-weight: $font-weight-bold;
     }
   }
+  &-subtitle {
+      color: $text-secondary;
+      text-align: center;
+    }
 }

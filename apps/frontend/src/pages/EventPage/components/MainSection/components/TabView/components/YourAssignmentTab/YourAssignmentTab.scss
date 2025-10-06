@@ -8,7 +8,8 @@
 }
 
 .your-assignment-tab-result {
-  padding: $spacing-4 $spacing-32;
+  width: min(100%, 300px) !important;
+  padding: $spacing-2 $spacing-24;
   background: linear-gradient(to right, $red-500, $red-700);
   font-size: $font-size-xl;
   font-weight: $font-weight-bold;

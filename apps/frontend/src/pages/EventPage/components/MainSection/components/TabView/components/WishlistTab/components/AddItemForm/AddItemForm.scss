@@ -1,0 +1,11 @@
+.add-item-form {
+  @include flex-layout(column);
+  padding: $spacing-4;
+  background-color: $gray-50;
+  border: dashed 2px $gray-300;
+  border-radius: $border-radius-lg;
+
+  &-buttons {
+    @include flex-layout(row);
+  }
+}

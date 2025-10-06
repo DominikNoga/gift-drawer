@@ -5,6 +5,7 @@ import type { Event } from '@gd/types/src/models/events.model';
 import ParticipantsTab from './components/TabView/components/ParticipantsTab/ParticipantsTab';
 import DrawNamesTab from './components/TabView/components/DrawNamesTab/DrawNamesTab';
 import YourAssignmentTab from './components/TabView/components/YourAssignmentTab/YourAssignmentTab';
+import WishlistTab from './components/TabView/components/WishlistTab/WishlistTab';
 
 type Props = {
   event: Event;
@@ -27,7 +28,7 @@ export default function MainSection({ event }: Props) {
   const tabs = [
     <ParticipantsTab key='participants' participants={event.participants} />,
     <YourAssignmentTab key='assignments' assignment={getUserAssignment()} />,
-    <h1 key='wishlist'>Wishlist</h1>,
+    <WishlistTab key='wishlist' />,
     <DrawNamesTab key='organizer' eventId={event.id} />
   ];
 

@@ -14,7 +14,7 @@ import {
   Copy,
   Search,
   Settings,
-  
+  Heart,
   // User & People
   User,
   Users,
@@ -89,6 +89,7 @@ export const ChristmasIcons = {
   Gift: Gift,
   Wishlist: ListChecks,
   Shuffle: Shuffle,
+  Heart: Heart,
 } as const;
 
 
