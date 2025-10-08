@@ -13,7 +13,6 @@ import { DrawAssignmentsRequest, EditParticipantWishlistRequest } from '@gd/type
 
 export const getEvent = async (request: Request<GetEventRequest>, response: Response<ApiResponse<GetEventResponse>>) => {
   const { id, joinCode } = request.params;
-  console.log(request.params);
   const eventRow = await eventsTable()
     .where({ id })
     .first();
