@@ -28,7 +28,7 @@ export default function MainSection({ event }: Props) {
   const tabs = [
     <ParticipantsTab key='participants' participants={event.participants} />,
     <YourAssignmentTab key='assignments' assignment={getUserAssignment()} />,
-    <WishlistTab key='wishlist' />,
+    <WishlistTab key='wishlist' currentParticipantId={event.currentParticipant.id} />,
     <DrawNamesTab key='organizer' eventId={event.id} />
   ];
 
