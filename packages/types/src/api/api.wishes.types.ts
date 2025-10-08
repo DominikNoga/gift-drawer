@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { WishlistItemCreateSchema } from "../models/wish.model";
+
 export type WishlistModifyParam = {
   id: string;
 };
@@ -11,8 +14,4 @@ export type EditWishlistItemRequest = {
   link?: string;
 };
 
-export type CreateWishlistItemRequest = {
-  name: string;
-  link?: string;
-  participantId: string;
-};
+export type CreateWishlistItemRequest = z.infer<typeof WishlistItemCreateSchema>;

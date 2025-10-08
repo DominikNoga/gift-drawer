@@ -8,5 +8,7 @@ export const WishlistItemSchema = z.object({
   participantId: z.string(),
 });
 
+export const WishlistItemCreateSchema = WishlistItemSchema.omit({ id: true });
+
 export type WishlistItem = z.infer<typeof WishlistItemSchema>;
 export type WishlistItemDbRecord = SnakeCaseKeys<WishlistItem>;

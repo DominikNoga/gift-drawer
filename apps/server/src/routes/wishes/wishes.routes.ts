@@ -1,16 +1,16 @@
 import { Router } from 'express'
 import { 
-  createWishlistItem,
+  addWishlistItem,
   getParticipantWishlist,
   editWishlistItem,
   deleteWishlistItem
 } from './wishes.handlers';
 
-const eventsRouter = Router();
+const wishesRouter = Router();
 
-eventsRouter.post('/', createWishlistItem);
-eventsRouter.get('/:participantId', getParticipantWishlist);
-eventsRouter.put('/:id', editWishlistItem);
-eventsRouter.delete('/:id', deleteWishlistItem);
+wishesRouter.post('/', addWishlistItem);
+wishesRouter.get('/:participantId', getParticipantWishlist);
+wishesRouter.put('/:id', editWishlistItem);
+wishesRouter.delete('/:id', deleteWishlistItem);
 
-export default eventsRouter;
+export default wishesRouter;
