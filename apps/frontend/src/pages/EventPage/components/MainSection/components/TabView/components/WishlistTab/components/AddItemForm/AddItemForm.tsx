@@ -3,17 +3,35 @@ import './AddItemForm.scss';
 import Input from '@gd/shared/components/Input/Input';
 import Button from '@gd/shared/components/buttons/Button/Button';
 import { useState } from 'react';
-import type { WishlistItem } from '@gd/types/src/models/participants.model';
+import { addWishlistItem } from '@gd/shared/services/wishes-services/wishes.service';
 
 type Props = {
   onCancel: () => void;
+  currentParticipantId: string;
+  afterSubmit: () => void;
 }
 
-export default function AddItemForm({ onCancel }: Props) {
-  const [wishlistItem, setWishlistItem] = useState<WishlistItem>({ name: '', link: '' });
+type WishlistItem = {
+  name: string;
+  link?: string;
+}
 
-  const onSubmit = (e: React.FormEvent) => {
+export default function AddItemForm({ onCancel, currentParticipantId, afterSubmit }: Props) {
+  const [wishlistItem, setWishlistItem] = useState<WishlistItem>({ name: '' });
+
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      const result = await addWishlistItem({
+        participantId: currentParticipantId,
+        ...wishlistItem,
+      });
+      console.log('Wishlist item added:');
+      console.log(result);
+      afterSubmit();
+    } catch (error) {
+      console.error('Error adding wishlist item:', error);
+    }
   };
 
   return (

@@ -1,5 +1,10 @@
 import { Router } from 'express'
-import { createEvent, drawAssignments, getEvent, getEventIdByParticipantCode } from './events.handlers';
+import { 
+  createEvent, 
+  drawAssignments, 
+  getEvent, 
+  getEventIdByParticipantCode,
+} from './events.handlers';
 
 const eventsRouter = Router();
 

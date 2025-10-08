@@ -1,13 +1,11 @@
 .tab-content-wrapper {
   @include flex-layout(column, center);
   width: 100%;
-  div {
-    width: min(100%, 600px);
-  }
 }
 
 .tab-content {
   @include flex-layout(column, center);
+  width: 100%;
 
   &-header {
     @include flex-layout(column, center);

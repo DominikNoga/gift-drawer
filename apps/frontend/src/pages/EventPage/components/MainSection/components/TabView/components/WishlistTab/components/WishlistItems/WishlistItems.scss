@@ -1,0 +1,83 @@
+.wishlist-items {
+  @include flex-layout(column);
+  width: 100%;
+
+  .wishlist-item {
+    width: 100%;
+    @include flex-layout(row, center, flex-start);
+    border-radius: $border-radius-lg;
+    padding: $spacing-4;
+    border: 1px solid $gray-200;
+    box-shadow: $shadow-base;
+
+    svg {
+      @include square(2rem);
+    }
+
+    &-info {
+      @include flex-layout(column, flex-start, center, $gap: $spacing-2);
+    }
+
+    &-title {
+      font-size: $font-size-base;
+      font-weight: $font-weight-semibold;
+    }
+
+    &-link {
+      color: $blue-500;
+      text-decoration: none;
+      @include flex-layout(row, center, $gap: $spacing-1);
+      
+      svg {
+        @include square(1rem);
+      }
+
+      @include hover-effect() {
+        text-decoration: underline;
+      }
+    }
+
+    &-delete-btn {
+      background-color: transparent;
+      margin-left: auto;
+      border: none;
+      border-radius: $border-radius-base;
+      @include square(1.5rem);
+      color: $red-600;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      transition: $transition-colors;
+      will-change: background-color;
+
+      @include hover-effect() {
+        background-color: $red-100;
+      }
+    }
+  }
+}
+
+.empty-list-message {
+  @include flex-layout(column, center, center, 1rem);
+  background-color: $gray-50;
+  border: dashed 2px $gray-300;
+  border-radius: $border-radius-lg;
+  padding: $spacing-8;
+  color: $gray-500;
+
+  svg {
+    @include square(3rem);
+  }
+
+  h4 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-normal;
+  }
+
+  p {
+    color: $gray-400;
+    padding: 0;
+    margin: 0;
+    font-size: $font-size-base;
+  }
+}
