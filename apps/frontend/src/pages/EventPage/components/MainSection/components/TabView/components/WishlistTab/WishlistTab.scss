@@ -1,11 +1,13 @@
 .wishlist-tab-content {
+  margin-top: $spacing-4;
+  width: 100%;
   @include flex-layout(column);
   header {
     @include flex-layout(row, center, space-between);
     
     .add-item-button {
-      font-weight: $font-weight-medium;
-      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-base;
     }
 
     span {

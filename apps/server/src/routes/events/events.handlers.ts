@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, response, Response } from 'express';
 import { eventsTable } from './events.db';
 import { EventCreateSchema } from '@gd/types/src/models/events.model';
 import { EventIdResponse, GetEventByJoinCodeRequest, CreateEventResponse, CreateEventRequest, GetEventRequest, GetEventResponse } from '@gd/types/src/api/api.events.types';
@@ -9,11 +9,10 @@ import { createExclusions, createParticipants, getEventData, getEventRow } from 
 import { toApiSchema } from '../../utils/change-case.utils';
 import { drawSecretSanta } from '../../utils/drawing-logic.utils';
 import { exclusionsTable } from '../exclusions/exclusions.db';
-import { DrawAssignmentsRequest } from '@gd/types/src/api/api.participants.types';
+import { DrawAssignmentsRequest, EditParticipantWishlistRequest } from '@gd/types/src/api/api.participants.types';
 
 export const getEvent = async (request: Request<GetEventRequest>, response: Response<ApiResponse<GetEventResponse>>) => {
   const { id, joinCode } = request.params;
-  console.log(request.params);
   const eventRow = await eventsTable()
     .where({ id })
     .first();

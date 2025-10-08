@@ -25,6 +25,7 @@ import {
   
   // Christmas & Gifts
   Gift,
+  Star,
   
   // Interface Elements
   Calendar,
@@ -90,6 +91,7 @@ export const ChristmasIcons = {
   Wishlist: ListChecks,
   Shuffle: Shuffle,
   Heart: Heart,
+  Star: Star,
 } as const;
 
 

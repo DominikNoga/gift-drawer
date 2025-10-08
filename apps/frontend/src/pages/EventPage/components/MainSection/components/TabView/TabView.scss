@@ -2,6 +2,7 @@
   padding: 0;
 
   &-content {
-    padding: $spacing-4;
+    padding: $spacing-4 $spacing-8;
+    width: 100%;
   }
 }
