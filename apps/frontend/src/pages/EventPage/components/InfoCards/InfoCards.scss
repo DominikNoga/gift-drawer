@@ -1,4 +1,6 @@
 .event-page-info-cards {
   width: 100%;
-  @include flex-layout(row, center, space-between);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-4;
 }
