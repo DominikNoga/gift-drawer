@@ -7,7 +7,7 @@ type Props = {
 
 export default function TabViewHeader({ tabs }: Props) {
   return (
-    <header className='tab-view-header'>
+    <header className='tab-view-header' style={{ gridTemplateColumns: `repeat(${tabs.length}, 1fr)` }}>
       {tabs.map((tab) => (
         <div
           key={tab.title}
