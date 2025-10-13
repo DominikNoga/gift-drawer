@@ -12,8 +12,8 @@ export default function InfoCard({ value, label, icon }: Props) {
     <Card className="event-page-info-card">
       {icon}
       <div>
-        <span className="event-page-info-card-value">{value}</span>
         <span className="event-page-info-card-label">{label}</span>
+        <span className="event-page-info-card-value">{value}</span>
       </div>
     </Card>
   );

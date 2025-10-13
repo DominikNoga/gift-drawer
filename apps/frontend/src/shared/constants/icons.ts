@@ -32,6 +32,7 @@ import {
   DollarSign,
   Link as LinkIcon,
   QrCode,
+  MapPin,
   
   // Status & Feedback
   CheckCircle,
@@ -108,6 +109,7 @@ export const InterfaceIcons = {
   Remove: Minus,
   Preview: Eye,
   Copy: Copy,
+  Location: MapPin,
 } as const;
 
 // =============================================================================

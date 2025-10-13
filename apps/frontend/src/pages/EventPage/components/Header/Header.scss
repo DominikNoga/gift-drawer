@@ -8,14 +8,9 @@
       font-weight: 600;
     }
 
-    .event-page-header-details {
-      @include flex-layout(row, flex-start, center);
+    h4 {
       color: $text-secondary;
-      font-size: $font-size-sm;
-
-      p {
-        margin: 0;
-      }
+      font-weight: $font-weight-normal;
     }
   }
   .event-page-header-phase {
