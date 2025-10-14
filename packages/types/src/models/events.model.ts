@@ -5,7 +5,7 @@ import { ParticipantSchema } from './participants.model';
 export const EventSchema = z.object({
   id: z.string(),
   name: z.string().max(50),
-  description: z.string().max(250),
+  description: z.string(),
   organizerName: z.string().max(30),
   giftBudget: z.number()
     .min(1)
@@ -22,7 +22,6 @@ export const EventSchema = z.object({
     participantName: z.string(),
     excludedParticipantName: z.string(),
   })),
-  currentParticipant: ParticipantSchema.pick({ name: true, id: true, joinCode: true, drawnParticipantId: true }),
 });
 
 export const EventCreateSchema = EventSchema.omit({
