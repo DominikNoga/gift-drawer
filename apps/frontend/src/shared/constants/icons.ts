@@ -109,6 +109,7 @@ export const InterfaceIcons = {
   Remove: Minus,
   Preview: Eye,
   Copy: Copy,
+  Cancel: X,
   Location: MapPin,
 } as const;
 
