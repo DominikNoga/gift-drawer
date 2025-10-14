@@ -1,0 +1,46 @@
+.draw-names-modal-info {
+  @include flex-layout(column, center);
+
+  h3 {
+    padding: 0;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: $text-secondary;
+  }
+}
+
+.draw-names-modal-icon {
+  color: $primary;
+  @include flex-layout(column, center);
+
+  svg {
+    @include square(5rem);
+  }
+}
+
+.draw-names-modal-summary {
+  background-color: $gray-100;
+  padding: $spacing-4;
+  border-radius: $border-radius-lg;
+  h4 {
+    @include reset-spacing();
+  }
+
+  ul {
+    padding: 0 $spacing-4;
+    color: $text-secondary;
+    @include flex-layout(column, flex-start, $gap: $spacing-1);
+  }
+}
+
+.draw-names-modal-button {
+  width: 100%;
+  padding: $spacing-4;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+}

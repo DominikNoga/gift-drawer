@@ -1,9 +1,5 @@
 .card {
-  border-radius: $card-radius;
-  border: $card-border;
-  background-color: $card-bg;
-  box-shadow: $card-shadow;
-  padding: $card-padding;
+  @include card-style();
 }
 
 .card-large {

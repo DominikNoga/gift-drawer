@@ -1,17 +1,14 @@
 import { useState } from 'react';
 import TabView from './components/TabView/TabView';
 import './MainSection.scss';
-import type { Event } from '@gd/types/src/models/events.model';
 import ParticipantsTab from './components/TabView/components/ParticipantsTab/ParticipantsTab';
 import DrawNamesTab from './components/TabView/components/DrawNamesTab/DrawNamesTab';
 import YourAssignmentTab from './components/TabView/components/YourAssignmentTab/YourAssignmentTab';
 import WishlistTab from './components/TabView/components/WishlistTab/WishlistTab';
+import { useEventPageContext } from '../../providers/EventPageContextProvider/EventPageContextProvider';
 
-type Props = {
-  event: Event;
-};
-
-export default function MainSection({ event }: Props) {
+export default function MainSection() {
+  const { event, isOrganizer } = useEventPageContext();
   const [activeTab, setActiveTab] = useState<number>(0);
 
   const handleTabChange = (tabIndex: number) => {
@@ -29,11 +26,14 @@ export default function MainSection({ event }: Props) {
     <ParticipantsTab key='participants' participants={event.participants} />,
     <YourAssignmentTab key='assignments' assignment={getUserAssignment()} />,
     <WishlistTab key='wishlist' currentParticipantId={event.currentParticipant.id} />,
-    <DrawNamesTab key='organizer' eventId={event.id} />
   ];
 
+  if (isOrganizer) {
+    tabs.push(<DrawNamesTab key='draw-names-tab' eventId={event.id} />);
+  }
+
   return (
-    <TabView onTabChange={handleTabChange}>
+    <TabView onTabChange={handleTabChange} isOrganizer={isOrganizer}>
       {tabs[activeTab]}
     </TabView>
   );

@@ -1,16 +1,12 @@
-import type { Event } from '@gd/types/src/models/events.model';
 import './Header.scss';
 import BackButton from '@gd/shared/components/buttons/BackButton/BackButton';
 import { useNavigate } from 'react-router-dom';
-import { formatDate } from '@gd/shared/utils/date.utils';
+import { useEventPageContext } from '../../providers/EventPageContextProvider/EventPageContextProvider';
 
-type Props = {
-  event: Event
-};
-
-export default function Header({ event }: Props) {
+export default function Header() {
+  const { event } = useEventPageContext();
   const navigate = useNavigate();
-  
+
   const onBackClick = () => {
     navigate('/');
   };
@@ -20,20 +16,10 @@ export default function Header({ event }: Props) {
       <BackButton onClick={onBackClick} isDisabled={false} filled />
       <main>
         <span className='event-page-header-title'>Hello {event.currentParticipant.name} 👋</span>
-        <section className='event-page-header-details'>
-          <p>
-            Organized by {event.organizerName}
-          </p>
-          <p>
-            Exchange Date: {formatDate(event.exchangeDate)}
-          </p>
-          <p>
-            Budget: ${event.giftBudget || 'not set'}
-          </p>
-        </section>
+        <h4>Welcome to {event.name}</h4>
       </main>
       <div className='event-page-header-phase'>
-        { event.isReady ? 'Ready for draw' : 'Setup in progress' }
+        {event.isReady ? 'Ready for draw' : 'Setup in progress'}
       </div>
     </header>
   );
