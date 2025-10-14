@@ -4,6 +4,7 @@ export type GetParticipantForEventResponse = {
   id: string;
   name: string;
   joinCode: string;
+  drawnParticipantId?: string;
 };
 
 export type DrawAssignmentsRequest = {
