@@ -3,8 +3,9 @@ import type React from 'react';
 import Card from '@gd/shared/components/Card/Card';
 import { type HeaderProps } from './TabView.types';
 import { useEffect, useMemo, useState } from 'react';
-import { getTabViewOptions } from './TabView.cost';
+import { getTabViewOptions } from './TabView.utils';
 import TabViewHeader from './components/TabViewHeader/TabViewHeader';
+
 type Props = {
   children?: React.ReactNode;
   onTabChange: (tabIndex: number) => void;

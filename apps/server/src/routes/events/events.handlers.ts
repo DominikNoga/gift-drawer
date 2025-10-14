@@ -28,8 +28,10 @@ export const getEvent = async (request: Request<GetEventRequest>, response: Resp
 
 export const createEvent = async (request: Request<{}, {}, CreateEventRequest>, response: Response<ApiResponse<CreateEventResponse>>) => {
   const parseResult = EventCreateSchema.safeParse(request.body);
+  console.log(parseResult);
 
   if (!parseResult.success) {
+    console.log(parseResult.error);
     return response.status(HTTP_STATUS.BAD_REQUEST)
       .json({ message: 'Invalid input', error: parseResult.error });
   }
