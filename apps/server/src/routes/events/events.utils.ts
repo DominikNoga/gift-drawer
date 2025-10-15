@@ -34,6 +34,7 @@ export const createParticipants = async (participantsNames: string[], eventId: s
         name: participantName,
         id: participantId,
         joinCode,
+        drawnParticipantId: null,
       })
     } catch (error) {
       console.error(error);

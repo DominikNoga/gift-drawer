@@ -1,10 +1,59 @@
 import { ChristmasIcons } from '@gd/shared/constants/icons';
 import './YourAssignmentTab.scss';
 import TabWithIconCentered from '../TabWithIconCentered/TabWithIconCentered';
+import Button from '@gd/shared/components/buttons/Button/Button';
+import { useEventPageContext } from '../../../../../../providers/EventPageContextProvider/EventPageContextProvider';
+import { cacheDisplayedAssignment } from '@gd/shared/services/displayed-assignment/displayed-assignment.cache.service';
+import { getAssignmentTabState } from './YourAssignmentTab.utils';
+import { useState } from 'react';
+import { ASSIGNMENT_STATES } from './YourAssignmentTab.const';
+import LoadingSpinner from '@gd/shared/components/LoadingSpinner/LoadingSpinner';
 
 type Props = {
   assignment?: string;
 };
+
+export default function YourAssignmentTab({ assignment }: Props) {
+  const { event } = useEventPageContext();
+  const [tabState, setTabState] = useState(getAssignmentTabState(event.id, event.currentParticipant.id, assignment));
+
+  const onReveal = () => {
+    setTabState(ASSIGNMENT_STATES.IS_REVEALING);
+    setTimeout(() => {
+      setTabState(ASSIGNMENT_STATES.ASSIGNMENT_REVEALED);
+    }, 1500);
+  };
+
+  let content;
+  switch (tabState) {
+    case ASSIGNMENT_STATES.NO_ASSIGNMENT:
+      content = <NoAssignment />;
+      break;
+    case ASSIGNMENT_STATES.ASSIGNMENT_HIDDEN:
+      content = <RevealAssignment
+        onReveal={onReveal}
+        eventId={event.id}
+        participantId={event.currentParticipant.id}
+      />;
+      break;
+    case ASSIGNMENT_STATES.ASSIGNMENT_REVEALED:
+      content = (
+        <div className="your-assignment-tab-result">
+          <p>{assignment}</p>
+        </div>
+      );
+      break;
+    case ASSIGNMENT_STATES.IS_REVEALING:
+      content = <LoadingAssignment />;
+      break;
+  }
+
+  return (
+    <TabWithIconCentered title="You are a secret santa for..." icon={<ChristmasIcons.Gift />}>
+      {content}
+    </TabWithIconCentered>
+  );
+}
 
 function NoAssignment() {
   return (
@@ -17,15 +66,36 @@ function NoAssignment() {
   );
 }
 
-export default function YourAssignmentTab({ assignment }: Props) {
+type RevealAssignmentProps = {
+  onReveal: () => void;
+  eventId: string;
+  participantId: string;
+};
+
+function RevealAssignment({ onReveal, eventId, participantId }: RevealAssignmentProps) {
+  const handleReveal = () => {
+    cacheDisplayedAssignment(eventId, participantId);
+    onReveal();
+  };
+
   return (
-    <TabWithIconCentered title="You are a secret santa for..." icon={<ChristmasIcons.Gift />}>
-      {!assignment && <NoAssignment />}
-      {assignment &&
-        <div className="your-assignment-tab-result">
-          <p>{assignment}</p>
-        </div>
-      }
-    </TabWithIconCentered>
+    <div className="reveal-assignment">
+      <p>🎁 Your assignment is ready!</p>
+      <Button
+        btnType='secondary'
+        className='reveal-assignment-button'
+        onClick={handleReveal}>
+          Reveal your assignment
+      </Button>
+    </div>
+  );
+}
+
+function LoadingAssignment() {
+  return (
+    <div className="loading-assignment">
+      <p>Revealing your assignment...</p>
+      <LoadingSpinner />
+    </div>
   );
 }

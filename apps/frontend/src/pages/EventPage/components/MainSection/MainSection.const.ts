@@ -1,0 +1,6 @@
+export const TAB_INDEXES = {
+  PARTICIPANTS: 0,
+  YOUR_ASSIGNMENT: 1,
+  WISHLIST: 2,
+  DRAW_NAMES: 3,
+};

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EventPageContext, type EventPageContextType } from "./EventPageContext";
 import { getEvent } from "@gd/shared/services/events-services/events.service";
 import { cacheUserEvents } from "@gd/shared/services/events-services/events.cache.service";
@@ -14,35 +14,44 @@ export default function EventPageContextProvider({ eventId, joinCode, children }
   const [event, setEvent] = useState<GetEventResponse>();
   const [isLoading, setIsLoading] = useState(true);
   const [isOrganizer, setIsOrganizer] = useState(false);
+  const [reloadFlag, setReloadFlag] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getEvent(eventId!, joinCode!);
-        cacheUserEvents(data);
-        setEvent(data);
-        setIsLoading(false);
-        setIsOrganizer(data.currentParticipant.name === data.organizerName);
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-      }
-    };
-    fetchData();
+  const fetchData = useCallback(async () => {
+    try {
+      const data = await getEvent(eventId!, joinCode!);
+      cacheUserEvents(data);
+      setEvent({
+        ...data,
+        namesDrawn:
+          data.currentParticipant.drawnParticipantId !== undefined &&
+          data.currentParticipant.drawnParticipantId !== null
+      });
+      setIsLoading(false);
+      setIsOrganizer(data.currentParticipant.name === data.organizerName);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
   }, [eventId, joinCode]);
 
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, reloadFlag]);
+
+  const refetchEvent = () => {
+    setReloadFlag(!reloadFlag);
+  };
+
   return (
-    <EventPageContext.Provider value={{ event, isOrganizer, isLoading }}>
-      {
-        children
-      }
+    <EventPageContext.Provider value={{ event, isOrganizer, isLoading, refetchEvent }}>
+      {children}
     </EventPageContext.Provider>
   );
 }
 
 export function useEventPageContext(): EventPageContextType {
   const context = useContext(EventPageContext);
-  
+
   if (!context) {
     throw new Error("useEventPageContext must be used within an EventPageContextProvider");
   }
