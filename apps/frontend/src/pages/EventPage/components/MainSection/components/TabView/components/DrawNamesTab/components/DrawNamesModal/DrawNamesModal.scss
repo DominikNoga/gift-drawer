@@ -14,13 +14,14 @@
   }
 }
 
-.draw-names-modal-icon {
-  color: $primary;
-  @include flex-layout(column, center);
+.draw-names-modal-content {
+  @include flex-layout($gap: $spacing-6);
+  
+}
 
-  svg {
-    @include square(5rem);
-  }
+.draw-names-modal-icon {
+  @include icon-big(5rem, $primary);
+  @include flex-layout(column, center);
 }
 
 .draw-names-modal-summary {
@@ -43,4 +44,32 @@
   padding: $spacing-4;
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
+  transition: $transition-base scale;
+
+  @include hover-effect() {
+    scale: 1.02;
+  }
+}
+
+.draw-names-modal-loading {
+  padding: $spacing-8 $spacing-4;
+  @include flex-layout(column, center, $gap: $spacing-4);
+  text-align: center;
+
+  h3 {
+    margin: 0;
+    padding: 0;
+    font-size: $font-size-xl;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+    color: $text-secondary;
+  }
+}
+
+.draw-names-modal-icon-success {
+  @include icon-big(5rem, $green-600);
+  @include flex-layout(column, center);
 }

@@ -47,6 +47,7 @@ import {
   InfoIcon,
   Minus,
   ListChecks,
+  CircleCheckBig,
 
   Eye,
 } from 'lucide-react';
@@ -111,6 +112,7 @@ export const InterfaceIcons = {
   Copy: Copy,
   Cancel: X,
   Location: MapPin,
+  Success: CircleCheckBig,
 } as const;
 
 // =============================================================================

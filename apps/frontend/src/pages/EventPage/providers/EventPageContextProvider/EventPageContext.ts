@@ -5,6 +5,7 @@ export type EventPageContextType = {
   event: GetEventResponse;
   isOrganizer: boolean;
   isLoading: boolean;
+  refetchEvent: () => void;
 };
 
 export const EventPageContext = createContext<Partial<EventPageContextType> | undefined>(undefined);
