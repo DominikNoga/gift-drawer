@@ -9,15 +9,16 @@ type Props = {
   isOpen?: boolean;
   onClose?: () => void;
   title: string;
+  closeHidden?: boolean;
 };
 
-export default function Modal({ children, isOpen, onClose, title }: Props) {
+export default function Modal({ children, isOpen, onClose, title, closeHidden = false }: Props) {
   return createPortal(
     <div className="modal-backdrop" style={{ display: isOpen ? 'flex' : 'none' }}>
       <dialog open={isOpen} className="modal" onClose={onClose}>
         <header className="modal-header">
           <h2 className="modal-title">{title}</h2>
-          {onClose && (
+          {onClose && !closeHidden && (
             <button className="modal-close-button" onClick={onClose} aria-label="Close modal">
               <InterfaceIcons.Cancel />
             </button>

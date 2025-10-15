@@ -113,3 +113,10 @@
   box-shadow: $card-shadow;
   padding: $card-padding;
 }
+
+@mixin icon-big($size: 5rem, $color: $primary) {
+  color: $color;
+  svg {
+    @include square($size);
+  }
+}

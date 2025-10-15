@@ -18,8 +18,8 @@ export default function Header() {
         <span className='event-page-header-title'>Hello {event.currentParticipant.name} 👋</span>
         <h4>Welcome to {event.name}</h4>
       </main>
-      <div className='event-page-header-phase'>
-        {event.isReady ? 'Ready for draw' : 'Setup in progress'}
+      <div className={`event-page-header-phase ${event.namesDrawn ? 'names-drawn' : ''}`}>
+        {event.namesDrawn ? 'Names drawn' : 'Setup in progress'}
       </div>
     </header>
   );
