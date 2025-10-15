@@ -1,10 +1,15 @@
-.no-assignment {
-  background-color: $amber-100;
-  border: 1px solid $amber-600;
-  color: $amber-600;
+@mixin message-panel($color, $bg-color, $border-color) {
   padding: $spacing-4 $spacing-8;
   border-radius: $border-radius-lg;
   text-align: center;
+  width: min(100%, 500px);
+  background-color: $bg-color;
+  border: 1px solid $border-color;
+  color: $color;
+}
+
+.no-assignment {
+  @include message-panel($amber-600, $amber-100, $amber-600);
 }
 
 .your-assignment-tab-result {
@@ -17,3 +22,25 @@
   text-align: center;
   border-radius: $border-radius-lg;
 }
+
+.reveal-assignment {
+  @include message-panel($green-600, $green-100, $green-600);
+  @include flex-layout(column, center);
+  font-size: $font-size-lg;
+
+  .reveal-assignment-button {
+    font-weight: $font-weight-semibold;
+    padding: $spacing-4 $spacing-8;
+    font-size: $font-size-lg;
+  }
+}
+
+.loading-assignment {
+  @include flex-layout(column, center);
+  
+  p {
+    @include reset-spacing();
+    color: $text-secondary;
+  }
+}
+// TNHb4kBFIsXZe7g9Ot0hJA

@@ -26,5 +26,6 @@ export type GetEventRequest = {
 
 export type GetEventResponse = Event & {
   currentParticipant: GetParticipantForEventResponse;
+  namesDrawn?: boolean;
 };
 

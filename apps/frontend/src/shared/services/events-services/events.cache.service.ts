@@ -1,9 +1,9 @@
-import type { Event } from "@gd/types/src/models/events.model";
 import { getCachedValue } from "../local-storage.service";
 import { USER_EVENTS } from "../../constants/local-storage-keys";
 import type { CachedEvent } from "../../types/events.types";
+import type { GetEventResponse } from "@gd/types/src/api/api.events.types";
 
-export const cacheUserEvents = (event: Event) => {
+export const cacheUserEvents = (event: GetEventResponse) => {
   const cachedEvents = getCachedValue<CachedEvent[]>(USER_EVENTS) || [];
   const isEventAlreadyCached = cachedEvents.some((e) => e.id === event.id);
   if (!isEventAlreadyCached) {
@@ -15,7 +15,7 @@ export const cacheUserEvents = (event: Event) => {
   localStorage.setItem(USER_EVENTS, JSON.stringify(updatedEvents));
 };
 
-const mapToCachedEvent = (event: Event): CachedEvent => ({
+const mapToCachedEvent = (event: GetEventResponse): CachedEvent => ({
   id: event.id,
   name: event.name,
   description: event.description,
