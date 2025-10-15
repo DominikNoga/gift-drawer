@@ -6,14 +6,12 @@ import DrawNamesTab from './components/TabView/components/DrawNamesTab/DrawNames
 import YourAssignmentTab from './components/TabView/components/YourAssignmentTab/YourAssignmentTab';
 import WishlistTab from './components/TabView/components/WishlistTab/WishlistTab';
 import { useEventPageContext } from '../../providers/EventPageContextProvider/EventPageContextProvider';
+import { TAB_INDEXES } from './MainSection.const';
+import { cacheActiveTab, getActiveTabFromCache } from '@gd/shared/services/active-tab/active-tab.cache.service';
 
 export default function MainSection() {
-  const { event, isOrganizer } = useEventPageContext();
-  const [activeTab, setActiveTab] = useState<number>(0);
-
-  const handleTabChange = (tabIndex: number) => {
-    setActiveTab(tabIndex);
-  };
+  const { event, isOrganizer, refetchEvent } = useEventPageContext();
+  const [activeTab, setActiveTab] = useState<number>(getActiveTabFromCache(event.id));
 
   const getUserAssignment = (): string | undefined => {
     if (event.currentParticipant.drawnParticipantId) {
@@ -22,18 +20,34 @@ export default function MainSection() {
     return undefined;
   };
 
+  const handleViewAssignment = () => {
+    setActiveTabWithCache(TAB_INDEXES.YOUR_ASSIGNMENT);
+    refetchEvent();
+  };
+
+  const setActiveTabWithCache = (tabIndex: number) => {
+    setActiveTab(tabIndex);
+    cacheActiveTab(event.id, tabIndex);
+  };
+
   const tabs = [
     <ParticipantsTab key='participants' participants={event.participants} />,
     <YourAssignmentTab key='assignments' assignment={getUserAssignment()} />,
     <WishlistTab key='wishlist' currentParticipantId={event.currentParticipant.id} />,
   ];
 
-  if (isOrganizer) {
-    tabs.push(<DrawNamesTab key='draw-names-tab' eventId={event.id} />);
+  if (isOrganizer && !event.namesDrawn) {
+    tabs.push(
+      <DrawNamesTab
+        key='draw-names-tab'
+        eventId={event.id}
+        handleViewAssignment={handleViewAssignment}
+      />
+    );
   }
 
   return (
-    <TabView onTabChange={handleTabChange} isOrganizer={isOrganizer}>
+    <TabView onTabChange={setActiveTabWithCache} isOrganizer={isOrganizer} activeTab={activeTab} namesDrawn={event.namesDrawn}>
       {tabs[activeTab]}
     </TabView>
   );
