@@ -5,17 +5,25 @@ import Button from '@gd/shared/components/buttons/Button/Button';
 import { useEventPageContext } from '../../../../../../providers/EventPageContextProvider/EventPageContextProvider';
 import { cacheDisplayedAssignment } from '@gd/shared/services/displayed-assignment/displayed-assignment.cache.service';
 import { getAssignmentTabState } from './YourAssignmentTab.utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ASSIGNMENT_STATES } from './YourAssignmentTab.const';
 import LoadingSpinner from '@gd/shared/components/LoadingSpinner/LoadingSpinner';
 
-type Props = {
-  assignment?: string;
-};
-
-export default function YourAssignmentTab({ assignment }: Props) {
+export default function YourAssignmentTab() {
   const { event } = useEventPageContext();
+
+  const getUserAssignment = (): string | undefined => {
+    if (event.currentParticipant.drawnParticipantId) {
+      return event.participants.find(p => p.id === event.currentParticipant.drawnParticipantId)?.name;
+    }
+    return undefined;
+  };
+  const assignment = getUserAssignment();
   const [tabState, setTabState] = useState(getAssignmentTabState(event.id, event.currentParticipant.id, assignment));
+
+  useEffect(() => {
+    setTabState(getAssignmentTabState(event.id, event.currentParticipant.id, assignment));
+  }, [event, assignment]);
 
   const onReveal = () => {
     setTabState(ASSIGNMENT_STATES.IS_REVEALING);
@@ -85,7 +93,7 @@ function RevealAssignment({ onReveal, eventId, participantId }: RevealAssignment
         btnType='secondary'
         className='reveal-assignment-button'
         onClick={handleReveal}>
-          Reveal your assignment
+        Reveal your assignment
       </Button>
     </div>
   );
