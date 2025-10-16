@@ -1,16 +1,8 @@
 .btn-with-icon {
   @include flex-layout(row, center, $gap: $spacing-2);
-  background-color: transparent;
   border: none;
-  box-shadow: $shadow-md;
-  transition: $transition-shadow;
-  width: fit-content;
   border-radius: $border-radius-md;
   padding: $button-padding-base;
-
-  @include hover-effect() {
-    box-shadow: $shadow-lg;
-  }
 }
 
 .btn-with-icon-disabled {
@@ -18,7 +10,6 @@
   opacity: 0.9;
   @include hover-effect() {
     cursor: not-allowed;
-    box-shadow: $shadow-md;
   }
 }
 
