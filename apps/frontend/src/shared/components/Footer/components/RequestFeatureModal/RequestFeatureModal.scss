@@ -1,0 +1,8 @@
+.request-feature-form {
+  @include flex-layout(column);
+  min-width: 350px;
+
+  &-buttons {
+    @include flex-layout(row, center, space-between);
+  }
+}

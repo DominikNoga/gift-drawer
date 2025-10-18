@@ -1,4 +1,8 @@
 .participants-tab {
   @include flex-layout();
-  
+  &-header {
+    font-size: $font-size-xl;
+    margin: $spacing-2 0;
+    font-weight: $font-weight-medium;
+  }
 }
