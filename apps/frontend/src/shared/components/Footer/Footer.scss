@@ -3,6 +3,7 @@
   background-color: $gray-900;
   color: $text-white;
   padding: $spacing-8 $spacing-4;
+  margin-top: $spacing-16;
   @include flex-layout(column, center, center);
 
   > section {
@@ -14,6 +15,8 @@
     color: $text-white;
     width: 100%;
     transition: $transition-colors;
+    font-size: $font-size-base;
+
     @include hover-effect() {
       background-color: $red-700;
     }
@@ -60,6 +63,17 @@
     }
   }
 
+  &-links {
+    @include flex-layout(column, $gap: $spacing-2);
+
+    .footer-link {
+      transition: $transition-colors;
+      @include hover-effect() {
+        color: $text-white;
+      }
+    }
+  }
+
   &-copy {
     @include flex-layout(column, center, center, 0);
 
@@ -70,7 +84,7 @@
 
     &-stack {
       color: $gray-500;
-      font-size: $font-size-sm;
+      font-size: $font-size-base;
     }
   }
 
