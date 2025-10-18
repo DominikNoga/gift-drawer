@@ -1,0 +1,91 @@
+.footer {
+  width: 100%;
+  background-color: $gray-900;
+  color: $text-white;
+  padding: $spacing-8 $spacing-4;
+  margin-top: $spacing-16;
+  @include flex-layout(column, center, center);
+
+  > section {
+    width: $page-content-width;
+  }
+
+  &-support-button {
+    background-color: $primary;
+    color: $text-white;
+    width: 100%;
+    transition: $transition-colors;
+    font-size: $font-size-base;
+
+    @include hover-effect() {
+      background-color: $red-700;
+    }
+  }
+
+  &-socials {
+    @include flex-layout(row, center, $gap: $spacing-4);
+
+    &-link {
+      color: $gray-400;
+      transition: $transition-colors;
+      background-color: $gray-800;
+      padding: $spacing-2;
+      border-radius: $border-radius-lg;
+
+      @include hover-effect() {
+        background-color: $gray-700;
+      }
+    }
+  }
+
+  &-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-8;
+    color: $gray-300;
+    border-bottom: solid 1px $gray-700;
+    padding-bottom: $spacing-8;
+
+    &-item {
+      @include flex-layout(column, flex-start);
+      
+      > p {
+        @include reset-spacing();
+        line-height: 1.4;
+      }
+
+      &-title {
+        font-size: $font-size-xl;
+        margin: 0;
+        padding: 0;
+        color: $text-white;
+      }
+    }
+  }
+
+  &-links {
+    @include flex-layout(column, $gap: $spacing-2);
+
+    .footer-link {
+      transition: $transition-colors;
+      @include hover-effect() {
+        color: $text-white;
+      }
+    }
+  }
+
+  &-copy {
+    @include flex-layout(column, center, center, 0);
+
+    &-text {
+      color: $gray-400;
+      font-size: $font-size-lg;
+    }
+
+    &-stack {
+      color: $gray-500;
+      font-size: $font-size-base;
+    }
+  }
+
+}
