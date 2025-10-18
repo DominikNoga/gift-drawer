@@ -22,9 +22,6 @@ export default function MyEventsCard({ event }: Props) {
         <h3>{event.name}</h3>
         <NavigationIcons.ExternalLink className='my-events-card-row-link-icon' />
       </div>
-      <span className='my-events-card-description'>
-        {event.description}
-      </span>
       <section className='my-events-card-info'>
         <span className='my-events-card-info-item'>
           <UserIcons.User className='my-events-card-info-icon-green' />
