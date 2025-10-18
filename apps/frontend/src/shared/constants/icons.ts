@@ -48,8 +48,10 @@ import {
   Minus,
   ListChecks,
   CircleCheckBig,
-
+  Linkedin,
+  Github,
   Eye,
+  MessageSquare,
 } from 'lucide-react';
 
 // =============================================================================
@@ -113,6 +115,7 @@ export const InterfaceIcons = {
   Cancel: X,
   Location: MapPin,
   Success: CircleCheckBig,
+  Message: MessageSquare,
 } as const;
 
 // =============================================================================
@@ -125,3 +128,7 @@ export const StatusIcons = {
   Error: AlertTriangle,
 } as const;
 
+export const SocialIcons = {
+  Linkedin: Linkedin,
+  Github: Github,
+} as const;

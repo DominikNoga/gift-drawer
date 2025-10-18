@@ -9,6 +9,9 @@ type Props = {
 export default function ParticipantsTab({ participants }: Props) {
   return (
     <div className='participants-tab'>
+      <header>
+        <h3 className='participants-tab-header'>Participants ({participants?.length})</h3>
+      </header>
       {participants?.map((participant) => (
         <ParticipantsTabItem
           key={participant.name}

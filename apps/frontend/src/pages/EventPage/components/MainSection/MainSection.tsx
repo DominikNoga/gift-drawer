@@ -13,16 +13,9 @@ export default function MainSection() {
   const { event, isOrganizer, refetchEvent } = useEventPageContext();
   const [activeTab, setActiveTab] = useState<number>(getActiveTabFromCache(event.id));
 
-  const getUserAssignment = (): string | undefined => {
-    if (event.currentParticipant.drawnParticipantId) {
-      return event.participants.find(p => p.id === event.currentParticipant.drawnParticipantId)?.name;
-    }
-    return undefined;
-  };
-
   const handleViewAssignment = () => {
-    setActiveTabWithCache(TAB_INDEXES.YOUR_ASSIGNMENT);
     refetchEvent();
+    setActiveTabWithCache(TAB_INDEXES.YOUR_ASSIGNMENT);
   };
 
   const setActiveTabWithCache = (tabIndex: number) => {
@@ -32,7 +25,7 @@ export default function MainSection() {
 
   const tabs = [
     <ParticipantsTab key='participants' participants={event.participants} />,
-    <YourAssignmentTab key='assignments' assignment={getUserAssignment()} />,
+    <YourAssignmentTab key='assignments' />,
     <WishlistTab key='wishlist' currentParticipantId={event.currentParticipant.id} />,
   ];
 
