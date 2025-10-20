@@ -52,6 +52,8 @@ import {
   Github,
   Eye,
   MessageSquare,
+  MailIcon,
+  UserPlus,
 } from 'lucide-react';
 
 // =============================================================================
@@ -76,6 +78,7 @@ export const UserIcons = {
   User: User,
   Users: Users,
   UserExclude: UserX,
+  AddUser: UserPlus,
 } as const;
 
 // =============================================================================
@@ -116,6 +119,7 @@ export const InterfaceIcons = {
   Location: MapPin,
   Success: CircleCheckBig,
   Message: MessageSquare,
+  Send: MailIcon,
 } as const;
 
 // =============================================================================
