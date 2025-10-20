@@ -1,0 +1,5 @@
+.event-preview-list {
+  @include flex-layout($gap: $spacing-2);
+  list-style-type: disc;
+  padding-left: $spacing-6;
+}

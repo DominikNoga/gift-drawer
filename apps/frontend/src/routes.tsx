@@ -3,6 +3,7 @@ import RootLayout from "./shared/components/RootLayout/RootLayout";
 import HomePage from "./pages/HomePage";
 import CreateEventPage from "./pages/CreateEventPage";
 import EventPage from "./pages/EventPage";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 export const ROUTES_NAMES = {
   HOME: '/',
@@ -14,6 +15,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

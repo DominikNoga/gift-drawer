@@ -1,14 +1,16 @@
 import { toApiSchema, toDbSchema } from "../../utils/change-case.utils";
 import { generateId } from "../../utils/generate-id.utils";
-import { CreateExclusionFromEventRequest, CreateExclusionRequestDto, ExclusionDbRecord } from "@gd/types/src/models/exclusions.model";
+import { CreateExclusionFromEventRequest, CreateExclusionRequestDto, Exclusion, ExclusionDbRecord } from "@gd/types/src/models/exclusions.model";
 import { createExclusionRecord } from "../exclusions/exclusions.utils";
 import { createParticipantRecord } from "../participants/participant.utils";
 import { CreateExclusionsFromParticipantDto, ParticipantDbRecord } from "@gd/types/src/models/participants.model";
 import { EventDbRecord } from "@gd/types/src/models/events.model";
-import { CreateEventRequestWithoutRelations, GetEventResponse } from "@gd/types/src/api/api.events.types";
+import { CreateEventRequest, CreateEventRequestWithoutRelations, GetEventResponse } from "@gd/types/src/api/api.events.types";
 import { GetParticipantForEventResponse } from "@gd/types/src/api/api.participants.types";
 import { participantsTable } from "../participants/participants.db";
 import { exclusionsTable } from "../exclusions/exclusions.db";
+import { DrawResultFailed, drawSecretSanta } from "../../utils/drawing-logic.utils";
+import { Participant } from "@gd/types/src/models/participants.model";
 
 export const getEventRow = (createEventRequest: CreateEventRequestWithoutRelations): EventDbRecord => {
   const id = generateId();
@@ -104,8 +106,8 @@ export const getEventData = async (eventId: string, eventRow: EventDbRecord, joi
   const participants = await participantsTable().where({ event_id: eventId });
   const exclusions = await exclusionsTable().where({ event_id: eventId });
   const mappedParticipants = participants.map((p) => {
-      const { eventId, ...rest } = toApiSchema<ParticipantDbRecord>(p);
-      return rest;
+    const { eventId, ...rest } = toApiSchema<ParticipantDbRecord>(p);
+    return rest;
   });
   const mappedExclusions = getMappedExclusions(exclusions, mappedParticipants);
 
@@ -115,4 +117,20 @@ export const getEventData = async (eventId: string, eventRow: EventDbRecord, joi
     currentParticipant: mappedParticipants.find(p => p.joinCode === joinCode)!,
     exclusions: mappedExclusions,
   };
+};
+
+export const validateDrawingPossibility = (request: CreateEventRequest): DrawResultFailed | { ok: true } => {
+  const participants = request.participants.map((p, index) => ({ name: p.name, id: index.toString() }));
+  const exclusions = request.exclusions.map((ex) => ({
+    participantId: request.participants.findIndex(p => p.name === ex.participantName).toString(),
+    excludedParticipantId: request.participants.findIndex(p => p.name === ex.excludedParticipantName).toString(),
+  }));
+
+  const result = drawSecretSanta(participants, exclusions);
+
+  if (!result.ok) {
+    return result;
+  }
+
+  return { ok: true };
 };
