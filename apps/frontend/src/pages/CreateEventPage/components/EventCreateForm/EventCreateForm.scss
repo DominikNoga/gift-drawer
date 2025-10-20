@@ -1,16 +1,39 @@
-.event-create-form-card {
-  @include flex-layout();
-}
+.event-create-form {
+  &-card {
+    @include flex-layout();
+  }
 
-.event-create-form-btn {
-  font-weight: $font-weight-bold;
-  font-size: $font-size-base;
-  padding: $spacing-4;
-  transition: $transition-base scale;
-  will-change: scale;
+  &-btn {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-base;
+    padding: $spacing-4;
+    transition: $transition-base scale;
+    will-change: scale;
 
-  @include hover-effect() {
-    scale: 1.02;
-    opacity: 1;
+    &::before {
+      display: none;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+
+      @include hover-effect(not-allowed) {
+        scale: 1;
+        opacity: 0.6;
+      }
+    }
+
+    @include hover-effect() {
+      scale: 1.02;
+      opacity: 1;
+    }
+  }
+
+  &-error-message {
+    color: $red-700;
+    padding: $spacing-4 $spacing-8;
+    background-color: $red-100;
+    border-radius: $border-radius-lg;
   }
 }

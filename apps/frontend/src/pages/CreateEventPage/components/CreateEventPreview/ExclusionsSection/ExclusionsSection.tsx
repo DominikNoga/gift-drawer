@@ -1,29 +1,28 @@
-import type { CreateExclusionFromEventRequest } from '@gd/types/src/models/exclusions.model'
+import type { CreateExclusionFromEventRequest } from '@gd/types/src/models/exclusions.model';
+import FormHeader from '../../ui/FormHeader/FormHeader';
+import EventPreviewSection from '../components/ui/EventPreviewSection/EventPreviewSection';
+import EventPreviewList from '../components/ui/EventPreviewList/EventPreviewList';
 
 type Props = {
-  exclusions: CreateExclusionFromEventRequest[]
-}
+  exclusions: CreateExclusionFromEventRequest[];
+};
 
 export default function ExclusionsSection({ exclusions }: Props) {
+  const subtitle = exclusions.length === 0 ? 'No exclusions set for this event.' : undefined;
   return (
-    <section className='event-preview-section event-preview-exclusions'>
-      <h2>Exclusions</h2>
-      {
-        exclusions.length === 0 && (
-          <p>No exclusions set for this event.</p>
-        )
-      }
+    <EventPreviewSection>
+      <FormHeader title="Exclusions" subtitle={subtitle} />
       {
         exclusions.length > 0 && (
-          <ul>
+          <EventPreviewList>
             {exclusions.map((exclusion) => (
               <li key={`${exclusion.participantName}-${exclusion.excludedParticipantName}`}>
                 {exclusion.participantName} excludes {exclusion.excludedParticipantName}
               </li>
             ))}
-          </ul>
+          </EventPreviewList>
         )
       }
-    </section>
+    </EventPreviewSection>
   );
 }

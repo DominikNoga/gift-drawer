@@ -2,7 +2,7 @@ import { InterfaceIcons, UserIcons } from '@gd/shared/constants/icons';
 import './EventCreateSteps.scss';
 import CircleIcon from '@gd/shared/components/icons/CircleIcon/CircleIcon';
 import { useContext } from 'react';
-import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
+import { CreateEventContext } from '../../../store/CreateEventContext/CreateEventContext';
 
 const STEPS = [
   {

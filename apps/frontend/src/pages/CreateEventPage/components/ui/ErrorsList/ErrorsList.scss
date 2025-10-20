@@ -1,0 +1,7 @@
+.event-create-form-errors-list {
+  @include flex-layout();
+  padding: $card-padding;
+  border-radius: $border-radius-lg;
+  background-color: $red-100;
+  color: $red-700;
+}

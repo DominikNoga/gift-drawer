@@ -1,16 +1,20 @@
+import FormHeader from "../../ui/FormHeader/FormHeader";
+import EventPreviewList from "../components/ui/EventPreviewList/EventPreviewList";
+import EventPreviewSection from "../components/ui/EventPreviewSection/EventPreviewSection";
+
 type Props = {
   participants: { name: string }[]
 }
 
 export default function ParticipantsSection({ participants }: Props) {
   return (
-    <section className='event-preview-section event-preview-participants'>
-      <h2>Participants</h2>
-      <ul>
+    <EventPreviewSection>
+      <FormHeader title="Participants" />
+      <EventPreviewList>
         {participants.map((participant) => (
           <li key={participant.name}>{participant.name}</li>
         ))}
-      </ul>
-    </section>
+      </EventPreviewList>
+    </EventPreviewSection>
   );
 }

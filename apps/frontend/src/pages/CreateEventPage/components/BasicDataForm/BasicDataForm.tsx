@@ -5,6 +5,7 @@ import Button from '@gd/shared/components/buttons/Button/Button';
 import Input from '@gd/shared/components/Input/Input';
 import { InterfaceIcons, UserIcons } from '@gd/shared/constants/icons';
 import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
+import FormHeader from '../ui/FormHeader/FormHeader';
 
 
 export default function BasicDataForm() {
@@ -22,6 +23,11 @@ export default function BasicDataForm() {
 
   return (
     <form onSubmit={(e: FormEvent) => handleAddBasicData(e, form)} className='event-create-form'>
+      <FormHeader
+        title='Basic information'
+        subtitle='Provide the basic details about your event'
+      />
+      
       <Input
         label='Event name'
         id='name'
@@ -61,6 +67,7 @@ export default function BasicDataForm() {
         icon={<InterfaceIcons.World />}
         onChange={handleChange}
         placeholder='Where is it taking place?'
+        required
       />
       <div className="input-row">
         <Input
@@ -82,6 +89,7 @@ export default function BasicDataForm() {
           icon={<InterfaceIcons.Calendar />}
           onChange={handleChange}
           placeholder='When is the gift exchange?'
+          required
         />
       </div>
       <Button

@@ -7,7 +7,7 @@ type Assignment = {
   receiverId: string;
 }
 
-type DrawResultFailed = {
+export type DrawResultFailed = {
   ok: false;
   reasons: string[];
   debug?: {
@@ -22,6 +22,15 @@ type DrawResultSuccess = {
 };
 
 export type DrawResult = DrawResultSuccess | DrawResultFailed;
+
+type Any = {
+  [key: string]: any;
+}
+
+type DrawParticipant = Pick<Participant, 'id'> & Any;
+type DrawParticipants = DrawParticipant[];
+type DrawExclusion = Pick<Exclusion, 'participantId' | 'excludedParticipantId'> & Any;
+type DrawExclusions = DrawExclusion[];
 
 // Shuffling using Fisher–Yates algorithm
 function shuffle<T>(arr: T[]): T[] {
@@ -39,7 +48,7 @@ const validateQuantity = (participantsQuantity: number) => {
   }
 }
 
-const buildDisallowedMap = (participantsByIdMap: Map<string, Participant>, exclusions: Exclusion[]) => {
+const buildDisallowedMap = (participantsByIdMap: Map<string, DrawParticipant>, exclusions: DrawExclusions) => {
   const disallowedReceiversByGiverMap = new Map<string, Set<string>>();
   for (const exclusion of exclusions) {
     const giverId = exclusion.participantId;
@@ -70,7 +79,7 @@ const buildAllowedReceiversMap = (participantIds: string[], disallowedReceiversB
 const validateZeroEdges = (
   allowedReceiversByGiverMap: Map<string, string[]>,
   participantIds: string[],
-  participantsByIdMap: Map<string, Participant>
+  participantsByIdMap: Map<string, DrawParticipant>
 ): DrawResultFailed | null => {
   const giverIdsWithNoOptions = participantIds.filter(
     (giverId) => (allowedReceiversByGiverMap.get(giverId)?.length ?? 0) === 0
@@ -122,8 +131,8 @@ function tryFindAugmentingPath(
 }
 
 export function drawSecretSanta(
-  participants: Participant[],
-  exclusions: Exclusion[]
+  participants: DrawParticipants,
+  exclusions: DrawExclusions
 ): DrawResult {
   const participantsQuantity = participants.length;
   validateQuantity(participantsQuantity);
