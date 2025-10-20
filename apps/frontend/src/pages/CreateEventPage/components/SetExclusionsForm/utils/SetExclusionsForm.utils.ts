@@ -10,7 +10,8 @@ export const getValidExclusions = (exclusions: NewExclusion[]): NewExclusion[] =
 };
 
 export const getInitialExclusions = (existingExclusions?: SetExclusionsPayload): NewExclusion[] => {
-  return existingExclusions?.map(exclusion => ({ ...exclusion, viceVersa: false })) || [{...EMPTY_EXCLUSION}];
+  return (existingExclusions && existingExclusions.length) ? existingExclusions?.map(exclusion => ({ ...exclusion, viceVersa: false })) 
+    : [{...EMPTY_EXCLUSION}];
 };
 
 export const getMappedExclusionsWithViceVersa = (exclusions: NewExclusion[]): SetExclusionsPayload => {

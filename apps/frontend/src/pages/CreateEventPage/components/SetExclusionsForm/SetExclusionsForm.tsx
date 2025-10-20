@@ -7,10 +7,11 @@ import CreateExclusionRow from './components/CreateExclusionRow/CreateExclusionR
 import { InterfaceIcons } from '@gd/shared/constants/icons';
 import { getInitialExclusions, getMappedExclusionsWithViceVersa, getValidExclusions } from './utils/SetExclusionsForm.utils';
 import { EMPTY_EXCLUSION } from './constants/constants';
+import FormHeader from '../ui/FormHeader/FormHeader';
 
 export default function SetExclusionsForm() {
   const { handleAddExclusions, createEventData } = useContext(CreateEventContext);
-  const [exclusions, setExclusions] = useState<NewExclusion[]>(getInitialExclusions());
+  const [exclusions, setExclusions] = useState<NewExclusion[]>(getInitialExclusions(createEventData.exclusions));
   const participants = createEventData.participants.map(p => p.name) || [];
 
   const addMoreExclusions = () => {
@@ -28,7 +29,6 @@ export default function SetExclusionsForm() {
       }
       return newExclusions;
     });
-    console.log(exclusions);
   };
 
   const handleViceVersaChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -38,7 +38,6 @@ export default function SetExclusionsForm() {
       newExclusions[index].viceVersa = isChecked;
       return newExclusions;
     });
-    console.log(exclusions);
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -50,10 +49,10 @@ export default function SetExclusionsForm() {
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className='event-create-form'>
-      <header>
-        <h2>Set Exclusions</h2>
-        <p>Here you can define participants that cannot draw each other</p>
-      </header>
+      <FormHeader
+        title='Set Exclusions'
+        subtitle='Here you can define participants that cannot draw each other'
+      />
 
       {
         exclusions.map((exclusion, index) => (

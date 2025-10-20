@@ -1,5 +1,5 @@
 import './index.scss';
-import EventCreateSteps from "./components/EventCreateSteps/EventCreateSteps";
+import EventCreateSteps from "./components/ui/EventCreateSteps/EventCreateSteps";
 import CreateEventContextProvider from './store/CreateEventContext/CreateEventContext';
 import EventCreateForm from './components/EventCreateForm/EventCreateForm';
 import BackButton from '@gd/shared/components/buttons/BackButton/BackButton';

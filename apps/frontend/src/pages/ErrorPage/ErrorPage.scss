@@ -1,0 +1,12 @@
+.error-page {
+  @include flex-layout(column, center);
+  height: 100vh;
+
+  &-content {
+    margin-top: $spacing-24;
+    padding: $spacing-24;
+    border: 1px solid $primary;
+    text-align: center;
+    border-radius: $border-radius-lg;
+  }
+}

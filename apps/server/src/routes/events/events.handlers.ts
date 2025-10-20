@@ -5,7 +5,7 @@ import { EventIdResponse, GetEventByJoinCodeRequest, CreateEventResponse, Create
 import { ApiResponse } from '@gd/types/src/api/api.types';
 import { participantsTable } from '../participants/participants.db';
 import { HTTP_STATUS } from '../../constants/status-codes';
-import { createExclusions, createParticipants, getEventData, getEventRow } from './events.utils';
+import { createExclusions, createParticipants, getEventData, getEventRow, validateDrawingPossibility } from './events.utils';
 import { toApiSchema } from '../../utils/change-case.utils';
 import { drawSecretSanta } from '../../utils/drawing-logic.utils';
 import { exclusionsTable } from '../exclusions/exclusions.db';
@@ -38,6 +38,13 @@ export const createEvent = async (request: Request<{}, {}, CreateEventRequest>, 
 
   const input = parseResult.data;
   const { participants, exclusions, ...createEventRequest } = input;
+
+  const canDraw = validateDrawingPossibility(input);
+  if (!canDraw.ok) {
+    return response.status(HTTP_STATUS.BAD_REQUEST).json({
+      message: `Drawing not possible with the given participants and exclusions.\n` + canDraw.reasons.join('\n'),
+    });
+  }
 
   const dbData = getEventRow(createEventRequest);
 

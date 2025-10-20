@@ -1,0 +1,9 @@
+SELECT 
+    p.name AS participant_name,
+    ep.name AS excluded_participant_name
+FROM exclusions e
+JOIN participants p 
+    ON e.participant_id = p.id
+JOIN participants ep 
+    ON e.excluded_participant_id = ep.id
+WHERE e.event_id = "7daba155-ce92-4efa-948d-546903279295";

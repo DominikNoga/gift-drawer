@@ -1,20 +1,24 @@
-import { useContext, useState, type FormEvent } from 'react';
+import React, { useContext, useRef, useState, type FormEvent } from 'react';
 import './AddParticipantsForm.scss';
 import Input from '@gd/shared/components/Input/Input';
 import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
 import Button from '@gd/shared/components/buttons/Button/Button';
-import ButtonWithIcon from '@gd/shared/components/buttons/ButtonWithIcon/ButtonWithIcon';
-import { InterfaceIcons } from '@gd/shared/constants/icons';
 import { validateParticipants } from './utils/AddParticipantsForm.utils';
+import ErrorsList from '../ui/ErrorsList/ErrorsList';
+import FormHeader from '../ui/FormHeader/FormHeader';
 
 const MIN_PARTICIPANTS = 3;
-const INITIAL_PARTICIPANTS = ['', '', ''];
 
 export default function AddParticipantsForm() {
   const { handleAddParticipants, createEventData, handleSetErrors } = useContext(CreateEventContext);
-  const initialParticipants = createEventData.participants.length > 0 ? 
-    createEventData.participants.map(participant => participant.name) : 
-    INITIAL_PARTICIPANTS;
+  const [participantsCount, setParticipantsCount] = useState<number>(
+    createEventData.participants.length > 0 ? createEventData.participants.length : 1
+  );
+  const participantsCountRef = useRef<number>(participantsCount);
+  const initialParticipants = createEventData.participants.length > 0 ?
+    createEventData.participants.map(participant => participant.name) :
+    [createEventData.organizerName];
+  const [countError, setCountError] = useState<string | undefined>();
   const [participants, setParticipants] = useState<string[]>(initialParticipants);
   const inputs = participants.map((_, i) => i);
 
@@ -28,21 +32,24 @@ export default function AddParticipantsForm() {
     }));
   };
 
-  const handleAddParticipant = (isAdding: boolean = false) => {
-    if (isAdding) {
-      setParticipants(prevParticipants => [...prevParticipants, '']);
+  const handleSetParticipantsCount = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    participantsCountRef.current = participantsCount;
+    const count = participantsCountRef.current;
+    if (count < MIN_PARTICIPANTS) {
+      setCountError(`Please enter at least ${MIN_PARTICIPANTS} participants.`);
       return;
     }
-    setParticipants(prevParticipants => {
-      if (prevParticipants.length > MIN_PARTICIPANTS) {
-        return prevParticipants.slice(0, -1);
-      }
-      return prevParticipants;
-    });
+    setCountError(undefined);
+    if (count > participants.length) {
+      const newParticipants = Array(count - participants.length).fill('');
+      setParticipants(prevParticipants => [...prevParticipants, ...newParticipants]);
+    } else {
+      setParticipants(prevParticipants => prevParticipants.slice(0, count));
+    }
   };
 
   const handleSubmit = (e: FormEvent) => {
-    console.log(participants);
     const errors = validateParticipants(participants);
     if (errors.length > 0) {
       e.preventDefault();
@@ -55,26 +62,37 @@ export default function AddParticipantsForm() {
 
   return (
     <>
+      <form className="event-create-form-participants-count" onSubmit={handleSetParticipantsCount}>
+        <Input
+          label='How many participants will there be? (including you)'
+          id='participants-count'
+          name='participants-count'
+          min={3}
+          type='number'
+          required
+          placeholder='Number of participants'
+          value={participantsCount}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            const count = parseInt(e.target.value);
+            setParticipantsCount(count);
+          }}
+        />
+        <Button
+          className='event-create-form-btn event-create-form-btn-confirm'
+          btnType='primary'
+          type='submit'
+        >
+          Confirm
+        </Button>
+      </form>
+      {countError && <ErrorsList errors={[countError]} />}
       <form onSubmit={handleSubmit} className='event-create-form'>
-        <div className="event-create-form-buttons">
-          <ButtonWithIcon
-            type='button'
-            className='remove-participant-btn'
-            onClick={() => handleAddParticipant()}
-            icon={<InterfaceIcons.Remove />}
-            disabled={participants.length <= MIN_PARTICIPANTS}
-          >
-            Remove participant
-          </ButtonWithIcon>
-          <ButtonWithIcon
-            type='button'
-            className='add-participant-btn'
-            onClick={() => handleAddParticipant(true)}
-            icon={<InterfaceIcons.Create />}
-          >
-            Add participant
-          </ButtonWithIcon>
-        </div>
+        <FormHeader
+          title='Participants names'
+          subtitle={
+            `Here you can add the names of all participants taking part in the event. You must add at least ${MIN_PARTICIPANTS} participants to proceed.`
+          }
+        />
         {
           inputs.map((_, index) => (
             <Input
@@ -84,6 +102,9 @@ export default function AddParticipantsForm() {
               value={participants[index]}
               autoComplete='off'
               placeholder={`Set participant ${index + 1} name`}
+              disabled={index === 0}
+              label={index === 0 ? 'Organizer (you)' : undefined}
+              id={`participant-input-${index}`}
               required
             />
           ))
@@ -92,6 +113,7 @@ export default function AddParticipantsForm() {
           className='event-create-form-btn'
           btnType='primary'
           type='submit'
+          disabled={participantsCount < MIN_PARTICIPANTS}
         >
           Next step
         </Button>

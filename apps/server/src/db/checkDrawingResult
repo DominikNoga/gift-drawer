@@ -1,0 +1,7 @@
+SELECT 
+    giver.name AS participant_name,
+    receiver.name AS receiver_name
+FROM participants giver
+JOIN participants receiver 
+    ON giver.drawn_participant_id = receiver.id
+WHERE giver.event_id = "7daba155-ce92-4efa-948d-546903279295";
