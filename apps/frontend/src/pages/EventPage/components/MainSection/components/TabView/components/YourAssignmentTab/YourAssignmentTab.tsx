@@ -8,6 +8,9 @@ import { getAssignmentTabState } from './YourAssignmentTab.utils';
 import { useEffect, useState } from 'react';
 import { ASSIGNMENT_STATES } from './YourAssignmentTab.const';
 import LoadingSpinner from '@gd/shared/components/LoadingSpinner/LoadingSpinner';
+import type { WishlistItem } from '@gd/types/src/models/wish.model';
+import { getParticipantWishlist } from '@gd/shared/services/wishes-services/wishes.service';
+import YourAssignmentWishes from './components/YourAssignmentWishes/YourAssignmentWishes';
 
 export default function YourAssignmentTab() {
   const { event } = useEventPageContext();
@@ -20,9 +23,17 @@ export default function YourAssignmentTab() {
   };
   const assignment = getUserAssignment();
   const [tabState, setTabState] = useState(getAssignmentTabState(event.id, event.currentParticipant.id, assignment));
+  const [assignmentWishes, setAssignmentWishes] = useState<WishlistItem[]>([]);
 
   useEffect(() => {
+    const fetchWishes = async () => {
+      if (assignment) {
+        const wishlist = await getParticipantWishlist(event.currentParticipant.drawnParticipantId!);
+        setAssignmentWishes(wishlist);
+      }
+    };
     setTabState(getAssignmentTabState(event.id, event.currentParticipant.id, assignment));
+    fetchWishes();
   }, [event, assignment]);
 
   const onReveal = () => {
@@ -46,9 +57,12 @@ export default function YourAssignmentTab() {
       break;
     case ASSIGNMENT_STATES.ASSIGNMENT_REVEALED:
       content = (
-        <div className="your-assignment-tab-result">
-          <p>{assignment}</p>
-        </div>
+        <>
+          <div className="your-assignment-tab-result">
+            <p>{assignment}</p>
+          </div>
+          <YourAssignmentWishes wishlistItems={assignmentWishes} drawnParticipantName={assignment!} />
+        </>
       );
       break;
     case ASSIGNMENT_STATES.IS_REVEALING:

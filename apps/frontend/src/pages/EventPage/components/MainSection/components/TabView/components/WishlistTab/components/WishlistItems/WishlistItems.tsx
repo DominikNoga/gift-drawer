@@ -6,13 +6,14 @@ import { colors } from '@gd/shared/constants/colors';
 
 type Props = {
   items: WishlistItem[];
-  handleItemDelete: (itemId: string) => void;
+  handleItemDelete?: (itemId: string) => void;
+  drawnParticipantName?: string;
 }
 
-export default function WishlistItems({ items, handleItemDelete }: Props) {
+export default function WishlistItems({ items, handleItemDelete, drawnParticipantName }: Props) {
   return (
     <div className="wishlist-items">
-      {items.length === 0 && <EmptyListMessage />}
+      {items.length === 0 && <EmptyListMessage drawnParticipantName={drawnParticipantName} />}
       {items.length > 0 && items.map(item => (
         <div key={item.id} className="wishlist-item">
           <SquareIcon
@@ -34,23 +35,37 @@ export default function WishlistItems({ items, handleItemDelete }: Props) {
               </a>
             )}
           </div>
-
-          <button className='wishlist-item-delete-btn' title='Delete Item' onClick={() => handleItemDelete(item.id)}>
-            <NavigationIcons.Delete />
-          </button>
+          {
+            handleItemDelete && (
+              <button className='wishlist-item-delete-btn' title='Delete Item' onClick={() => handleItemDelete(item.id)}>
+                <NavigationIcons.Delete />
+              </button>
+            )
+          }
         </div>
       ))}
     </div>
   );
 }
 
-function EmptyListMessage() {
+type EmptyListMessageProps = {
+  drawnParticipantName?: string;
+};
+
+function EmptyListMessage({ drawnParticipantName }: EmptyListMessageProps) {
+  const header = drawnParticipantName
+    ? `${drawnParticipantName} has not added any wishlist items yet.`
+    : `No wishlist items yet.`;
+
+  const subtitle = drawnParticipantName
+    ? `As soon as ${drawnParticipantName} adds items, they will appear here.`
+    : `Add your first item to help your Secret Santa choose the perfect gift!`;
   return (
     <div className="empty-list-message">
       <ChristmasIcons.Gift />
-      <h4>No wishlist items yet</h4>
+      <h4>{header}</h4>
       <p>
-        Add your first item to help your Secret Santa choose the perfect gift!
+        {subtitle}
       </p>
     </div>
   );
