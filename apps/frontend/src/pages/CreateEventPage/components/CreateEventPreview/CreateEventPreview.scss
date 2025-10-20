@@ -1,0 +1,11 @@
+.create-event-preview-form {
+  @include flex-layout();
+
+  > header {
+    margin-left: $spacing-2;
+  }
+
+  &-content {
+    @include flex-layout();
+  }
+}

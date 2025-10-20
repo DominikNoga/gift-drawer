@@ -23,6 +23,10 @@
     border: $border-color-medium 2px solid;
     transition: border-color $transition-base;
     z-index: 1;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 
   textarea {
