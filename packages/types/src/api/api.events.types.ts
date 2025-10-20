@@ -13,7 +13,7 @@ export type CreateEventRequestWithoutRelations = Omit<CreateEventRequest, 'parti
 export type CreateEventResponse = {
   id: string;
   organizerCode: string;
-}
+};
 
 // GET: /events/join/:joinCode
 export type GetEventByJoinCodeRequest = { joinCode: string };

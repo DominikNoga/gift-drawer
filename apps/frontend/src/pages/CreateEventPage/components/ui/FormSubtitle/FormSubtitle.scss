@@ -1,0 +1,5 @@
+.form-subtitle {
+  @include reset-spacing();
+  font-size: $font-size-base;
+  color: $text-secondary;
+}

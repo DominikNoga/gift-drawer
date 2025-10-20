@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ParticipantSchema = z.object({
+const ParticipantSchema = z.object({
   id: z.string(),
   name: z.string(),
   eventId: z.string(),
@@ -8,15 +8,15 @@ export const ParticipantSchema = z.object({
   drawParticipantId: z.string().nullable(),
 });
 
-export const ExclusionSchema = z.object({
+const ExclusionSchema = z.object({
   id: z.string(),
   eventId: z.string(),
   participantId: z.string(),         // giver who excludes...
   excludedParticipantId: z.string(), // ...this receiver
 });
 
-export type Participant = z.infer<typeof ParticipantSchema>;
-export type Exclusion = z.infer<typeof ExclusionSchema>;
+type Participant = z.infer<typeof ParticipantSchema>;
+type Exclusion = z.infer<typeof ExclusionSchema>;
 
 type DrawResultFailed = {
   ok: false;

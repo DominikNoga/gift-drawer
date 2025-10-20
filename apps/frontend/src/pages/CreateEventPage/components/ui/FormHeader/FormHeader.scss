@@ -1,0 +1,7 @@
+.form-header {
+  @include flex-layout(column);
+
+  h3 {
+    @include reset-spacing();
+  }
+}
