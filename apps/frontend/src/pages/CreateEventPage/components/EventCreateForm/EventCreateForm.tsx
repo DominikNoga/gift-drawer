@@ -6,7 +6,7 @@ import BasicDataForm from '../BasicDataForm/BasicDataForm';
 import AddParticipantsForm from '../AddParticipantsForm/AddParticipantsForm';
 import SetExclusionsForm from '../SetExclusionsForm/SetExclusionsForm';
 import CreateEventPreview from '../CreateEventPreview/CreateEventPreview';
-import ErrorsList from '../ErrorsList/ErrorsList';
+import ErrorsList from '../ui/ErrorsList/ErrorsList';
 import BackButton from '@gd/shared/components/buttons/BackButton/BackButton';
 
 const Components = [

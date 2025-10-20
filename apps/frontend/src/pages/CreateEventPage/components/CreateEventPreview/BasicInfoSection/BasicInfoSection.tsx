@@ -1,38 +1,38 @@
 import type { CreateEventRequest } from '@gd/types/src/api/api.events.types';
 import './BasicInfoSection.scss';
+import FormHeader from '../../ui/FormHeader/FormHeader';
+import EventPreviewSection from '../components/ui/EventPreviewSection/EventPreviewSection';
 
 type Props = Omit<CreateEventRequest, 'exclusions' | 'participants'>
 
 export default function BasicInfoSection({ name, organizerName, exchangeDate, giftBudget, description, location }: Props) {
   return (
-    <section className='event-preview-section-basic-info'>
-      <h2>Event Basic Information</h2>
-      <div className='event-preview-section-basic-info-content'>
+    <EventPreviewSection>
+      <FormHeader title="Basic Information" />
+      <p>
+        <strong className='basic-info-label'>Event Name:</strong> {name}
+      </p>
+      <p>
+        <strong className='basic-info-label'>Organizer Name:</strong> {organizerName}
+      </p>
+      <p>
+        <strong className='basic-info-label'>Description:</strong> {description}
+      </p>
+      {exchangeDate && (
         <p>
-          <strong>Event Name:</strong> {name}
+          <strong className='basic-info-label'>Exchange Date:</strong> {new Date(exchangeDate).toLocaleDateString()}
         </p>
+      )}
+      {giftBudget && (
         <p>
-          <strong>Organizer Name:</strong> {organizerName}
+          <strong className='basic-info-label'>Gift Budget:</strong> ${giftBudget}
         </p>
+      )}
+      {location && (
         <p>
-          <strong>Description:</strong> {description}
+          <strong className='basic-info-label'>Location:</strong> {location}
         </p>
-        {exchangeDate && (
-          <p>
-            <strong>Exchange Date:</strong> {new Date(exchangeDate).toLocaleDateString()}
-          </p>
-        )}
-        {giftBudget && (
-          <p>
-            <strong>Gift Budget:</strong> ${giftBudget}
-          </p>
-        )}
-        {location && (
-          <p>
-            <strong>Location:</strong> {location}
-          </p>
-        )}
-      </div>
-    </section>
+      )}
+    </EventPreviewSection>
   );
 }

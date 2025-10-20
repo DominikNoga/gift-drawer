@@ -64,7 +64,7 @@ export default function Footer() {
           Built with React, TypeScript, Node.js, and a bit of holiday magic.
         </p>
       </section>
-      <RequestFeatureModal isOpen={isRequestFeatureModalOpen} onClose={onModalClose} />
+      {/* <RequestFeatureModal isOpen={isRequestFeatureModalOpen} onClose={onModalClose} /> */}
     </footer>
   );
 }
