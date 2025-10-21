@@ -4,4 +4,4 @@ SELECT
 FROM participants giver
 JOIN participants receiver 
     ON giver.drawn_participant_id = receiver.id
-WHERE giver.event_id = "7daba155-ce92-4efa-948d-546903279295";
+WHERE giver.event_id = "c713a97f-8ecc-4677-ab14-7e9c76be46ac";
