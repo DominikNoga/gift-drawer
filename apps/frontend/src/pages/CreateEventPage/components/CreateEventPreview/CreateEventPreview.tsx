@@ -1,6 +1,6 @@
-import { useContext, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import './CreateEventPreview.scss';
-import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
+import { useCreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
 import { clearFormDataCache } from '../../utils/create-event.utils';
 import { createEvent } from '@gd/shared/services/events-services/events.service';
 import Button from '@gd/shared/components/buttons/Button/Button';
@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import FormHeader from '../ui/FormHeader/FormHeader';
 
 export default function CreateEventPreview() {
-  const { createEventData, handleSetErrors } = useContext(CreateEventContext);
+  const { createEventData, handleSetErrors } = useCreateEventContext();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 

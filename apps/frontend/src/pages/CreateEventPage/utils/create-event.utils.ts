@@ -1,11 +1,10 @@
 import { CREATE_EVENT_FORM_VALUE_KEY } from "../constants/constants";
-import { INITIAL_CREATE_EVENT_STATE } from "../store/CreateEventContext/constants/constants";
 import type { CreateEventContextType } from "../store/CreateEventContext/types/types";
 
-export const getInitialFormValue = (): CreateEventContextType => {
+export const getInitialFormValue = (): CreateEventContextType | undefined => {
   const cachedData = localStorage.getItem(CREATE_EVENT_FORM_VALUE_KEY);
   return cachedData && cachedData !== '' ? 
-    JSON.parse(cachedData) : INITIAL_CREATE_EVENT_STATE;
+    JSON.parse(cachedData) : undefined;
 };
 
 export const cacheFormValue = (formState: CreateEventContextType): void => {
