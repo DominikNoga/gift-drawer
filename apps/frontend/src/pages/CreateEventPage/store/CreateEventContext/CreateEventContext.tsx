@@ -54,6 +54,7 @@ export default function CreateEventContextProvider({ children }: { children: Rea
     handleAddBasicData,
     handlePrevStep,
     handleSetErrors,
+    errors: [],
   };
 
   return (

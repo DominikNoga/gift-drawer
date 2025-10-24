@@ -1,13 +1,13 @@
 import { CREATE_EVENT_ACTIONS, CREATE_EVENT_STEPS } from "../../../../constants/constants";
 import type { CurrentStep } from "../../../../types/types";
 import { cacheFormValue } from "../../../../utils/create-event.utils";
-import type { CreateEventAction, CreateEventContextType } from "../../types/types";
+import type { CreateEventAction, CreateEventContextValues } from "../../types/types";
 
-export const createEventReducer = (state: CreateEventContextType | undefined, action: CreateEventAction) => {
+export const createEventReducer = (state: CreateEventContextValues | undefined, action: CreateEventAction) => {
   let updatedState = { 
     ...state,
     errors: [],
-  } as CreateEventContextType;
+  } as CreateEventContextValues;
   console.log(updatedState);
 
   switch (action.type) {

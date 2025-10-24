@@ -34,3 +34,5 @@ export type CreateEventContextType = {
   handleSetErrors: (errors: string[]) => void;
   errors?: string[];
 };
+
+export type CreateEventContextValues = Pick<CreateEventContextType, 'createEventData' | 'currentStep' | 'errors'>;
