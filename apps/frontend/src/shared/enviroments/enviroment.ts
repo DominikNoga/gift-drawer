@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'http://localhost:5000/api'
+  apiUrl: import.meta.env.VITE_API_URL ?? ' http://localhost:3000/api',
 };
