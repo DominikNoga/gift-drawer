@@ -1,7 +1,7 @@
-import React, { useContext, useRef, useState, type FormEvent } from 'react';
+import React, { useRef, useState, type FormEvent } from 'react';
 import './AddParticipantsForm.scss';
 import Input from '@gd/shared/components/Input/Input';
-import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
+import { useCreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
 import Button from '@gd/shared/components/buttons/Button/Button';
 import { validateParticipants } from './utils/AddParticipantsForm.utils';
 import ErrorsList from '../ui/ErrorsList/ErrorsList';
@@ -10,7 +10,7 @@ import FormHeader from '../ui/FormHeader/FormHeader';
 const MIN_PARTICIPANTS = 3;
 
 export default function AddParticipantsForm() {
-  const { handleAddParticipants, createEventData, handleSetErrors } = useContext(CreateEventContext);
+  const { handleAddParticipants, createEventData, handleSetErrors } = useCreateEventContext();
   const [participantsCount, setParticipantsCount] = useState<number>(
     createEventData.participants.length > 0 ? createEventData.participants.length : 1
   );

@@ -1,7 +1,6 @@
 import './EventCreateForm.scss';
 import Card from '@gd/shared/components/Card/Card';
-import { useContext } from 'react';
-import { CreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
+import { useCreateEventContext } from '../../store/CreateEventContext/CreateEventContext';
 import BasicDataForm from '../BasicDataForm/BasicDataForm';
 import AddParticipantsForm from '../AddParticipantsForm/AddParticipantsForm';
 import SetExclusionsForm from '../SetExclusionsForm/SetExclusionsForm';
@@ -17,7 +16,7 @@ const Components = [
 ];
 
 export default function EventCreateForm() {
-  const { currentStep, errors, handlePrevStep } = useContext(CreateEventContext);
+  const { currentStep, errors, handlePrevStep } = useCreateEventContext();
   const isBackDisabled = currentStep === 0;
   const Component = Components[currentStep];
 

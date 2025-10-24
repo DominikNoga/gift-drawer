@@ -1,4 +1,4 @@
-import { SnakeCase, CamelCase } from 'type-fest';
+import { type SnakeCase, type CamelCase } from 'type-fest';
 
 export type SnakeCaseKeys<T> = {
   [K in keyof T as SnakeCase<K & string>]: T[K];

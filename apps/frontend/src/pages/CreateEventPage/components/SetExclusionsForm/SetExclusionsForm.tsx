@@ -1,6 +1,6 @@
 import './SetExclusionsForm.scss';
-import { useContext, useState, type FormEvent } from "react";
-import { CreateEventContext } from "../../store/CreateEventContext/CreateEventContext";
+import { useState, type FormEvent } from "react";
+import { useCreateEventContext } from "../../store/CreateEventContext/CreateEventContext";
 import type { NewExclusion } from "../../store/CreateEventContext/types/types";
 import Button from "@gd/shared/components/buttons/Button/Button";
 import CreateExclusionRow from './components/CreateExclusionRow/CreateExclusionRow';
@@ -10,7 +10,7 @@ import { EMPTY_EXCLUSION } from './constants/constants';
 import FormHeader from '../ui/FormHeader/FormHeader';
 
 export default function SetExclusionsForm() {
-  const { handleAddExclusions, createEventData } = useContext(CreateEventContext);
+  const { handleAddExclusions, createEventData } = useCreateEventContext();
   const [exclusions, setExclusions] = useState<NewExclusion[]>(getInitialExclusions(createEventData.exclusions));
   const participants = createEventData.participants.map(p => p.name) || [];
 
