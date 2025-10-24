@@ -3,10 +3,10 @@
   "outputDirectory": "apps/frontend/dist",
   "framework": null,
   "functions": {
-    "apps/server/api/*.ts": { "runtime": "nodejs18.x" }
+    "api/*.ts": { "runtime": "nodejs20.x" }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "apps/server/api/index.prod.ts" }
+    { "source": "/api/(.*)", "destination": "/api/index.ts" }
   ],
   "ignoreCommand": "echo 'Use Vercel build cache'"
 }
