@@ -1,12 +1,5 @@
 {
   "buildCommand": "pnpm i --frozen-lockfile && pnpm -w build",
   "outputDirectory": "apps/frontend/dist",
-  "framework": null,
-  "functions": {
-    "api/*.ts": { "runtime": "nodejs20.x" }
-  },
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.ts" }
-  ],
-  "ignoreCommand": "echo 'Use Vercel build cache'"
+  "framework": null
 }
