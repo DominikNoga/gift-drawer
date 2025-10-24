@@ -1,12 +1,11 @@
-import React, { useReducer, type FormEvent } from "react";
+import React, { useContext, useReducer, type FormEvent } from "react";
 import { createContext } from "react";
 import type { AddParticipantsPayload, BasicInfoPayload, CreateEventContextType, SetExclusionsPayload } from "./types/types";
 import { createEventReducer } from "./reducers/create-event/create-event-reducer";
-import { INITIAL_CREATE_EVENT_STATE } from "./constants/constants";
 import { CREATE_EVENT_ACTIONS } from "../../constants/constants";
 import { getInitialFormValue } from "../../utils/create-event.utils";
 
-export const CreateEventContext = createContext<CreateEventContextType>(INITIAL_CREATE_EVENT_STATE);
+export const CreateEventContext = createContext<CreateEventContextType | null>(null);
 
 export default function CreateEventContextProvider({ children }: { children: React.ReactNode }) {
   const [createEventState, createEventDispatch] = useReducer(createEventReducer, getInitialFormValue());
@@ -58,8 +57,16 @@ export default function CreateEventContextProvider({ children }: { children: Rea
   };
 
   return (
-    <CreateEventContext value={ctxValue}>
+    <CreateEventContext value={ctxValue as CreateEventContextType}>
       {children}
     </CreateEventContext>
   );
 }
+
+export const useCreateEventContext = (): CreateEventContextType => {
+  const context = useContext(CreateEventContext);
+  if (!context) {
+    throw new Error('useCreateEventContext must be used within a CreateEventContextProvider');
+  }
+  return context;
+};
