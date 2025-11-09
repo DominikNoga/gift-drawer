@@ -10,7 +10,6 @@ import { GetParticipantForEventResponse } from "@gd/types/src/api/api.participan
 import { participantsTable } from "../participants/participants.db";
 import { exclusionsTable } from "../exclusions/exclusions.db";
 import { DrawResultFailed, drawSecretSanta } from "../../utils/drawing-logic.utils";
-import { Participant } from "@gd/types/src/models/participants.model";
 
 export const getEventRow = (createEventRequest: CreateEventRequestWithoutRelations): EventDbRecord => {
   const id = generateId();
