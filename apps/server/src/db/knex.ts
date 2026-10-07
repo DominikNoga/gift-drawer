@@ -27,4 +27,3 @@ const config: Knex.Config = isProd
     };
 
 export default config;
-module.exports = config;
