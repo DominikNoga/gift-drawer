@@ -19,26 +19,26 @@ import {
   User,
   Users,
   UserX,
-  
+
   // Communication
   Mail,
-  
+
   // Christmas & Gifts
   Gift,
   Star,
-  
+
   // Interface Elements
   Calendar,
   DollarSign,
   Link as LinkIcon,
   QrCode,
   MapPin,
-  
+
   // Status & Feedback
   CheckCircle,
   AlertCircle,
   AlertTriangle,
-  
+
   // Actions & Tools
   Shuffle,
   EarthIcon,
@@ -100,7 +100,6 @@ export const ChristmasIcons = {
   Heart: Heart,
   Star: Star,
 } as const;
-
 
 export const InterfaceIcons = {
   Calendar: Calendar,

@@ -7,21 +7,18 @@ export const EventSchema = z.object({
   name: z.string().max(50),
   description: z.string(),
   organizerName: z.string().max(30),
-  giftBudget: z.number()
-    .min(1)
-    .int()
-    .optional(),
-  location: z.string()
-    .optional(),
-  exchangeDate: z.string()
-    .optional(),
+  giftBudget: z.number().min(1).int().optional(),
+  location: z.string().optional(),
+  exchangeDate: z.string().optional(),
   isReady: z.boolean(),
   createdAt: z.string(),
-  participants: z.array(ParticipantSchema.pick({name: true, id: true, joinCode: true})),
-  exclusions: z.array(z.object({
-    participantName: z.string(),
-    excludedParticipantName: z.string(),
-  })),
+  participants: z.array(ParticipantSchema.pick({ name: true, id: true, joinCode: true })),
+  exclusions: z.array(
+    z.object({
+      participantName: z.string(),
+      excludedParticipantName: z.string(),
+    }),
+  ),
 });
 
 export const EventCreateSchema = EventSchema.omit({
@@ -35,7 +32,7 @@ export const EventCreateSchema = EventSchema.omit({
 export const EventDbSchema = EventSchema.omit({
   exclusions: true,
   participants: true,
-})
+});
 
 export type Event = z.infer<typeof EventSchema>;
 

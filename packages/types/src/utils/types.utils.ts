@@ -6,4 +6,4 @@ export type SnakeCaseKeys<T> = {
 
 export type CamelCaseKeys<T> = {
   [K in keyof T as CamelCase<K & string>]: T[K];
-}
+};

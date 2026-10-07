@@ -1,5 +1,4 @@
-import type { EventCardProps } from "./components/EventCard/EventCard";
-
+import type { EventCardProps } from './components/EventCard/EventCard';
 
 export const createEventProps: Omit<EventCardProps, 'icon'> = {
   description: 'Start a new Secret Santa event and invite your friends, family, or colleagues.',

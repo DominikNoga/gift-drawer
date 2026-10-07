@@ -48,7 +48,7 @@
 
     &-item {
       @include flex-layout(column, flex-start);
-      
+
       > p {
         @include reset-spacing();
         line-height: 1.4;
@@ -87,5 +87,4 @@
       font-size: $font-size-base;
     }
   }
-
 }

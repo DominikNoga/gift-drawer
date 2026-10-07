@@ -21,7 +21,7 @@
   @include hover-effect() {
     &::before {
       box-shadow: $shadow-lg;
-      opacity: .1;
+      opacity: 0.1;
     }
   }
 }

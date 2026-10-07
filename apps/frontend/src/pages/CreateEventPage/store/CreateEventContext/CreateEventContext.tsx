@@ -1,20 +1,28 @@
-import React, { useContext, useReducer, type FormEvent } from "react";
-import { createContext } from "react";
-import type { AddParticipantsPayload, BasicInfoPayload, CreateEventContextType, SetExclusionsPayload } from "./types/types";
-import { createEventReducer } from "./reducers/create-event/create-event-reducer";
-import { CREATE_EVENT_ACTIONS } from "../../constants/constants";
-import { getInitialFormValue } from "../../utils/create-event.utils";
+import React, { useContext, useReducer, type FormEvent } from 'react';
+import { createContext } from 'react';
+import type {
+  AddParticipantsPayload,
+  BasicInfoPayload,
+  CreateEventContextType,
+  SetExclusionsPayload,
+} from './types/types';
+import { createEventReducer } from './reducers/create-event/create-event-reducer';
+import { CREATE_EVENT_ACTIONS } from '../../constants/constants';
+import { getInitialFormValue } from '../../utils/create-event.utils';
 
 export const CreateEventContext = createContext<CreateEventContextType | null>(null);
 
 export default function CreateEventContextProvider({ children }: { children: React.ReactNode }) {
-  const [createEventState, createEventDispatch] = useReducer(createEventReducer, getInitialFormValue());
+  const [createEventState, createEventDispatch] = useReducer(
+    createEventReducer,
+    getInitialFormValue(),
+  );
 
   const handleAddBasicData = (e: FormEvent, formData: BasicInfoPayload) => {
     e.preventDefault();
     createEventDispatch({
       payload: formData,
-      type: CREATE_EVENT_ACTIONS.BASIC_INFO
+      type: CREATE_EVENT_ACTIONS.BASIC_INFO,
     });
   };
 
@@ -58,9 +66,7 @@ export default function CreateEventContextProvider({ children }: { children: Rea
   };
 
   return (
-    <CreateEventContext value={ctxValue as CreateEventContextType}>
-      {children}
-    </CreateEventContext>
+    <CreateEventContext value={ctxValue as CreateEventContextType}>{children}</CreateEventContext>
   );
 }
 

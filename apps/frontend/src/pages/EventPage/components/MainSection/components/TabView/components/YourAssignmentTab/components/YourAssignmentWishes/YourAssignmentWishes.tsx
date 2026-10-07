@@ -10,7 +10,7 @@ type Props = {
 export default function YourAssignmentWishes({ wishlistItems, drawnParticipantName }: Props) {
   return (
     <div className="your-assignment-wishes">
-      <h3 className='your-assignment-wishes-title'>{drawnParticipantName}&apos;s Wishlist</h3>
+      <h3 className="your-assignment-wishes-title">{drawnParticipantName}&apos;s Wishlist</h3>
       <WishlistItems items={wishlistItems} drawnParticipantName={drawnParticipantName} />
     </div>
   );

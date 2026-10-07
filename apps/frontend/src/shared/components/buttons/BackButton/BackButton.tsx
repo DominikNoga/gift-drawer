@@ -8,15 +8,14 @@ type Props = {
 };
 
 export default function BackButton({ onClick, isDisabled, filled }: Props) {
-
   return (
     <button
       className={`back-btn${isDisabled ? '-disabled' : ''} ${filled ? ' back-btn-filled' : ''}`}
-      type='button'
+      type="button"
       onClick={onClick}
       disabled={isDisabled}
     >
-      <NavigationIcons.Back className='back-btn-icon'/>
+      <NavigationIcons.Back className="back-btn-icon" />
     </button>
   );
 }

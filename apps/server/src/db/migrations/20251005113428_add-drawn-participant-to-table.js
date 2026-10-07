@@ -17,14 +17,13 @@ exports.up = async function up(knex) {
       `SELECT 1
          FROM pg_constraint
         WHERE conname = 'participants_drawn_participant_id_foreign'
-          AND conrelid = 'participants'::regclass`
+          AND conrelid = 'participants'::regclass`,
     )
     .then((r) => r.rowCount > 0);
 
   if (!fkExists) {
     await knex.schema.alterTable('participants', (t) => {
-      t
-        .foreign('drawn_participant_id')
+      t.foreign('drawn_participant_id')
         .references('id')
         .inTable('participants')
         .onDelete('SET NULL');
@@ -34,7 +33,7 @@ exports.up = async function up(knex) {
   // Helpful index (safe/optional)
   await knex.raw(
     `CREATE INDEX IF NOT EXISTS participants_drawn_participant_id_idx
-       ON participants (drawn_participant_id);`
+       ON participants (drawn_participant_id);`,
   );
 };
 
@@ -50,7 +49,7 @@ exports.down = async function down(knex) {
        IF EXISTS (SELECT 1 FROM pg_class WHERE relname = 'participants_drawn_participant_id_idx') THEN
          EXECUTE 'DROP INDEX participants_drawn_participant_id_idx';
        END IF;
-     END $$;`
+     END $$;`,
   );
 
   // Drop FK if present
@@ -65,7 +64,7 @@ exports.down = async function down(knex) {
        ) THEN
          ALTER TABLE participants DROP CONSTRAINT participants_drawn_participant_id_foreign;
        END IF;
-     END $$;`
+     END $$;`,
   );
 
   // Drop column if present

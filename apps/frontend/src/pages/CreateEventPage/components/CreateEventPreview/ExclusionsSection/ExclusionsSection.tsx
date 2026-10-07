@@ -12,17 +12,15 @@ export default function ExclusionsSection({ exclusions }: Props) {
   return (
     <EventPreviewSection>
       <FormHeader title="Exclusions" subtitle={subtitle} />
-      {
-        exclusions.length > 0 && (
-          <EventPreviewList>
-            {exclusions.map((exclusion) => (
-              <li key={`${exclusion.participantName}-${exclusion.excludedParticipantName}`}>
-                {exclusion.participantName} excludes {exclusion.excludedParticipantName}
-              </li>
-            ))}
-          </EventPreviewList>
-        )
-      }
+      {exclusions.length > 0 && (
+        <EventPreviewList>
+          {exclusions.map((exclusion) => (
+            <li key={`${exclusion.participantName}-${exclusion.excludedParticipantName}`}>
+              {exclusion.participantName} excludes {exclusion.excludedParticipantName}
+            </li>
+          ))}
+        </EventPreviewList>
+      )}
     </EventPreviewSection>
   );
 }

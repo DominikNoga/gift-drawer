@@ -1,5 +1,5 @@
-import { CREATE_EVENT_STEPS } from "../../constants/constants";
-import type { CreateEventContextValues } from "./types/types";
+import { CREATE_EVENT_STEPS } from '../../constants/constants';
+import type { CreateEventContextValues } from './types/types';
 
 export const INITIAL_CONTEXT_VALUE: CreateEventContextValues = {
   createEventData: {

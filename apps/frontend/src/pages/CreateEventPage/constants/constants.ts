@@ -11,6 +11,6 @@ export const CREATE_EVENT_STEPS = {
   ADD_PARTICIPANTS: 1,
   SET_EXCLUSIONS: 2,
   PREVIEW: 3,
-} as const; 
+} as const;
 
 export const CREATE_EVENT_FORM_VALUE_KEY = 'create-event-form-value';

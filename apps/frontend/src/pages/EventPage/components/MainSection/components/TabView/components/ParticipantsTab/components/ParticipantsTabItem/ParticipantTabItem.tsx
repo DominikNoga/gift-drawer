@@ -29,16 +29,18 @@ export default function ParticipantsTabItem({ name, joinCode = 'test code' }: Pr
         size={2}
       />
       <span>{name}</span>
-      {
-        isOrganizer && (
-          <button className="participant-tab-item-copy-btn" type="button" onClick={handleCopyJoinCode}>
-            <span className="participant-tab-item-copy-btn-icon">
-              <InterfaceIcons.Copy />
-            </span>
-            {copyBtnText}
-          </button>
-        )
-      }
+      {isOrganizer && (
+        <button
+          className="participant-tab-item-copy-btn"
+          type="button"
+          onClick={handleCopyJoinCode}
+        >
+          <span className="participant-tab-item-copy-btn-icon">
+            <InterfaceIcons.Copy />
+          </span>
+          {copyBtnText}
+        </button>
+      )}
     </div>
   );
 }

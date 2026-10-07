@@ -10,20 +10,20 @@ const config: Knex.Config = isProd
       migrations: {
         directory: path.resolve(__dirname, 'migrations'),
         tableName: 'knex_migrations',
-        extension: 'ts'
-      }
+        extension: 'ts',
+      },
     }
   : {
       client: 'sqlite3',
       connection: {
-        filename: path.resolve(__dirname, 'gd.db.sqlite3')
+        filename: path.resolve(__dirname, 'gd.db.sqlite3'),
       },
       useNullAsDefault: true,
       migrations: {
         directory: path.resolve(__dirname, 'migrations'),
         tableName: 'knex_migrations',
-        extension: 'ts'
-      }
+        extension: 'ts',
+      },
     };
 
 export default config;

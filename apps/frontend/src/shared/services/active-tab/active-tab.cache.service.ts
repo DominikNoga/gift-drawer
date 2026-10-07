@@ -1,6 +1,6 @@
-import { ACTIVE_TAB_KEY } from "../../constants/local-storage-keys";
-import { cacheValue, getCachedValue } from "../local-storage.service";
-import type { ActiveTabCache } from "./active-tab.cache.service.types";
+import { ACTIVE_TAB_KEY } from '../../constants/local-storage-keys';
+import { cacheValue, getCachedValue } from '../local-storage.service';
+import type { ActiveTabCache } from './active-tab.cache.service.types';
 
 export const cacheActiveTab = (eventId: string, tabIndex: number) => {
   const activeTabCache = getCachedValue<ActiveTabCache[]>(ACTIVE_TAB_KEY) || [];
@@ -10,7 +10,9 @@ export const cacheActiveTab = (eventId: string, tabIndex: number) => {
     cacheValue<ActiveTabCache[]>(ACTIVE_TAB_KEY, updatedCache);
     return;
   }
-  const updatedCache = activeTabCache.map((cache) => cache.eventId === eventId ? { eventId, tabIndex } : cache);
+  const updatedCache = activeTabCache.map((cache) =>
+    cache.eventId === eventId ? { eventId, tabIndex } : cache,
+  );
   cacheValue<ActiveTabCache[]>(ACTIVE_TAB_KEY, updatedCache);
 };
 

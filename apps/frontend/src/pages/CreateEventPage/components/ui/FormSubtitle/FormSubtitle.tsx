@@ -6,7 +6,5 @@ type Props = {
 };
 
 export default function FormSubtitle({ children }: Props) {
-  return (
-    <p className="form-subtitle">{children}</p>
-  );
+  return <p className="form-subtitle">{children}</p>;
 }

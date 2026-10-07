@@ -7,9 +7,9 @@ export default function MyEventsSection() {
   const events = getUserEventsFromCache();
 
   return (
-    <section className='my-events-section'>
-      <span className='my-events-section-title'>
-        <NavigationIcons.Search className='my-events-section-title-icon' /> My Events
+    <section className="my-events-section">
+      <span className="my-events-section-title">
+        <NavigationIcons.Search className="my-events-section-title-icon" /> My Events
       </span>
       <MyEventsList events={events || []} />
     </section>

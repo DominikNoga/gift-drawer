@@ -4,7 +4,7 @@ const allNamesDifferent = (participants: string[]) => {
 };
 
 const allNamesFilled = (participants: string[]) => {
-  const emptyParticipant = participants.find(p => p === '');
+  const emptyParticipant = participants.find((p) => p === '');
   console.log(emptyParticipant);
   return emptyParticipant === undefined;
 };
@@ -15,7 +15,7 @@ export const validateParticipants = (participants: string[]): string[] => {
   if (!allNamesFilled(participants)) {
     errors.push('Participant names cannot be empty');
   }
-  
+
   if (!allNamesDifferent(participants)) {
     errors.push('All names must have different values');
   }

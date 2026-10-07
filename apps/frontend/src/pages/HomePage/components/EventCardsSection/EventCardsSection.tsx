@@ -29,12 +29,7 @@ export default function EventCardsSection() {
   return (
     <section className="event-cards-section">
       <EventCard
-        icon={
-          <CircleIcon
-            icon={<InterfaceIcons.Create />}
-            className='event-cards-create-icon'
-          />
-        }
+        icon={<CircleIcon icon={<InterfaceIcons.Create />} className="event-cards-create-icon" />}
         {...createEventProps}
       >
         <Button
@@ -43,23 +38,19 @@ export default function EventCardsSection() {
             navigate(ROUTES_NAMES.CREATE_EVENT);
           }}
           btnType="primary"
-          className="event-card-btn">
+          className="event-card-btn"
+        >
           Create Event
         </Button>
       </EventCard>
       <EventCard
-        icon={
-          <CircleIcon
-            icon={<UserIcons.Users />}
-            className='event-cards-join-icon'
-          />
-        }
+        icon={<CircleIcon icon={<UserIcons.Users />} className="event-cards-join-icon" />}
         {...joinEventProps}
       >
         <Input
-          id='join-code-input'
-          className='input-field-green event-card-input'
-          placeholder='Enter a join code'
+          id="join-code-input"
+          className="input-field-green event-card-input"
+          placeholder="Enter a join code"
           value={joinCode}
           onChange={handleChange}
           minLength={22}

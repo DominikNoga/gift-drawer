@@ -1,13 +1,16 @@
 .my-events-card {
   @include flex-layout(column, flex-start, flex-start);
-  transition: border-color $transition-base, $transition-shadow;
+  transition:
+    border-color $transition-base,
+    $transition-shadow;
 
   @include hover-effect() {
     border: $border-width-1 solid $border-color-primary;
     box-shadow: $shadow-lg;
 
     .my-events-card-row {
-      h3, &-link-icon {
+      h3,
+      &-link-icon {
         color: $primary;
       }
     }
@@ -17,7 +20,8 @@
     @include flex-layout(row, center, space-between);
     width: 100%;
 
-    h3, &-link-icon {
+    h3,
+    &-link-icon {
       transition: $transition-base color;
     }
 
@@ -36,7 +40,7 @@
   }
 
   &-info {
-    @include flex-layout(column, $gap: .5rem);
+    @include flex-layout(column, $gap: 0.5rem);
     color: $text-secondary;
 
     &-item {

@@ -11,7 +11,9 @@
   border-radius: $border-radius-lg;
   font-size: $font-size-lg;
   font-weight: $font-weight-bold;
-  transition: $transition-shadow, scale $transition-base;
+  transition:
+    $transition-shadow,
+    scale $transition-base;
   @include hover-effect() {
     box-shadow: $shadow-lg;
     scale: 1.1;

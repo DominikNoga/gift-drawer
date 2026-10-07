@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { WishlistItemCreateSchema } from "../models/wish.model";
+import { z } from 'zod';
+import { WishlistItemCreateSchema } from '../models/wish.model';
 
 export type WishlistModifyParam = {
   id: string;

@@ -10,13 +10,16 @@ type SquareIconProps = {
 
 export default function SquareIcon({ icon, backgroundColor, iconColor, size }: SquareIconProps) {
   return (
-    <div className='square-icon' style={{
-      backgroundColor: backgroundColor,
-      color: iconColor,
-      width: `${size}em`,
-      height: `${size}em`,
-    }}>
-      { icon }
+    <div
+      className="square-icon"
+      style={{
+        backgroundColor: backgroundColor,
+        color: iconColor,
+        width: `${size}em`,
+        height: `${size}em`,
+      }}
+    >
+      {icon}
     </div>
   );
 }

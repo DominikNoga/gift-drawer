@@ -1,5 +1,5 @@
 import './InfoCard.scss';
-import Card from "@gd/shared/components/Card/Card";
+import Card from '@gd/shared/components/Card/Card';
 
 type Props = {
   value: string | number;

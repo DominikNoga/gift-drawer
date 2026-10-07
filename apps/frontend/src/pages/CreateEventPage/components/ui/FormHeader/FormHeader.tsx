@@ -8,9 +8,9 @@ type Props = {
 
 export default function FormHeader({ title, subtitle }: Props) {
   return (
-    <header className='form-header'>
+    <header className="form-header">
       <h3>{title}</h3>
       {subtitle && <FormSubtitle>{subtitle}</FormSubtitle>}
     </header>
   );
-} 
+}

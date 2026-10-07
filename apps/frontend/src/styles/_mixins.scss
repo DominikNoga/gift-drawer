@@ -1,4 +1,4 @@
-@use './variables'as *;
+@use './variables' as *;
 
 @mixin hover-effect($cursor: pointer) {
   &:hover {
@@ -38,7 +38,12 @@
   transform: translate(-50%, -50%);
 }
 
-@mixin flex-layout($direction: column, $align-items: default, $justify-content: default, $gap: $default-gap) {
+@mixin flex-layout(
+  $direction: column,
+  $align-items: default,
+  $justify-content: default,
+  $gap: $default-gap
+) {
   display: flex;
   flex-direction: $direction;
   align-items: $align-items;
@@ -46,7 +51,13 @@
   gap: $gap;
 }
 
-@mixin simple-transition($property, $time: .3s, $before-transition-value, $after-transition-value, $cursor: pointer) {
+@mixin simple-transition(
+  $property,
+  $time: 0.3s,
+  $before-transition-value,
+  $after-transition-value,
+  $cursor: pointer
+) {
   transition: #{$property} $time;
   #{$property}: $before-transition-value;
   will-change: #{$property};
@@ -56,8 +67,19 @@
   }
 }
 
-@mixin opacity-transition($time: .3s, $before-transition-value: 1, $after-transition-value: .9, $cursor: pointer) {
-  @include simple-transition(opacity, $time, $before-transition-value, $after-transition-value, $cursor);
+@mixin opacity-transition(
+  $time: 0.3s,
+  $before-transition-value: 1,
+  $after-transition-value: 0.9,
+  $cursor: pointer
+) {
+  @include simple-transition(
+    opacity,
+    $time,
+    $before-transition-value,
+    $after-transition-value,
+    $cursor
+  );
 }
 
 @mixin sr-only {

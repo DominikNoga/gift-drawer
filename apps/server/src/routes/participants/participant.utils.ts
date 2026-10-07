@@ -1,14 +1,19 @@
-import { toDbSchema } from "../../utils/change-case.utils";
-import { generateId } from "../../utils/generate-id.utils";
-import { CreateParticipantRequestDto, ParticipantDbRecord } from "@gd/types/src/models/participants.model";
-import { participantsTable } from "./participants.db";
+import { toDbSchema } from '../../utils/change-case.utils';
+import { generateId } from '../../utils/generate-id.utils';
+import {
+  CreateParticipantRequestDto,
+  ParticipantDbRecord,
+} from '@gd/types/src/models/participants.model';
+import { participantsTable } from './participants.db';
 import crypto from 'crypto';
 
 function generateJoinCode() {
-  return crypto.randomBytes(16).toString('base64url'); 
+  return crypto.randomBytes(16).toString('base64url');
 }
 
-export const getParticipantRow = (createParticipantRequest: CreateParticipantRequestDto): ParticipantDbRecord => {
+export const getParticipantRow = (
+  createParticipantRequest: CreateParticipantRequestDto,
+): ParticipantDbRecord => {
   const id = generateId();
 
   return toDbSchema({
@@ -19,7 +24,9 @@ export const getParticipantRow = (createParticipantRequest: CreateParticipantReq
   });
 };
 
-export const createParticipantRecord = async (createParticipantRequest: CreateParticipantRequestDto) => {
+export const createParticipantRecord = async (
+  createParticipantRequest: CreateParticipantRequestDto,
+) => {
   const participantRow = getParticipantRow(createParticipantRequest);
   await participantsTable().insert(participantRow);
   return {

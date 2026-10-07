@@ -1,8 +1,8 @@
-import express from "express";
-import cors from 'cors'
-import eventsRouter from "./routes/events/events.routes";
-import wishesRouter from "./routes/wishes/wishes.routes";
-import healthRouter from "./routes/healthcheck/router";
+import express from 'express';
+import cors from 'cors';
+import eventsRouter from './routes/events/events.routes';
+import wishesRouter from './routes/wishes/wishes.routes';
+import healthRouter from './routes/healthcheck/router';
 
 export function createApp() {
   const app = express();

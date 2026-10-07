@@ -7,7 +7,10 @@ import YourAssignmentTab from './components/TabView/components/YourAssignmentTab
 import WishlistTab from './components/TabView/components/WishlistTab/WishlistTab';
 import { useEventPageContext } from '../../providers/EventPageContextProvider/EventPageContextProvider';
 import { TAB_INDEXES } from './MainSection.const';
-import { cacheActiveTab, getActiveTabFromCache } from '@gd/shared/services/active-tab/active-tab.cache.service';
+import {
+  cacheActiveTab,
+  getActiveTabFromCache,
+} from '@gd/shared/services/active-tab/active-tab.cache.service';
 
 export default function MainSection() {
   const { event, isOrganizer, refetchEvent } = useEventPageContext();
@@ -24,23 +27,28 @@ export default function MainSection() {
   };
 
   const tabs = [
-    <ParticipantsTab key='participants' participants={event.participants} />,
-    <YourAssignmentTab key='assignments' />,
-    <WishlistTab key='wishlist' currentParticipantId={event.currentParticipant.id} />,
+    <ParticipantsTab key="participants" participants={event.participants} />,
+    <YourAssignmentTab key="assignments" />,
+    <WishlistTab key="wishlist" currentParticipantId={event.currentParticipant.id} />,
   ];
 
   if (isOrganizer && !event.namesDrawn) {
     tabs.push(
       <DrawNamesTab
-        key='draw-names-tab'
+        key="draw-names-tab"
         eventId={event.id}
         handleViewAssignment={handleViewAssignment}
-      />
+      />,
     );
   }
 
   return (
-    <TabView onTabChange={setActiveTabWithCache} isOrganizer={isOrganizer} activeTab={activeTab} namesDrawn={event.namesDrawn}>
+    <TabView
+      onTabChange={setActiveTabWithCache}
+      isOrganizer={isOrganizer}
+      activeTab={activeTab}
+      namesDrawn={event.namesDrawn}
+    >
       {tabs[activeTab]}
     </TabView>
   );

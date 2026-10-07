@@ -2,7 +2,7 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function(knex) {
+exports.up = function (knex) {
   return knex.schema.createTable('event_participants', (table) => {
     table.string('id').primary();
     table.string('participant_id').notNullable();
@@ -18,6 +18,6 @@ exports.up = function(knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTableIfExists('event_participants');
 };

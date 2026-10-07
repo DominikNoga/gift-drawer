@@ -8,9 +8,9 @@ type Props = {
 
 export default function ParticipantsTab({ participants }: Props) {
   return (
-    <div className='participants-tab'>
+    <div className="participants-tab">
       <header>
-        <h3 className='participants-tab-header'>Participants ({participants?.length})</h3>
+        <h3 className="participants-tab-header">Participants ({participants?.length})</h3>
       </header>
       {participants?.map((participant) => (
         <ParticipantsTabItem

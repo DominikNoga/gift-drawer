@@ -6,5 +6,5 @@ type Props = {
 };
 
 export default function EventPreviewSection({ children }: Props) {
-  return <section className='event-preview-section'>{children}</section>;
+  return <section className="event-preview-section">{children}</section>;
 }

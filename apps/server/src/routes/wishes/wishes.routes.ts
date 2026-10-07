@@ -1,9 +1,9 @@
-import { Router } from 'express'
-import { 
+import { Router } from 'express';
+import {
   addWishlistItem,
   getParticipantWishlist,
   editWishlistItem,
-  deleteWishlistItem
+  deleteWishlistItem,
 } from './wishes.handlers';
 
 const wishesRouter = Router();

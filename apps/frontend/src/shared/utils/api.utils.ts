@@ -1,4 +1,4 @@
-import { environment } from "../environments/environment";
+import { environment } from '../environments/environment';
 import axios from 'axios';
 
 export const api = axios.create({
@@ -9,23 +9,34 @@ export const api = axios.create({
   withCredentials: false,
 });
 
-
-export const get = async <ResponseType>(url: string, params?: Record<string, unknown>): Promise<ResponseType> => {
+export const get = async <ResponseType>(
+  url: string,
+  params?: Record<string, unknown>,
+): Promise<ResponseType> => {
   const response = await api.get<ResponseType>(url, { params });
   return response.data;
 };
 
-export const post = async <ResponseType, BodyType = unknown>(url: string, body: BodyType): Promise<ResponseType> => {
+export const post = async <ResponseType, BodyType = unknown>(
+  url: string,
+  body: BodyType,
+): Promise<ResponseType> => {
   const response = await api.post<ResponseType>(url, body);
   return response.data;
 };
 
-export const put = async <ResponseType, BodyType = unknown>(url: string, body: BodyType): Promise<ResponseType> => {
+export const put = async <ResponseType, BodyType = unknown>(
+  url: string,
+  body: BodyType,
+): Promise<ResponseType> => {
   const response = await api.put<ResponseType>(url, body);
   return response.data;
 };
 
-export const patch = async <ResponseType, BodyType = unknown>(url: string, body: BodyType): Promise<ResponseType> => {
+export const patch = async <ResponseType, BodyType = unknown>(
+  url: string,
+  body: BodyType,
+): Promise<ResponseType> => {
   const response = await api.patch<ResponseType>(url, body);
   return response.data;
 };

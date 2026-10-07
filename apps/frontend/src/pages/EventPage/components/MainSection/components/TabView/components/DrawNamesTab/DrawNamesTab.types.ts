@@ -5,4 +5,4 @@ export const MODAL_STATE = {
   SUCCESS: 'success',
 } as const;
 
-export type ModalState = typeof MODAL_STATE[keyof typeof MODAL_STATE];
+export type ModalState = (typeof MODAL_STATE)[keyof typeof MODAL_STATE];
