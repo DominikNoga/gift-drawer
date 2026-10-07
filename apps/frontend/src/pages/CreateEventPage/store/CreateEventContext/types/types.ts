@@ -4,12 +4,6 @@ import type { CREATE_EVENT_ACTIONS } from '../../../constants/constants';
 import type { CreateExclusionFromEventRequest } from '@gd/types/src/models/exclusions.model';
 import type { FormEvent } from 'react';
 
-export type CreateEventActionType =
-  | 'basic-info'
-  | 'add-participants'
-  | 'set-exclusions'
-  | 'create-event';
-
 export type BasicInfoPayload = CreateEventRequest;
 
 export type AddParticipantsPayload = string[];
@@ -17,8 +11,6 @@ export type AddParticipantsPayload = string[];
 export type NewExclusion = CreateExclusionFromEventRequest & { viceVersa: boolean };
 
 export type SetExclusionsPayload = CreateExclusionFromEventRequest[];
-
-export type CreateEventPayload = CreateEventRequest;
 
 export type CreateEventAction =
   | { type: (typeof CREATE_EVENT_ACTIONS)['BASIC_INFO']; payload: BasicInfoPayload }
