@@ -22,14 +22,10 @@ type DrawResultSuccess = {
 
 export type DrawResult = DrawResultSuccess | DrawResultFailed;
 
-type Any = {
-  [key: string]: any;
-};
-
-type DrawParticipant = Pick<Participant, 'id'> & Any;
-type DrawParticipants = DrawParticipant[];
-type DrawExclusion = Pick<Exclusion, 'participantId' | 'excludedParticipantId'> & Any;
-type DrawExclusions = DrawExclusion[];
+// Minimal shapes the algorithm needs; callers may pass richer objects.
+// `name` is optional and only used to make failure reasons readable.
+export type DrawParticipant = Pick<Participant, 'id'> & Partial<Pick<Participant, 'name'>>;
+export type DrawExclusion = Pick<Exclusion, 'participantId' | 'excludedParticipantId'>;
 
 // Shuffling using Fisher–Yates algorithm
 function shuffle<T>(arr: T[]): T[] {
@@ -46,9 +42,9 @@ const validateQuantity = (participantsQuantity: number) => {
   }
 };
 
-const buildDisallowedMap = (
-  participantsByIdMap: Map<string, DrawParticipant>,
-  exclusions: DrawExclusions,
+const buildDisallowedMap = <TParticipant extends DrawParticipant>(
+  participantsByIdMap: Map<string, TParticipant>,
+  exclusions: readonly DrawExclusion[],
 ) => {
   const disallowedReceiversByGiverMap = new Map<string, Set<string>>();
   for (const exclusion of exclusions) {
@@ -80,10 +76,10 @@ const buildAllowedReceiversMap = (
   return allowedReceiversByGiverMap;
 };
 
-const validateZeroEdges = (
+const validateZeroEdges = <TParticipant extends DrawParticipant>(
   allowedReceiversByGiverMap: Map<string, string[]>,
   participantIds: string[],
-  participantsByIdMap: Map<string, DrawParticipant>,
+  participantsByIdMap: Map<string, TParticipant>,
 ): DrawResultFailed | null => {
   const giverIdsWithNoOptions = participantIds.filter(
     (giverId) => (allowedReceiversByGiverMap.get(giverId)?.length ?? 0) === 0,
@@ -139,9 +135,9 @@ function tryFindAugmentingPath(
   return false;
 }
 
-export function drawSecretSanta(
-  participants: DrawParticipants,
-  exclusions: DrawExclusions,
+export function drawSecretSanta<TParticipant extends DrawParticipant>(
+  participants: readonly TParticipant[],
+  exclusions: readonly DrawExclusion[],
 ): DrawResult {
   const participantsQuantity = participants.length;
   validateQuantity(participantsQuantity);
