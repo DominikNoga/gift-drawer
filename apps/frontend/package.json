@@ -19,7 +19,6 @@
     "react-router-dom": "^7.6.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.25.0",
     "@gd/eslint-config": "workspace:*",
     "@gd/shared": "workspace:*",
     "@gd/types": "workspace:*",
@@ -37,14 +36,5 @@
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
     "vitest": "^3.2.7"
-  },
-  "turbo": {
-    "pipeline": {
-      "build": {
-        "outputs": [
-          "dist/**"
-        ]
-      }
-    }
   }
 }
