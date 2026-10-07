@@ -4,9 +4,7 @@
 
 A Secret Santa organizer: create an event, invite participants with join codes, set exclusion rules and draw names.
 
-**Live demo:** [gift-drawer-frontend.onrender.com](https://gift-drawer-frontend.onrender.com/)
-
-> Hosted on a free tier, so the first load may take up to a minute while the server wakes up.
+**Live demo:** [gift-drawer-app.vercel.app](https://gift-drawer-app.vercel.app/)
 
 ## Screenshots
 
