@@ -9,8 +9,8 @@ export default function HomePage() {
     <>
       <Header />
       <EventCardsSection />
-      <HowItWorksSection />
       <MyEventsSection />
+      <HowItWorksSection />
       <FeaturesOverviewBanner />
     </>
   );

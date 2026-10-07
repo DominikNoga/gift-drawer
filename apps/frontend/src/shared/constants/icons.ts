@@ -54,6 +54,7 @@ import {
   MessageSquare,
   MailIcon,
   UserPlus,
+  Lightbulb,
 } from 'lucide-react';
 
 // =============================================================================
@@ -119,6 +120,7 @@ export const InterfaceIcons = {
   Success: CircleCheckBig,
   Message: MessageSquare,
   Send: MailIcon,
+  Lightbulb: Lightbulb,
 } as const;
 
 // =============================================================================

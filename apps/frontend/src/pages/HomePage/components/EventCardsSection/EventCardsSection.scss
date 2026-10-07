@@ -23,3 +23,10 @@
   font-size: $font-size-lg;
   padding: $spacing-4 $spacing-2 !important;
 }
+
+@media (max-width: 768px) {
+  .event-cards-section {
+    grid-template-columns: 1fr;
+    row-gap: $spacing-8;
+  }
+}
