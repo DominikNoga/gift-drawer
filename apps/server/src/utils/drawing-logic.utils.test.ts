@@ -1,323 +1,222 @@
-import { z } from 'zod';
+import { describe, expect, it } from '@jest/globals';
+import {
+  drawSecretSanta,
+  type DrawExclusion,
+  type DrawParticipant,
+  type DrawResult,
+} from './drawing-logic.utils';
 
-const ParticipantSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  eventId: z.string(),
-  joinCode: z.string(),
-  drawParticipantId: z.string().nullable(),
+const participant = (id: string, name = `Name ${id}`): DrawParticipant => ({ id, name });
+
+const createParticipants = (count: number): DrawParticipant[] =>
+  Array.from({ length: count }, (_, index) => participant(`P${index + 1}`));
+
+const exclusion = (participantId: string, excludedParticipantId: string): DrawExclusion => ({
+  participantId,
+  excludedParticipantId,
 });
 
-const ExclusionSchema = z.object({
-  id: z.string(),
-  eventId: z.string(),
-  participantId: z.string(), // giver who excludes...
-  excludedParticipantId: z.string(), // ...this receiver
-});
+/** Each participant excludes the next `span` participants (wrapping around). */
+const createRingExclusions = (participants: DrawParticipant[], span = 1): DrawExclusion[] =>
+  participants.flatMap((giver, index) =>
+    Array.from({ length: span }, (_, offset) =>
+      exclusion(giver.id, participants[(index + offset + 1) % participants.length].id),
+    ),
+  );
 
-type Participant = z.infer<typeof ParticipantSchema>;
-type Exclusion = z.infer<typeof ExclusionSchema>;
-
-type DrawResultFailed = {
-  ok: false;
-  reasons: string[];
-  debug?: {
-    unmatchedGivers: string[];
-    domains: Record<string, string[]>; // giverId -> allowed receiverIds
-  };
-};
-
-type DrawResultSuccess = {
-  ok: true;
-  assignment: Record<string, string>;
-};
-
-type DrawResult = DrawResultSuccess | DrawResultFailed;
-
-// Shuffling using Fisher–Yates algorithm
-function shuffle<T>(arr: T[]): T[] {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-const validateQuantity = (participantsQuantity: number) => {
-  if (participantsQuantity < 3) {
-    throw new Error('At least 3 participants are required for drawing.');
-  }
-};
-
-const buildDisallowedMap = (
-  participantsByIdMap: Map<string, Participant>,
-  exclusions: Exclusion[],
+const expectSuccessfulDraw = (
+  result: DrawResult,
+  participants: DrawParticipant[],
+  exclusions: DrawExclusion[] = [],
 ) => {
-  const disallowedReceiversByGiverMap = new Map<string, Set<string>>();
-  for (const exclusion of exclusions) {
-    const giverId = exclusion.participantId;
-    const receiverId = exclusion.excludedParticipantId;
-    if (!participantsByIdMap.has(giverId) || !participantsByIdMap.has(receiverId)) continue;
-
-    if (!disallowedReceiversByGiverMap.has(giverId)) {
-      disallowedReceiversByGiverMap.set(giverId, new Set());
-    }
-    disallowedReceiversByGiverMap.get(giverId)!.add(receiverId);
+  if (!result.ok) {
+    throw new Error(`Expected a successful draw, got: ${result.reasons.join(' ')}`);
   }
-  return disallowedReceiversByGiverMap;
+
+  const ids = participants.map((p) => p.id).sort();
+  const givers = result.assignments.map((a) => a.giverId).sort();
+  const receivers = result.assignments.map((a) => a.receiverId).sort();
+
+  // Everyone gives exactly once and receives exactly once
+  expect(result.assignments).toHaveLength(participants.length);
+  expect(givers).toEqual(ids);
+  expect(receivers).toEqual(ids);
+
+  for (const { giverId, receiverId } of result.assignments) {
+    expect(receiverId).not.toBe(giverId);
+    expect(exclusions).not.toContainEqual(exclusion(giverId, receiverId));
+  }
+
+  return result.assignments;
 };
 
-const buildAllowedReceiversMap = (
-  participantIds: string[],
-  disallowedReceiversByGiverMap: Map<string, Set<string>>,
-) => {
-  const allowedReceiversByGiverMap = new Map<string, string[]>();
-  for (const giverId of participantIds) {
-    const disallowed = disallowedReceiversByGiverMap.get(giverId) ?? new Set<string>();
-    const allowedReceiverIds = participantIds.filter(
-      (receiverId) => receiverId !== giverId && !disallowed.has(receiverId),
-    );
-    // randomize to vary results between runs
-    allowedReceiversByGiverMap.set(giverId, shuffle(allowedReceiverIds.slice()));
-  }
-  return allowedReceiversByGiverMap;
-};
+const RUNS = 200;
 
-const validateZeroEdges = (
-  allowedReceiversByGiverMap: Map<string, string[]>,
-  participantIds: string[],
-  participantsByIdMap: Map<string, Participant>,
-): DrawResultFailed | null => {
-  const giverIdsWithNoOptions = participantIds.filter(
-    (giverId) => (allowedReceiversByGiverMap.get(giverId)?.length ?? 0) === 0,
-  );
+describe('drawSecretSanta', () => {
+  describe('valid draws', () => {
+    it('assigns every participant exactly one other participant', () => {
+      const participants = createParticipants(6);
 
-  if (giverIdsWithNoOptions.length > 0) {
-    return {
-      ok: false,
-      reasons: [
-        `These participants have no valid recipients due to exclusions: ${giverIdsWithNoOptions
-          .map((id) => participantsByIdMap.get(id)?.name ?? id)
-          .join(', ')}.`,
-        `Please relax exclusions for at least one of them.`,
-      ],
-      debug: {
-        unmatchedGivers: giverIdsWithNoOptions,
-        domains: Object.fromEntries(
-          participantIds.map((giverId) => [giverId, allowedReceiversByGiverMap.get(giverId)!]),
-        ),
-      },
-    };
-  }
-  return null;
-};
-
-function tryFindAugmentingPath(
-  receiverToGiverMatchMap: Map<string, string>,
-  allowedReceiversByGiverMap: Map<string, string[]>,
-  giverId: string,
-  visitedReceiverIds: Set<string>,
-): boolean {
-  const candidateReceiverIds = allowedReceiversByGiverMap.get(giverId)!;
-
-  for (const receiverId of candidateReceiverIds) {
-    if (visitedReceiverIds.has(receiverId)) continue;
-    visitedReceiverIds.add(receiverId);
-
-    const currentlyMatchedGiverId = receiverToGiverMatchMap.get(receiverId);
-    const receiverIsFree =
-      currentlyMatchedGiverId === undefined ||
-      tryFindAugmentingPath(
-        receiverToGiverMatchMap,
-        allowedReceiversByGiverMap,
-        currentlyMatchedGiverId,
-        visitedReceiverIds,
-      );
-
-    if (receiverIsFree) {
-      receiverToGiverMatchMap.set(receiverId, giverId);
-      return true;
-    }
-  }
-  return false;
-}
-
-export function drawSecretSanta(participants: Participant[], exclusions: Exclusion[]): DrawResult {
-  const participantsQuantity = participants.length;
-  validateQuantity(participantsQuantity);
-
-  // Index participants
-  const participantsByIdMap = new Map(participants.map((p) => [p.id, p]));
-  const participantIds = participants.map((p) => p.id);
-
-  // Build: giverId -> Set(disallowedReceiverIds)
-  const disallowedReceiversByGiverMap = buildDisallowedMap(participantsByIdMap, exclusions);
-
-  // Build allowed adjacency: giverId -> allowedReceiverIds (no self, no excluded)
-  const allowedReceiversByGiverMap = buildAllowedReceiversMap(
-    participantIds,
-    disallowedReceiversByGiverMap,
-  );
-
-  const zeroEdgeValidation = validateZeroEdges(
-    allowedReceiversByGiverMap,
-    participantIds,
-    participantsByIdMap,
-  );
-  if (zeroEdgeValidation) return zeroEdgeValidation;
-
-  // Kuhn's algorithm (maximum bipartite matching via DFS of augmenting paths)
-  // Map: receiverId -> giverId
-  const receiverToGiverMatchMap = new Map<string, string>();
-
-  // Order givers by MRV (fewest options first) with light randomization
-  const giverIdsOrdered = participantIds
-    .slice()
-    .sort(
-      (a, b) =>
-        allowedReceiversByGiverMap.get(a)!.length - allowedReceiversByGiverMap.get(b)!.length,
-    );
-  shuffle(giverIdsOrdered);
-
-  let matchedCount = 0;
-  for (const giverId of giverIdsOrdered) {
-    if (
-      tryFindAugmentingPath(receiverToGiverMatchMap, allowedReceiversByGiverMap, giverId, new Set())
-    )
-      matchedCount++;
-  }
-
-  if (matchedCount !== participantsQuantity) {
-    const assignedReceiverIds = new Set(receiverToGiverMatchMap.keys());
-    const matchedGiverIds = new Set<string>(
-      [...assignedReceiverIds].map((receiverId) => receiverToGiverMatchMap.get(receiverId)!),
-    );
-    const unmatchedGiverIds = giverIdsOrdered.filter((giverId) => !matchedGiverIds.has(giverId));
-
-    const domains: Record<string, string[]> = {};
-    for (const giverId of participantIds) {
-      domains[giverId] = allowedReceiversByGiverMap.get(giverId)!;
-    }
-
-    return {
-      ok: false,
-      reasons: [
-        `No valid complete drawing exists with the current exclusions (matched ${matchedCount}/${participantsQuantity}).`,
-        `Problematic participants: ${
-          unmatchedGiverIds.map((id) => participantsByIdMap.get(id)?.name ?? id).join(', ') || '—'
-        }.`,
-      ],
-      debug: { unmatchedGivers: unmatchedGiverIds, domains },
-    };
-  }
-
-  // Build final giverId -> receiverId assignment
-  const assignment: Record<string, string> = {};
-  for (const [receiverId, giverId] of receiverToGiverMatchMap.entries()) {
-    assignment[giverId] = receiverId;
-  }
-  return { ok: true, assignment };
-}
-
-/** Optional helper: return a copy with drawParticipantId filled from an assignment */
-export function applyAssignment(
-  participants: Participant[],
-  assignment: Record<string, string>,
-): Participant[] {
-  return participants.map((p) => ({
-    ...p,
-    drawParticipantId: assignment[p.id] ?? null,
-  }));
-}
-
-/* ------------------------- Mock test data & harness ------------------------ */
-
-function p(id: string, name: string, eventId = 'e1'): Participant {
-  return { id, name, eventId, joinCode: `join-${id}`, drawParticipantId: null };
-}
-
-function ex(
-  id: string,
-  participantId: string,
-  excludedParticipantId: string,
-  eventId = 'e1',
-): Exclusion {
-  return { id, eventId, participantId, excludedParticipantId };
-}
-
-function printResult(title: string, participants: Participant[], exclusions: Exclusion[]) {
-  console.log(`\n=== ${title} ===`);
-  const res = drawSecretSanta(participants, exclusions);
-  if (res.ok) {
-    const byId = new Map(participants.map((p) => [p.id, p.name]));
-    console.log('Assignment (giver -> receiver):');
-    for (const g of Object.keys(res.assignment)) {
-      console.log(`  ${byId.get(g)} -> ${byId.get(res.assignment[g])}`);
-    }
-  } else {
-    console.log('FAILED:');
-    for (const r of res.reasons) console.log('  - ' + r);
-    if (res.debug) {
-      const byId = new Map(participants.map((p) => [p.id, p.name]));
-      console.log(
-        '  Unmatched givers:',
-        res.debug.unmatchedGivers.map((id) => byId.get(id)),
-      );
-      // Optional: show domains in names
-      console.log('  Domains:');
-      for (const [g, domain] of Object.entries(res.debug.domains)) {
-        console.log(`   ${byId.get(g)} can draw: ${domain.map((r) => byId.get(r)).join(', ')}`);
+      for (let run = 0; run < RUNS; run++) {
+        expectSuccessfulDraw(drawSecretSanta(participants, []), participants);
       }
-    }
-  }
-}
+    });
 
-/* ------------------------------- Test cases ------------------------------- */
+    it('works with the minimum of 3 participants', () => {
+      const participants = createParticipants(3);
 
-// Case 1: No exclusions (should succeed)
-const participants1 = [p('A', 'Alice'), p('B', 'Bob'), p('C', 'Cara'), p('D', 'Dan')];
-const exclusions1: Exclusion[] = [];
+      expectSuccessfulDraw(drawSecretSanta(participants, []), participants);
+    });
 
-// Case 2: Directed exclusions but still feasible
-// Alice cannot draw Bob; Bob cannot draw Cara; still solvable.
-const participants2 = [p('A', 'Alice'), p('B', 'Bob'), p('C', 'Cara'), p('D', 'Dan')];
-const exclusions2 = [ex('e1', 'A', 'B'), ex('e2', 'B', 'C')];
+    it('always respects exclusions', () => {
+      const participants = createParticipants(5);
+      const exclusions = [
+        ...createRingExclusions(participants),
+        exclusion('P1', 'P3'),
+        exclusion('P3', 'P1'),
+      ];
 
-// Case 3: Impossible because one participant excludes everyone else
-// Alice excludes Bob, Cara, Dan -> Alice has no options.
-const participants3 = [p('A', 'Alice'), p('B', 'Bob'), p('C', 'Cara'), p('D', 'Dan')];
-const exclusions3 = [ex('e1', 'A', 'B'), ex('e2', 'A', 'C'), ex('e3', 'A', 'D')];
+      for (let run = 0; run < RUNS; run++) {
+        expectSuccessfulDraw(drawSecretSanta(participants, exclusions), participants, exclusions);
+      }
+    });
 
-// Case 4: Hall-violation style impossible (no individual zero-degree, but still impossible)
-// A can draw only C; B can draw only C; others free.
-// Two givers contend for the same single receiver -> cannot match all.
-const participants4 = [p('A', 'Alice'), p('B', 'Bob'), p('C', 'Cara'), p('D', 'Dan')]; // p("E", "Eve"), p("F", "Frank"), p("G", "Grace")];
-const exclusions4 = [
-  ex('e1', 'A', 'B'),
-  // ex("e2", "A", "D"), // A -> {C}
-  // ex("e3", "B", "A"),
-  // ex("e4", "B", "D"), // B -> {C}
-];
+    it('produces the only possible assignment when exclusions leave a single option', () => {
+      // P1 -> P2 -> P3 -> P1 is the only allowed cycle
+      const participants = createParticipants(3);
+      const exclusions = [exclusion('P1', 'P3'), exclusion('P2', 'P1'), exclusion('P3', 'P2')];
 
-// Case 5: 5 people with a ring of exclusions (still feasible)
-// Each person excludes the next person; should still work.
-const participants5 = [p('P1', 'P1'), p('P2', 'P2'), p('P3', 'P3'), p('P4', 'P4'), p('P5', 'P5')];
-const exclusions5 = [
-  ex('e1', 'P1', 'P2'),
-  ex('e2', 'P2', 'P3'),
-  ex('e3', 'P3', 'P4'),
-  ex('e4', 'P4', 'P5'),
-  ex('e5', 'P5', 'P1'),
-];
+      const assignments = expectSuccessfulDraw(
+        drawSecretSanta(participants, exclusions),
+        participants,
+        exclusions,
+      );
 
-// Run if executed directly: `ts-node secretSanta.ts`
-if (require.main === module) {
-  // for (let i = 0; i < 3; i++) {}
-  printResult('Case 1: No exclusions (should succeed)', participants1, exclusions1);
-  printResult('Case 2: Some exclusions (should succeed)', participants2, exclusions2);
-  printResult('Case 3: One excludes everyone (should fail)', participants3, exclusions3);
-  printResult('Case 4: Hall-style impossible (should fail)', participants4, exclusions4);
-  printResult('Case 5: Ring exclusions (should succeed)', participants5, exclusions5);
-}
+      expect(assignments).toEqual(
+        expect.arrayContaining([
+          { giverId: 'P1', receiverId: 'P2' },
+          { giverId: 'P2', receiverId: 'P3' },
+          { giverId: 'P3', receiverId: 'P1' },
+        ]),
+      );
+    });
 
-export default { drawSecretSanta, applyAssignment };
+    it('ignores exclusions that reference unknown participants', () => {
+      const participants = createParticipants(3);
+      const exclusions = [exclusion('P1', 'unknown'), exclusion('unknown', 'P2')];
+
+      expectSuccessfulDraw(drawSecretSanta(participants, exclusions), participants);
+    });
+
+    it('accepts participants with extra fields', () => {
+      const participants = createParticipants(4).map((p) => ({ ...p, eventId: 'event-1' }));
+
+      expectSuccessfulDraw(drawSecretSanta(participants, []), participants);
+    });
+  });
+
+  describe('randomness', () => {
+    it('produces different results between runs', () => {
+      const participants = createParticipants(6);
+      const distinctDraws = new Set<string>();
+
+      for (let run = 0; run < RUNS; run++) {
+        const assignments = expectSuccessfulDraw(drawSecretSanta(participants, []), participants);
+        distinctDraws.add(
+          assignments
+            .map((a) => `${a.giverId}->${a.receiverId}`)
+            .sort()
+            .join(','),
+        );
+      }
+
+      expect(distinctDraws.size).toBeGreaterThan(1);
+    });
+
+    it('lets a participant draw each of their allowed receivers over many runs', () => {
+      const participants = createParticipants(4);
+      const receiversOfP1 = new Set<string>();
+
+      for (let run = 0; run < RUNS; run++) {
+        const assignments = expectSuccessfulDraw(drawSecretSanta(participants, []), participants);
+        receiversOfP1.add(assignments.find((a) => a.giverId === 'P1')!.receiverId);
+      }
+
+      expect([...receiversOfP1].sort()).toEqual(['P2', 'P3', 'P4']);
+    });
+  });
+
+  describe('impossible configurations', () => {
+    it('fails when a participant has excluded everyone else', () => {
+      const participants = [participant('A', 'Alice'), participant('B'), participant('C')];
+      const exclusions = [exclusion('A', 'B'), exclusion('A', 'C')];
+
+      const result = drawSecretSanta(participants, exclusions);
+
+      expect(result.ok).toBe(false);
+      if (result.ok) return;
+      expect(result.reasons).toEqual([
+        'These participants have no valid recipients due to exclusions: Alice.',
+        'Please relax exclusions for at least one of them.',
+      ]);
+      expect(result.debug?.unmatchedGivers).toEqual(['A']);
+      expect(result.debug?.domains.A).toEqual([]);
+    });
+
+    it('fails when two participants can only draw the same person', () => {
+      // Every participant has at least one option, but A and B both can only draw C
+      const participants = ['A', 'B', 'C', 'D'].map((id) => participant(id));
+      const exclusions = [
+        exclusion('A', 'B'),
+        exclusion('A', 'D'),
+        exclusion('B', 'A'),
+        exclusion('B', 'D'),
+      ];
+
+      for (let run = 0; run < 20; run++) {
+        const result = drawSecretSanta(participants, exclusions);
+
+        expect(result.ok).toBe(false);
+        if (result.ok) return;
+        expect(result.reasons[0]).toBe(
+          'No valid complete drawing exists with the current exclusions (matched 3/4).',
+        );
+        expect(result.reasons[1]).toMatch(/^Problematic participants: Name [AB]\.$/);
+        expect(result.debug?.unmatchedGivers).toHaveLength(1);
+        expect(['A', 'B']).toContain(result.debug?.unmatchedGivers[0]);
+      }
+    });
+
+    it('falls back to participant ids in reasons when names are missing', () => {
+      const participants: DrawParticipant[] = [{ id: 'A' }, { id: 'B' }, { id: 'C' }];
+      const exclusions = [exclusion('A', 'B'), exclusion('A', 'C')];
+
+      const result = drawSecretSanta(participants, exclusions);
+
+      expect(result.ok).toBe(false);
+      if (result.ok) return;
+      expect(result.reasons[0]).toBe(
+        'These participants have no valid recipients due to exclusions: A.',
+      );
+    });
+  });
+
+  describe('input validation', () => {
+    it.each([0, 1, 2])('throws for %i participants', (count) => {
+      expect(() => drawSecretSanta(createParticipants(count), [])).toThrow(
+        'At least 3 participants are required for drawing.',
+      );
+    });
+  });
+
+  describe('larger groups', () => {
+    it('resolves 50 participants with many exclusions', () => {
+      const participants = createParticipants(50);
+      const exclusions = createRingExclusions(participants, 10);
+
+      for (let run = 0; run < 20; run++) {
+        expectSuccessfulDraw(drawSecretSanta(participants, exclusions), participants, exclusions);
+      }
+    });
+  });
+});
