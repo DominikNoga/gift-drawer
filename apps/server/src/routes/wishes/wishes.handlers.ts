@@ -51,12 +51,6 @@ export const addWishlistItem = async (
   }
 };
 
-export const editWishlistItem = async (request: Request, response: Response) => {
-  const { id } = request.params;
-  const wishData = request.body;
-  response.json({ wish: { id, ...wishData } });
-};
-
 export const deleteWishlistItem = async (request: Request, response: Response) => {
   const { id } = request.params;
   try {
