@@ -36,18 +36,20 @@ export const addWishlistItem = async (
   const parseResult = WishlistItemCreateSchema.safeParse(wishData);
   if (!parseResult.success) {
     console.error('Validation failed:', parseResult.error);
-    return response
-      .status(HTTP_STATUS.BAD_REQUEST)
-      .json({ message: 'Invalid input', error: parseResult.error });
+    return response.status(HTTP_STATUS.BAD_REQUEST).json({
+      message: parseResult.error.issues[0]?.message ?? 'Invalid input',
+      error: parseResult.error,
+    });
   }
 
   try {
     const createdWish = await createWishlistItemRecord(parseResult.data);
     return response.status(HTTP_STATUS.CREATED).json(createdWish);
   } catch (error) {
+    console.error('Error creating wishlist item:', error);
     return response
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-      .json({ message: 'Failed to create wishlist item', error });
+      .json({ message: 'Failed to add the item. Please try again.', error });
   }
 };
 
