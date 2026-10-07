@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import './Input.scss';
 import React, { useRef, type ReactElement } from 'react';
 import { isDateInput } from './utils/Input.utils';

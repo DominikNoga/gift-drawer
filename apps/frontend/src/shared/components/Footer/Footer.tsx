@@ -1,22 +1,10 @@
 import './Footer.scss';
 import { useNavigate } from 'react-router-dom';
 import { SocialIcons } from '../../constants/icons';
-// import ButtonWithIcon from '../buttons/ButtonWithIcon/ButtonWithIcon';
 import { ROUTES_NAMES } from '../../../routes';
-// import { useState } from 'react';
-// import RequestFeatureModal from './components/RequestFeatureModal/RequestFeatureModal';
 
 export default function Footer() {
   const navigate = useNavigate();
-  // const [isRequestFeatureModalOpen, setIsRequestFeatureModalOpen] = useState(false);
-
-  // const onModalClose = () => {
-  //   setIsRequestFeatureModalOpen(false);
-  // };
-
-  // const handleRequestFeatureClick = () => {
-  //   setIsRequestFeatureModalOpen(true);
-  // };
 
   return (
     <footer className="footer">
@@ -55,18 +43,12 @@ export default function Footer() {
               </span>
             </li>
             <li>
-              {/* <span className='footer-link' onClick={handleRequestFeatureClick}>Request a feature</span> */}
-            </li>
-            <li>
               <span className="footer-link">How it works?</span>
             </li>
           </ul>
         </section>
         <section className="footer-info-item">
           <h3 className="footer-info-item-title">Support</h3>
-          {/* <ButtonWithIcon className='footer-support-button' onClick={handleRequestFeatureClick} icon={<InterfaceIcons.Message />}>
-            Request a feature
-          </ButtonWithIcon> */}
           <p>Have an idea to make Secret Santa even better? We&apos;d love to hear from you!</p>
         </section>
       </section>
@@ -76,7 +58,6 @@ export default function Footer() {
           Built with React, TypeScript, Node.js, and a bit of holiday magic.
         </p>
       </section>
-      {/* <RequestFeatureModal isOpen={isRequestFeatureModalOpen} onClose={onModalClose} /> */}
     </footer>
   );
 }
