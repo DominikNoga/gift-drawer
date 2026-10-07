@@ -4,3 +4,9 @@
   grid-template-columns: repeat(2, 1fr);
   gap: $spacing-4;
 }
+
+@media (max-width: 700px) {
+  .event-page-info-cards {
+    grid-template-columns: 1fr;
+  }
+}

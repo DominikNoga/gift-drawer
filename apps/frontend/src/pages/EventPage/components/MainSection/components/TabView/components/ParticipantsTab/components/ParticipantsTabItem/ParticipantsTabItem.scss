@@ -1,6 +1,5 @@
 .participant-tab-item {
   width: 100%;
-  // box-shadow: $shadow-base;
   border: 1px solid $gray-200;
   @include flex-layout(row, center, flex-start, $spacing-4);
   padding: $spacing-2;
@@ -8,6 +7,7 @@
 
   span {
     font-weight: $font-weight-semibold;
+    overflow-wrap: break-word;
   }
 
   &-copy-btn {
@@ -18,6 +18,8 @@
     font-size: $font-size-xs;
     @include simple-transition(background-color, 0.2s, $purple-100, $purple-200);
     margin-left: auto;
+    flex-shrink: 0;
+    white-space: nowrap;
     @include flex-layout(row, center, center, $spacing-1);
     &-icon {
       * {

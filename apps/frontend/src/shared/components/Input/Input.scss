@@ -6,6 +6,7 @@
   .input-group-label {
     @include flex-layout(row, center, $gap: $spacing-1);
     text-align: center;
+
     svg {
       @include square($font-size-lg);
     }
@@ -20,6 +21,7 @@
     padding: $input-padding;
     border-radius: $border-radius-sm;
     outline: none;
+    overflow: hidden;
     border: $border-color-medium 2px solid;
     transition: border-color $transition-base;
     z-index: 1;
@@ -44,6 +46,8 @@
     color: $text-secondary;
     z-index: 10;
     transition: $transition-opacity;
+    max-width: 80%;
+    overflow: hidden;
   }
 
   .input-placeholder-no-label {

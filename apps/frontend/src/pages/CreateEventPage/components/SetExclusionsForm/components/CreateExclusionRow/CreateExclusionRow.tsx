@@ -19,29 +19,29 @@ export default function CreateExclusionRow({
   isViceVersaChecked,
 }: Props) {
   return (
-    <>
-      <div className="set-exclusions-input-row">
-        <SelectInput
-          options={participants}
-          value={values[0]}
-          onChange={(e) => handleChange(e, index, 0)}
+    <div className="set-exclusions-input-row">
+      <SelectInput
+        id={`select-participant-${index}-1`}
+        options={participants}
+        value={values[0]}
+        onChange={(e) => handleChange(e, index, 0)}
+      />
+      <span className="set-exclusions-input-row-text">cannot draw</span>
+      <SelectInput
+        id={`select-participant-${index}-2`}
+        options={participants}
+        value={values[1]}
+        onChange={(e) => handleChange(e, index, 1)}
+      />
+      <div className="set-exclusions-vice-versa">
+        <input
+          type="checkbox"
+          id={`check-${index}`}
+          onChange={(e) => handleViceVersaChange(e, index)}
+          checked={isViceVersaChecked}
         />
-        <span className="set-exclusions-input-row-text">cannot draw</span>
-        <SelectInput
-          options={participants}
-          value={values[1]}
-          onChange={(e) => handleChange(e, index, 1)}
-        />
-        <div className="set-exclusions-vice-versa">
-          <input
-            type="checkbox"
-            id={`check-${index}`}
-            onChange={(e) => handleViceVersaChange(e, index)}
-            checked={isViceVersaChecked}
-          />
-          <label htmlFor={`check-${index}`}>and vice versa</label>
-        </div>
+        <label htmlFor={`check-${index}`}>and vice versa</label>
       </div>
-    </>
+    </div>
   );
 }

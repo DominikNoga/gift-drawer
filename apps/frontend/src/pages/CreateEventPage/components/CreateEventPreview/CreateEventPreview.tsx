@@ -9,6 +9,7 @@ import ParticipantsSection from './ParticipantsSection/ParticipantsSection';
 import ExclusionsSection from './ExclusionsSection/ExclusionsSection';
 import { useNavigate } from 'react-router-dom';
 import FormHeader from '../ui/FormHeader/FormHeader';
+import PageLoading from '@gd/shared/components/PageLoading/PageLoading';
 
 export default function CreateEventPreview() {
   const { createEventData, handleSetErrors } = useCreateEventContext();
@@ -34,6 +35,7 @@ export default function CreateEventPreview() {
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="create-event-preview-form">
+      {isSubmitting && <PageLoading text="We are creating your event..." />}
       <FormHeader
         title="Review your event"
         subtitle="Please review the details of your event before creating it. You can go back to make any changes if needed."
@@ -43,7 +45,12 @@ export default function CreateEventPreview() {
         <ParticipantsSection participants={createEventData.participants} />
         <ExclusionsSection exclusions={createEventData.exclusions} />
       </div>
-      <Button className="event-create-form-btn" btnType="primary" type="submit">
+      <Button
+        className="event-create-form-btn"
+        btnType="primary"
+        type="submit"
+        disabled={isSubmitting}
+      >
         {isSubmitting ? 'Creating Event...' : 'Create Event'}
       </Button>
     </form>

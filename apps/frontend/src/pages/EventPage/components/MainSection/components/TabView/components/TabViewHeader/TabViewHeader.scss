@@ -2,7 +2,7 @@
   display: grid;
   border-top-left-radius: $card-radius;
   border-top-right-radius: $card-radius;
-  overflow: hidden;
+  overflow-x: hidden;
 
   &-item {
     @include flex-layout(row, center, center, $spacing-2);
@@ -25,5 +25,11 @@
     &-title {
       font-size: $font-size-base;
     }
+  }
+}
+
+@media (max-width: 700px) {
+  .tab-view-header {
+    grid-template-columns: 1fr !important;
   }
 }

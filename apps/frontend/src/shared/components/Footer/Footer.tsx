@@ -43,13 +43,11 @@ export default function Footer() {
               </span>
             </li>
             <li>
-              <span className="footer-link">How it works?</span>
+              <a className="footer-link" href="#how-it-works">
+                How it works?
+              </a>
             </li>
           </ul>
-        </section>
-        <section className="footer-info-item">
-          <h3 className="footer-info-item-title">Support</h3>
-          <p>Have an idea to make Secret Santa even better? We&apos;d love to hear from you!</p>
         </section>
       </section>
       <section className="footer-copy">

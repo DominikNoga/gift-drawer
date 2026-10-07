@@ -13,4 +13,9 @@
   justify-self: end;
   grid-column: 3;
   color: $text-secondary;
+
+  @media (max-width: $create-event-page-breakpoint) {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
 }

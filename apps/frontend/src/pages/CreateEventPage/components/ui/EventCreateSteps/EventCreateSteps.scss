@@ -1,8 +1,15 @@
-$progress-line-width: 180px;
+$progress-line-width: 26%;
 $progress-line-start: 85px;
+
 .create-event-steps {
   @include flex-layout(row, center, space-between, 0);
+
+  @media (max-width: $create-event-page-breakpoint) {
+    @include flex-layout(column, center, default, $spacing-6);
+  }
+
   position: relative;
+
   .progress-line-1 {
     position: absolute;
     top: 25%;
@@ -10,7 +17,10 @@ $progress-line-start: 85px;
     z-index: 1;
     @include rectangle($progress-line-width, 8px);
     background-color: $gray-300;
-    border-radius: $border-radius-base;
+
+    @media (max-width: $create-event-page-breakpoint) {
+      display: none;
+    }
   }
 
   .progress-line-2 {
@@ -28,14 +38,26 @@ $progress-line-start: 85px;
   }
 
   .create-event-step {
-    z-index: 2;
+    z-index: 3;
     @include flex-layout(column, center, $gap: $spacing-2);
+
     &-icon {
+      z-index: 3;
       background-color: $red-100;
       color: $red-600;
       @include circle(3rem);
+
       svg {
         @include square(1.5rem);
+      }
+    }
+
+    @media (max-width: $create-event-page-breakpoint) {
+      display: none;
+
+      &.active {
+        display: flex;
+        align-self: center;
       }
     }
 

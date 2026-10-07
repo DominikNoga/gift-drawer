@@ -26,15 +26,26 @@ export default function EventCreateSteps() {
   const { currentStep } = useCreateEventContext();
   return (
     <div className="create-event-steps">
-      <div className={`progress-line-1 ${currentStep >= 1 && 'progress-line-filled'}`}></div>
-      <div className={`progress-line-2 ${currentStep >= 2 && 'progress-line-filled'}`}></div>
-      <div className={`progress-line-3 ${currentStep >= 3 && 'progress-line-filled'}`}></div>
-      {STEPS.map((step) => (
-        <div key={step.title} className="create-event-step">
-          <CircleIcon icon={step.icon} className="create-event-step-icon" />
+      <ProgressLines currentStep={currentStep} />
+      {STEPS.map((step, index) => (
+        <div
+          key={step.title}
+          className={`create-event-step ${currentStep === index ? 'active' : ''}`}
+        >
+          <CircleIcon icon={step.icon} className={`create-event-step-icon`} />
           <span className="create-event-step-title">{step.title}</span>
         </div>
       ))}
     </div>
+  );
+}
+
+function ProgressLines({ currentStep }: { currentStep: number }) {
+  return (
+    <>
+      <div className={`progress-line-1 ${currentStep >= 1 && 'progress-line-filled'}`}></div>
+      <div className={`progress-line-2 ${currentStep >= 2 && 'progress-line-filled'}`}></div>
+      <div className={`progress-line-3 ${currentStep >= 3 && 'progress-line-filled'}`}></div>
+    </>
   );
 }

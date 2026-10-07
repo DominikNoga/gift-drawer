@@ -1,6 +1,5 @@
 .event-page-info-card {
   @include flex-layout(row, center);
-  width: 100%;
 
   &-label {
     color: $text-secondary;
@@ -10,6 +9,7 @@
   &-value {
     font-size: $font-size-base;
     font-weight: $font-weight-semibold;
+    overflow-wrap: break-word;
   }
 
   div {
