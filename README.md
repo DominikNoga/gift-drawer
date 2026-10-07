@@ -4,7 +4,7 @@
 
 A Secret Santa organizer: create an event, invite participants with join codes, set exclusion rules and draw names.
 
-**Live demo:** <!-- TODO: add the live demo URL --> [gift-drawer](#)
+**Live demo:** [gift-drawer-frontend.onrender.com](https://gift-drawer-frontend.onrender.com/)
 
 > Hosted on a free tier, so the first load may take up to a minute while the server wakes up.
 
@@ -76,11 +76,7 @@ Notes: a valid draw may contain mutual pairs (A → B and B → A) or several se
 
 - Node.js 22+
 - pnpm 9 (`corepack enable` picks up the version from `package.json`)
-- PostgreSQL, for example via Docker:
-
-  ```sh
-  docker run -d --name gift-drawer-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=giftdrawer -p 5432:5432 postgres:16-alpine
-  ```
+- Optional: PostgreSQL. Without it, the server uses a local SQLite file, so no database setup is needed.
 
 ### Environment variables
 
@@ -91,13 +87,21 @@ Notes: a valid draw may contain mutual pairs (A → B and B → A) or several se
 
 The server reads `POSTGRES_URL` from the shell environment. For the frontend, copy `apps/frontend/.env.example` to `apps/frontend/.env.local`.
 
+To use PostgreSQL locally, for example via Docker:
+
+```sh
+docker run -d --name gift-drawer-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=giftdrawer -p 5432:5432 postgres:16-alpine
+export POSTGRES_URL=postgres://postgres:postgres@localhost:5432/giftdrawer
+```
+
 ### Install, migrate and run
 
 ```sh
 pnpm install
 
-# Run database migrations
-export POSTGRES_URL=postgres://postgres:postgres@localhost:5432/giftdrawer
+cp apps/frontend/.env.example apps/frontend/.env.local
+
+# Create the database (SQLite by default; set POSTGRES_URL to use PostgreSQL)
 pnpm --filter @gd/server migrate
 
 # Start the frontend (http://localhost:5173) and the API (http://localhost:5000)
