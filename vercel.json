@@ -1,5 +1,0 @@
-{
-  "buildCommand": "pnpm i --frozen-lockfile && pnpm -w build",
-  "outputDirectory": "apps/frontend/dist",
-  "framework": null
-}
