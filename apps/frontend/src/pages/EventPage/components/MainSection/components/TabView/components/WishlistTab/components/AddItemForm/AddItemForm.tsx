@@ -22,12 +22,10 @@ export default function AddItemForm({ onCancel, currentParticipantId, afterSubmi
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await addWishlistItem({
+      await addWishlistItem({
         participantId: currentParticipantId,
         ...wishlistItem,
       });
-      console.log('Wishlist item added:');
-      console.log(result);
       afterSubmit();
     } catch (error) {
       console.error('Error adding wishlist item:', error);

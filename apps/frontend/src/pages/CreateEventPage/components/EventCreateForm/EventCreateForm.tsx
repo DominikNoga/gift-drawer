@@ -15,8 +15,6 @@ export default function EventCreateForm() {
   const isBackDisabled = currentStep === 0;
   const Component = Components[currentStep];
 
-  console.log(errors);
-
   return (
     <Card className="event-create-form-card">
       <BackButton onClick={handlePrevStep} isDisabled={isBackDisabled} />

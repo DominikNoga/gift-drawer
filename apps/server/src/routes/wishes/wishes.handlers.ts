@@ -43,7 +43,6 @@ export const addWishlistItem = async (
 
   try {
     const createdWish = await createWishlistItemRecord(parseResult.data);
-    console.log('Wishlist item created with ID:', createdWish.id);
     return response.status(HTTP_STATUS.CREATED).json(createdWish);
   } catch (error) {
     return response
@@ -61,7 +60,6 @@ export const editWishlistItem = async (request: Request, response: Response) => 
 export const deleteWishlistItem = async (request: Request, response: Response) => {
   const { id } = request.params;
   try {
-    console.log(`Deleting wishlist item with ID: ${id}`);
     await wishesTable().where('id', id).del();
   } catch (error) {
     console.error('Error deleting wishlist item:', error);

@@ -5,7 +5,6 @@ const allNamesDifferent = (participants: string[]) => {
 
 const allNamesFilled = (participants: string[]) => {
   const emptyParticipant = participants.find((p) => p === '');
-  console.log(emptyParticipant);
   return emptyParticipant === undefined;
 };
 
