@@ -45,10 +45,8 @@ export const createEvent = async (
   response: Response<ApiResponse<CreateEventResponse>>,
 ) => {
   const parseResult = EventCreateSchema.safeParse(request.body);
-  console.log(parseResult);
 
   if (!parseResult.success) {
-    console.log(parseResult.error);
     return response
       .status(HTTP_STATUS.BAD_REQUEST)
       .json({ message: 'Invalid input', error: parseResult.error });
@@ -138,7 +136,6 @@ export const drawAssignments = async (
   }
 
   const { assignments } = drawingResult;
-  console.log(assignments);
   await Promise.all(
     assignments.map((a) =>
       participantsTable().where({ id: a.giverId }).update({ drawn_participant_id: a.receiverId }),

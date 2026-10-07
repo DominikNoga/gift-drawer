@@ -49,7 +49,6 @@ export default function SetExclusionsForm() {
   const handleSubmit = (e: FormEvent) => {
     const validExclusions = getValidExclusions(exclusions);
     const mappedExclusions = getMappedExclusionsWithViceVersa(validExclusions);
-    console.log(mappedExclusions);
     handleAddExclusions(e, mappedExclusions);
   };
 

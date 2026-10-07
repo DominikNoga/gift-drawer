@@ -27,8 +27,7 @@ export default function DrawNamesTab({ eventId, handleViewAssignment }: Props) {
       setModalState(MODAL_STATE.DRAWING);
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setModalState(MODAL_STATE.SUCCESS);
-      const result = await drawAssignments(eventId);
-      console.log(result);
+      await drawAssignments(eventId);
     } catch (error) {
       console.error('Error drawing assignments:', error);
       setModalState(MODAL_STATE.ERROR);

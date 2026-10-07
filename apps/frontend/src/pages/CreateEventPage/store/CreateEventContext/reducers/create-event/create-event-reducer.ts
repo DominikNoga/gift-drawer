@@ -11,7 +11,6 @@ export const createEventReducer = (
     ...state,
     errors: [],
   } as CreateEventContextValues;
-  console.log(updatedState);
 
   switch (action.type) {
     case CREATE_EVENT_ACTIONS.BASIC_INFO:
