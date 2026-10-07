@@ -1,8 +1,12 @@
-
-import { get, post } from "@gd/shared/utils/api.utils";
-import type { CreateEventRequest, CreateEventResponse, EventIdResponse, GetEventResponse } from "@gd/types/src/api/api.events.types";
-import type { DrawAssignmentsRequest } from "@gd/types/src/api/api.participants.types";
-import axios from "axios";
+import { get, post } from '@gd/shared/utils/api.utils';
+import type {
+  CreateEventRequest,
+  CreateEventResponse,
+  EventIdResponse,
+  GetEventResponse,
+} from '@gd/types/src/api/api.events.types';
+import type { DrawAssignmentsRequest } from '@gd/types/src/api/api.participants.types';
+import axios from 'axios';
 
 const API_URL = '/events';
 
@@ -12,7 +16,6 @@ export const createEvent = async (formData: CreateEventRequest): Promise<CreateE
       ...formData,
     });
     return { id, organizerCode };
-
   } catch (err: unknown) {
     if (axios.isAxiosError(err) && err.response) {
       const axiosError = err.response.data;

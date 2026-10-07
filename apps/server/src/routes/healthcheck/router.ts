@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Router } from 'express';
 import { db } from '../../db/db';
 const healthRouter = Router();
 
@@ -13,7 +13,7 @@ healthRouter.get('/check', async (_req, res) => {
       db: r?.rows?.[0]?.ok ?? r?.[0]?.ok ?? 1,
       elapsedMs: Date.now() - start,
       envHasPg: Boolean(process.env.POSTGRES_URL || process.env.DATABASE_URL),
-      vercel: Boolean(process.env.VERCEL)
+      vercel: Boolean(process.env.VERCEL),
     });
   } catch (err: any) {
     res.status(500).json({ ok: false, error: String(err), elapsedMs: Date.now() - start });

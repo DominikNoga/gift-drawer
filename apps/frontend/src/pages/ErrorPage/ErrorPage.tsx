@@ -29,12 +29,10 @@ export default function ErrorPage() {
   );
 }
 
-function ErrorPageWrapper({children}: {children: React.ReactNode}) {
+function ErrorPageWrapper({ children }: { children: React.ReactNode }) {
   return (
     <main className="error-page">
-      <div className="error-page-content">
-        {children}
-      </div>
+      <div className="error-page-content">{children}</div>
     </main>
   );
 }

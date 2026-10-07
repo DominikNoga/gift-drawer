@@ -1,7 +1,7 @@
 import './Modal.scss';
-import type React from "react";
-import { createPortal } from "react-dom";
-import { MODAL_PORTAL_ID } from "../../constants/const";
+import type React from 'react';
+import { createPortal } from 'react-dom';
+import { MODAL_PORTAL_ID } from '../../constants/const';
 import { InterfaceIcons } from '../../constants/icons';
 
 type Props = {
@@ -24,9 +24,7 @@ export default function Modal({ children, isOpen, onClose, title, closeHidden = 
             </button>
           )}
         </header>
-        <div className="modal-content">
-          {children}
-        </div>
+        <div className="modal-content">{children}</div>
       </dialog>
     </div>,
     document.getElementById(MODAL_PORTAL_ID) as HTMLElement,

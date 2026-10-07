@@ -7,9 +7,5 @@ type CircleIconProps = {
 };
 
 export default function CircleIcon({ icon, className }: CircleIconProps) {
-  return (
-    <div className={`circle-icon ${className}`}>
-      { icon }
-    </div>
-  );
+  return <div className={`circle-icon ${className}`}>{icon}</div>;
 }

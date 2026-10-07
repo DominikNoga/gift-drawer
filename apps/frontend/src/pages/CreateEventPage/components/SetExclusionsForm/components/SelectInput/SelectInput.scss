@@ -12,7 +12,7 @@
   transition: border-color $transition-base;
   z-index: 1;
   background-color: transparent;
-  
+
   &:focus {
     border-color: $primary;
   }

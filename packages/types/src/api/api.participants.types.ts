@@ -1,4 +1,4 @@
-import { type WishlistItem } from '../models/wish.model'
+import { type WishlistItem } from '../models/wish.model';
 
 export type GetParticipantForEventResponse = {
   id: string;

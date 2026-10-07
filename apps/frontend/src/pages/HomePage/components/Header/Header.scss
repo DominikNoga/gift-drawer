@@ -6,7 +6,7 @@
   &-title {
     font-size: $font-size-4xl;
     letter-spacing: $letter-spacing-wide;
-    @include flex-layout(row, center, center, .5rem);
+    @include flex-layout(row, center, center, 0.5rem);
     .gift-icon {
       color: $primary;
       @include square(2.5rem);

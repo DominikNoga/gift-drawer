@@ -1,6 +1,6 @@
 import './Card.scss';
 
-type CardProps = { 
+type CardProps = {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
@@ -9,9 +9,7 @@ type CardProps = {
 export default function Card({ children, className = undefined, onClick }: CardProps) {
   return (
     <div className={`card ${className}`} onClick={onClick}>
-      {
-        children
-      }
+      {children}
     </div>
   );
 }

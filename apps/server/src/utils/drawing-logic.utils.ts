@@ -1,11 +1,10 @@
-
-import { Participant } from "@gd/types/src/models/participants.model";
-import { Exclusion } from "@gd/types/src/models/exclusions.model";
+import { Participant } from '@gd/types/src/models/participants.model';
+import { Exclusion } from '@gd/types/src/models/exclusions.model';
 
 type Assignment = {
   giverId: string;
   receiverId: string;
-}
+};
 
 export type DrawResultFailed = {
   ok: false;
@@ -25,7 +24,7 @@ export type DrawResult = DrawResultSuccess | DrawResultFailed;
 
 type Any = {
   [key: string]: any;
-}
+};
 
 type DrawParticipant = Pick<Participant, 'id'> & Any;
 type DrawParticipants = DrawParticipant[];
@@ -41,14 +40,16 @@ function shuffle<T>(arr: T[]): T[] {
   return arr;
 }
 
-
 const validateQuantity = (participantsQuantity: number) => {
   if (participantsQuantity < 3) {
-    throw new Error("At least 3 participants are required for drawing.");
+    throw new Error('At least 3 participants are required for drawing.');
   }
-}
+};
 
-const buildDisallowedMap = (participantsByIdMap: Map<string, DrawParticipant>, exclusions: DrawExclusions) => {
+const buildDisallowedMap = (
+  participantsByIdMap: Map<string, DrawParticipant>,
+  exclusions: DrawExclusions,
+) => {
   const disallowedReceiversByGiverMap = new Map<string, Set<string>>();
   for (const exclusion of exclusions) {
     const giverId = exclusion.participantId;
@@ -63,12 +64,15 @@ const buildDisallowedMap = (participantsByIdMap: Map<string, DrawParticipant>, e
   return disallowedReceiversByGiverMap;
 };
 
-const buildAllowedReceiversMap = (participantIds: string[], disallowedReceiversByGiverMap: Map<string, Set<string>>) => {
+const buildAllowedReceiversMap = (
+  participantIds: string[],
+  disallowedReceiversByGiverMap: Map<string, Set<string>>,
+) => {
   const allowedReceiversByGiverMap = new Map<string, string[]>();
   for (const giverId of participantIds) {
     const disallowed = disallowedReceiversByGiverMap.get(giverId) ?? new Set<string>();
     const allowedReceiverIds = participantIds.filter(
-      (receiverId) => receiverId !== giverId && !disallowed.has(receiverId)
+      (receiverId) => receiverId !== giverId && !disallowed.has(receiverId),
     );
     // randomize to vary results between runs
     allowedReceiversByGiverMap.set(giverId, shuffle(allowedReceiverIds.slice()));
@@ -79,10 +83,10 @@ const buildAllowedReceiversMap = (participantIds: string[], disallowedReceiversB
 const validateZeroEdges = (
   allowedReceiversByGiverMap: Map<string, string[]>,
   participantIds: string[],
-  participantsByIdMap: Map<string, DrawParticipant>
+  participantsByIdMap: Map<string, DrawParticipant>,
 ): DrawResultFailed | null => {
   const giverIdsWithNoOptions = participantIds.filter(
-    (giverId) => (allowedReceiversByGiverMap.get(giverId)?.length ?? 0) === 0
+    (giverId) => (allowedReceiversByGiverMap.get(giverId)?.length ?? 0) === 0,
   );
 
   if (giverIdsWithNoOptions.length > 0) {
@@ -91,13 +95,13 @@ const validateZeroEdges = (
       reasons: [
         `These participants have no valid recipients due to exclusions: ${giverIdsWithNoOptions
           .map((id) => participantsByIdMap.get(id)?.name ?? id)
-          .join(", ")}.`,
+          .join(', ')}.`,
         `Please relax exclusions for at least one of them.`,
       ],
       debug: {
         unmatchedGivers: giverIdsWithNoOptions,
         domains: Object.fromEntries(
-          participantIds.map((giverId) => [giverId, allowedReceiversByGiverMap.get(giverId)!])
+          participantIds.map((giverId) => [giverId, allowedReceiversByGiverMap.get(giverId)!]),
         ),
       },
     };
@@ -120,7 +124,12 @@ function tryFindAugmentingPath(
     const currentlyMatchedGiverId = receiverToGiverMatchMap.get(receiverId);
     const receiverIsFree =
       currentlyMatchedGiverId === undefined ||
-      tryFindAugmentingPath(receiverToGiverMatchMap, allowedReceiversByGiverMap, currentlyMatchedGiverId, visitedReceiverIds);
+      tryFindAugmentingPath(
+        receiverToGiverMatchMap,
+        allowedReceiversByGiverMap,
+        currentlyMatchedGiverId,
+        visitedReceiverIds,
+      );
 
     if (receiverIsFree) {
       receiverToGiverMatchMap.set(receiverId, giverId);
@@ -132,7 +141,7 @@ function tryFindAugmentingPath(
 
 export function drawSecretSanta(
   participants: DrawParticipants,
-  exclusions: DrawExclusions
+  exclusions: DrawExclusions,
 ): DrawResult {
   const participantsQuantity = participants.length;
   validateQuantity(participantsQuantity);
@@ -145,9 +154,16 @@ export function drawSecretSanta(
   const disallowedReceiversByGiverMap = buildDisallowedMap(participantsByIdMap, exclusions);
 
   // Build allowed adjacency: giverId -> allowedReceiverIds (no self, no excluded)
-  const allowedReceiversByGiverMap = buildAllowedReceiversMap(participantIds, disallowedReceiversByGiverMap);
+  const allowedReceiversByGiverMap = buildAllowedReceiversMap(
+    participantIds,
+    disallowedReceiversByGiverMap,
+  );
 
-  const zeroEdgeValidation = validateZeroEdges(allowedReceiversByGiverMap, participantIds, participantsByIdMap);
+  const zeroEdgeValidation = validateZeroEdges(
+    allowedReceiversByGiverMap,
+    participantIds,
+    participantsByIdMap,
+  );
   if (zeroEdgeValidation) return zeroEdgeValidation;
 
   // Kuhn's algorithm (maximum bipartite matching via DFS of augmenting paths)
@@ -159,20 +175,22 @@ export function drawSecretSanta(
     .slice()
     .sort(
       (a, b) =>
-      (allowedReceiversByGiverMap.get(a)!.length -
-        allowedReceiversByGiverMap.get(b)!.length)
+        allowedReceiversByGiverMap.get(a)!.length - allowedReceiversByGiverMap.get(b)!.length,
     );
   shuffle(giverIdsOrdered);
 
   let matchedCount = 0;
   for (const giverId of giverIdsOrdered) {
-    if (tryFindAugmentingPath(receiverToGiverMatchMap, allowedReceiversByGiverMap, giverId, new Set())) matchedCount++;
+    if (
+      tryFindAugmentingPath(receiverToGiverMatchMap, allowedReceiversByGiverMap, giverId, new Set())
+    )
+      matchedCount++;
   }
 
   if (matchedCount !== participantsQuantity) {
     const assignedReceiverIds = new Set(receiverToGiverMatchMap.keys());
     const matchedGiverIds = new Set<string>(
-      [...assignedReceiverIds].map((receiverId) => receiverToGiverMatchMap.get(receiverId)!)
+      [...assignedReceiverIds].map((receiverId) => receiverToGiverMatchMap.get(receiverId)!),
     );
     const unmatchedGiverIds = giverIdsOrdered.filter((giverId) => !matchedGiverIds.has(giverId));
 
@@ -185,9 +203,9 @@ export function drawSecretSanta(
       ok: false,
       reasons: [
         `No valid complete drawing exists with the current exclusions (matched ${matchedCount}/${participantsQuantity}).`,
-        `Problematic participants: ${unmatchedGiverIds
-          .map((id) => participantsByIdMap.get(id)?.name ?? id)
-          .join(", ") || "—"}.`,
+        `Problematic participants: ${
+          unmatchedGiverIds.map((id) => participantsByIdMap.get(id)?.name ?? id).join(', ') || '—'
+        }.`,
       ],
       debug: { unmatchedGivers: unmatchedGiverIds, domains },
     };
@@ -203,7 +221,7 @@ export function drawSecretSanta(
 /** Optional helper: return a copy with drawParticipantId filled from an assignment */
 export function applyAssignment(
   participants: Participant[],
-  assignment: Record<string, string>
+  assignment: Record<string, string>,
 ): Participant[] {
   return participants.map((p) => ({
     ...p,

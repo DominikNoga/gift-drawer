@@ -4,7 +4,7 @@
   @include flex-layout(column);
   header {
     @include flex-layout(row, center, space-between);
-    
+
     .add-item-button {
       font-weight: $font-weight-semibold;
       font-size: $font-size-base;

@@ -15,23 +15,31 @@ type Props = {
   namesDrawn?: boolean;
 };
 
-export default function TabView({ children, onTabChange, isOrganizer, activeTab = 0, namesDrawn = false }: Props) {
-  const tabs: HeaderProps[] = useMemo(() => getTabViewOptions(isOrganizer, activeTab, namesDrawn).map((tab, index) => ({
-    ...tab,
-    isActive: index === activeTab,
-    onClick: () => onTabChange(index),
-  })), [activeTab, isOrganizer, onTabChange]);
+export default function TabView({
+  children,
+  onTabChange,
+  isOrganizer,
+  activeTab = 0,
+  namesDrawn = false,
+}: Props) {
+  const tabs: HeaderProps[] = useMemo(
+    () =>
+      getTabViewOptions(isOrganizer, activeTab, namesDrawn).map((tab, index) => ({
+        ...tab,
+        isActive: index === activeTab,
+        onClick: () => onTabChange(index),
+      })),
+    [activeTab, isOrganizer, onTabChange],
+  );
 
   useEffect(() => {
     onTabChange(activeTab);
   }, [activeTab, onTabChange]);
 
   return (
-    <Card className='tab-view'>
+    <Card className="tab-view">
       <TabViewHeader tabs={tabs} />
-      <div className="tab-view-content">
-        {children}
-      </div>
+      <div className="tab-view-content">{children}</div>
     </Card>
   );
 }

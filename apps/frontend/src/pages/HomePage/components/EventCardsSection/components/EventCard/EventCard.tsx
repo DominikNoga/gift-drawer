@@ -13,9 +13,7 @@ export default function EventCard({ icon, title, description, children }: EventC
   return (
     <Card>
       <div className="event-card">
-        <span>
-          {icon}
-        </span>
+        <span>{icon}</span>
         <h3 className="event-card-title">{title}</h3>
         <p className="event-card-description">{description}</p>
         {children}

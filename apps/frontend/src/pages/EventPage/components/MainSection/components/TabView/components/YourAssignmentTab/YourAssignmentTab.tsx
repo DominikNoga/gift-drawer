@@ -17,12 +17,15 @@ export default function YourAssignmentTab() {
 
   const getUserAssignment = (): string | undefined => {
     if (event.currentParticipant.drawnParticipantId) {
-      return event.participants.find(p => p.id === event.currentParticipant.drawnParticipantId)?.name;
+      return event.participants.find((p) => p.id === event.currentParticipant.drawnParticipantId)
+        ?.name;
     }
     return undefined;
   };
   const assignment = getUserAssignment();
-  const [tabState, setTabState] = useState(getAssignmentTabState(event.id, event.currentParticipant.id, assignment));
+  const [tabState, setTabState] = useState(
+    getAssignmentTabState(event.id, event.currentParticipant.id, assignment),
+  );
   const [assignmentWishes, setAssignmentWishes] = useState<WishlistItem[]>([]);
 
   useEffect(() => {
@@ -49,11 +52,13 @@ export default function YourAssignmentTab() {
       content = <NoAssignment />;
       break;
     case ASSIGNMENT_STATES.ASSIGNMENT_HIDDEN:
-      content = <RevealAssignment
-        onReveal={onReveal}
-        eventId={event.id}
-        participantId={event.currentParticipant.id}
-      />;
+      content = (
+        <RevealAssignment
+          onReveal={onReveal}
+          eventId={event.id}
+          participantId={event.currentParticipant.id}
+        />
+      );
       break;
     case ASSIGNMENT_STATES.ASSIGNMENT_REVEALED:
       content = (
@@ -61,7 +66,10 @@ export default function YourAssignmentTab() {
           <div className="your-assignment-tab-result">
             <p>{assignment}</p>
           </div>
-          <YourAssignmentWishes wishlistItems={assignmentWishes} drawnParticipantName={assignment!} />
+          <YourAssignmentWishes
+            wishlistItems={assignmentWishes}
+            drawnParticipantName={assignment!}
+          />
         </>
       );
       break;
@@ -81,8 +89,8 @@ function NoAssignment() {
   return (
     <div className="no-assignment">
       <p>
-        The organizer hasn&apos;t drawn names yet.
-        You&apos;ll be able to see your assignment once the drawing is complete!
+        The organizer hasn&apos;t drawn names yet. You&apos;ll be able to see your assignment once
+        the drawing is complete!
       </p>
     </div>
   );
@@ -103,10 +111,7 @@ function RevealAssignment({ onReveal, eventId, participantId }: RevealAssignment
   return (
     <div className="reveal-assignment">
       <p>🎁 Your assignment is ready!</p>
-      <Button
-        btnType='secondary'
-        className='reveal-assignment-button'
-        onClick={handleReveal}>
+      <Button btnType="secondary" className="reveal-assignment-button" onClick={handleReveal}>
         Reveal your assignment
       </Button>
     </div>

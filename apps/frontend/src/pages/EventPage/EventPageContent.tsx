@@ -12,7 +12,7 @@ export default function EventPageContent() {
   }
 
   return (
-    <main className='event-page'>
+    <main className="event-page">
       <Header />
       <Description />
       <InfoCards />

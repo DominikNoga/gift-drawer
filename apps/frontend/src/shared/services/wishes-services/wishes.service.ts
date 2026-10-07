@@ -1,6 +1,6 @@
-import { apiDelete, get, post } from "@gd/shared/utils/api.utils";
-import type { WishlistItem } from "@gd/types/src/models/wish.model";
-import type { CreateWishlistItemRequest } from "@gd/types/src/api/api.wishes.types";
+import { apiDelete, get, post } from '@gd/shared/utils/api.utils';
+import type { WishlistItem } from '@gd/types/src/models/wish.model';
+import type { CreateWishlistItemRequest } from '@gd/types/src/api/api.wishes.types';
 
 const API_URL = '/wishes';
 

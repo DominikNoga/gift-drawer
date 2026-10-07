@@ -6,6 +6,6 @@
   }
 
   &-content {
-    @include flex-layout(row)
+    @include flex-layout(row);
   }
 }

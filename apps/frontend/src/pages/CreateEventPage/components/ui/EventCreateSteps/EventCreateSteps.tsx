@@ -10,16 +10,16 @@ const STEPS = [
   },
   {
     title: 'Add participants',
-    icon: <UserIcons.Users />
+    icon: <UserIcons.Users />,
   },
   {
     title: 'Set exclusions',
-    icon: <UserIcons.UserExclude />
+    icon: <UserIcons.UserExclude />,
   },
   {
     title: 'Preview & create',
-    icon: <InterfaceIcons.Preview />
-  }
+    icon: <InterfaceIcons.Preview />,
+  },
 ];
 
 export default function EventCreateSteps() {
@@ -29,17 +29,12 @@ export default function EventCreateSteps() {
       <div className={`progress-line-1 ${currentStep >= 1 && 'progress-line-filled'}`}></div>
       <div className={`progress-line-2 ${currentStep >= 2 && 'progress-line-filled'}`}></div>
       <div className={`progress-line-3 ${currentStep >= 3 && 'progress-line-filled'}`}></div>
-      {
-        STEPS.map(step => (
-          <div key={step.title} className="create-event-step">
-            <CircleIcon
-              icon={step.icon}
-              className='create-event-step-icon'
-            />
-            <span className='create-event-step-title'>{step.title}</span>
-          </div>
-        ))
-      }
+      {STEPS.map((step) => (
+        <div key={step.title} className="create-event-step">
+          <CircleIcon icon={step.icon} className="create-event-step-icon" />
+          <span className="create-event-step-title">{step.title}</span>
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,7 +1,7 @@
-import { getCachedValue } from "../local-storage.service";
-import { USER_EVENTS } from "../../constants/local-storage-keys";
-import type { CachedEvent } from "../../types/events.types";
-import type { GetEventResponse } from "@gd/types/src/api/api.events.types";
+import { getCachedValue } from '../local-storage.service';
+import { USER_EVENTS } from '../../constants/local-storage-keys';
+import type { CachedEvent } from '../../types/events.types';
+import type { GetEventResponse } from '@gd/types/src/api/api.events.types';
 
 export const cacheUserEvents = (event: GetEventResponse) => {
   const cachedEvents = getCachedValue<CachedEvent[]>(USER_EVENTS) || [];
@@ -11,7 +11,7 @@ export const cacheUserEvents = (event: GetEventResponse) => {
     localStorage.setItem(USER_EVENTS, JSON.stringify(updatedEvents));
     return;
   }
-  const updatedEvents = cachedEvents.map((e) => e.id === event.id ? mapToCachedEvent(event) : e);
+  const updatedEvents = cachedEvents.map((e) => (e.id === event.id ? mapToCachedEvent(event) : e));
   localStorage.setItem(USER_EVENTS, JSON.stringify(updatedEvents));
 };
 

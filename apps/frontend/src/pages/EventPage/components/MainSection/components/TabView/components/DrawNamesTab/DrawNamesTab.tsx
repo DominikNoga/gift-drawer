@@ -16,7 +16,9 @@ type Props = {
 };
 
 export default function DrawNamesTab({ eventId, handleViewAssignment }: Props) {
-  const { event: { participants, exclusions } } = useEventPageContext();
+  const {
+    event: { participants, exclusions },
+  } = useEventPageContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalState, setModalState] = useState<ModalState>(MODAL_STATE.IDLE);
 
@@ -27,7 +29,6 @@ export default function DrawNamesTab({ eventId, handleViewAssignment }: Props) {
       setModalState(MODAL_STATE.SUCCESS);
       const result = await drawAssignments(eventId);
       console.log(result);
-
     } catch (error) {
       console.error('Error drawing assignments:', error);
       setModalState(MODAL_STATE.ERROR);
@@ -47,7 +48,7 @@ export default function DrawNamesTab({ eventId, handleViewAssignment }: Props) {
   return (
     <>
       <TabWithIconCentered
-        title='Ready to Draw Names?'
+        title="Ready to Draw Names?"
         icon={<ChristmasIcons.Shuffle />}
         subtitle={subtitle}
       >

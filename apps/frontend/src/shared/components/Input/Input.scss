@@ -43,12 +43,12 @@
     translate: 0 -50%;
     color: $text-secondary;
     z-index: 10;
-    transition: $transition-opacity; 
+    transition: $transition-opacity;
   }
 
   .input-placeholder-no-label {
     @extend .input-placeholder;
-    top: calc(50% + $input-padding-top*0.1);
+    top: calc(50% + $input-padding-top * 0.1);
   }
 
   .input-field:focus {

@@ -8,42 +8,45 @@ type Props = {
   items: WishlistItem[];
   handleItemDelete?: (itemId: string) => void;
   drawnParticipantName?: string;
-}
+};
 
 export default function WishlistItems({ items, handleItemDelete, drawnParticipantName }: Props) {
   return (
     <div className="wishlist-items">
       {items.length === 0 && <EmptyListMessage drawnParticipantName={drawnParticipantName} />}
-      {items.length > 0 && items.map(item => (
-        <div key={item.id} className="wishlist-item">
-          <SquareIcon
-            icon={<ChristmasIcons.Star />}
-            backgroundColor={colors.amber[100]}
-            iconColor={colors.amber[600]}
-            size={2.5}
-          />
-          <div className='wishlist-item-info'>
-            <span className='wishlist-item-title'>{item.name}</span>
-            {item.link && (
-              <a
-                href={item.link}
-                target="_blank"
-                className='wishlist-item-link'
-                rel="noopener noreferrer"
+      {items.length > 0 &&
+        items.map((item) => (
+          <div key={item.id} className="wishlist-item">
+            <SquareIcon
+              icon={<ChristmasIcons.Star />}
+              backgroundColor={colors.amber[100]}
+              iconColor={colors.amber[600]}
+              size={2.5}
+            />
+            <div className="wishlist-item-info">
+              <span className="wishlist-item-title">{item.name}</span>
+              {item.link && (
+                <a
+                  href={item.link}
+                  target="_blank"
+                  className="wishlist-item-link"
+                  rel="noopener noreferrer"
+                >
+                  <NavigationIcons.ExternalLink /> View Item online
+                </a>
+              )}
+            </div>
+            {handleItemDelete && (
+              <button
+                className="wishlist-item-delete-btn"
+                title="Delete Item"
+                onClick={() => handleItemDelete(item.id)}
               >
-                <NavigationIcons.ExternalLink /> View Item online
-              </a>
-            )}
-          </div>
-          {
-            handleItemDelete && (
-              <button className='wishlist-item-delete-btn' title='Delete Item' onClick={() => handleItemDelete(item.id)}>
                 <NavigationIcons.Delete />
               </button>
-            )
-          }
-        </div>
-      ))}
+            )}
+          </div>
+        ))}
     </div>
   );
 }
@@ -64,9 +67,7 @@ function EmptyListMessage({ drawnParticipantName }: EmptyListMessageProps) {
     <div className="empty-list-message">
       <ChristmasIcons.Gift />
       <h4>{header}</h4>
-      <p>
-        {subtitle}
-      </p>
+      <p>{subtitle}</p>
     </div>
   );
 }

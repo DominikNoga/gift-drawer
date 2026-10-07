@@ -10,20 +10,19 @@
     font-weight: $font-weight-semibold;
   }
 
-  &-copy-btn{
+  &-copy-btn {
     border: none;
     color: $purple-600;
     border-radius: $border-radius-lg;
     padding: $spacing-2 $spacing-2;
     font-size: $font-size-xs;
-    @include simple-transition(background-color, .2s, $purple-100, $purple-200);
+    @include simple-transition(background-color, 0.2s, $purple-100, $purple-200);
     margin-left: auto;
     @include flex-layout(row, center, center, $spacing-1);
     &-icon {
       * {
-        @include square(.75rem);
+        @include square(0.75rem);
       }
     }
-
   }
 }

@@ -12,10 +12,10 @@ export default function Header() {
   };
 
   return (
-    <header className='event-page-header'>
+    <header className="event-page-header">
       <BackButton onClick={onBackClick} isDisabled={false} filled />
       <main>
-        <span className='event-page-header-title'>Hello {event.currentParticipant.name} 👋</span>
+        <span className="event-page-header-title">Hello {event.currentParticipant.name} 👋</span>
         <h4>Welcome to {event.name}</h4>
       </main>
       <div className={`event-page-header-phase ${event.namesDrawn ? 'names-drawn' : ''}`}>

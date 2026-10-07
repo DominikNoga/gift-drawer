@@ -2,12 +2,12 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = async function(knex) {
+exports.up = async function (knex) {
   // 1. Rename column eventId → event_id in participants
   await knex.schema.alterTable('participants', (table) => {
     table.renameColumn('eventId', 'event_id');
   });
-  
+
   await knex.schema.alterTable('participants', (table) => {
     table.foreign('event_id').references('events.id').onDelete('CASCADE');
   });
@@ -23,8 +23,8 @@ exports.up = async function(knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = async function(knex) {
-   await knex.schema.alterTable('exclusions', (table) => {
+exports.down = async function (knex) {
+  await knex.schema.alterTable('exclusions', (table) => {
     table.dropForeign(['event_id']);
     table.dropForeign(['participant_id']);
     table.dropForeign(['excluded_participant_id']);

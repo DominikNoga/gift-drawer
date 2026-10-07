@@ -1,10 +1,13 @@
-import { CREATE_EVENT_ACTIONS, CREATE_EVENT_STEPS } from "../../../../constants/constants";
-import type { CurrentStep } from "../../../../types/types";
-import { cacheFormValue } from "../../../../utils/create-event.utils";
-import type { CreateEventAction, CreateEventContextValues } from "../../types/types";
+import { CREATE_EVENT_ACTIONS, CREATE_EVENT_STEPS } from '../../../../constants/constants';
+import type { CurrentStep } from '../../../../types/types';
+import { cacheFormValue } from '../../../../utils/create-event.utils';
+import type { CreateEventAction, CreateEventContextValues } from '../../types/types';
 
-export const createEventReducer = (state: CreateEventContextValues | undefined, action: CreateEventAction) => {
-  let updatedState = { 
+export const createEventReducer = (
+  state: CreateEventContextValues | undefined,
+  action: CreateEventAction,
+) => {
+  let updatedState = {
     ...state,
     errors: [],
   } as CreateEventContextValues;
@@ -24,7 +27,7 @@ export const createEventReducer = (state: CreateEventContextValues | undefined, 
         currentStep: CREATE_EVENT_STEPS.SET_EXCLUSIONS,
         createEventData: {
           ...updatedState.createEventData,
-          participants: action.payload.map(name => ({ name })),
+          participants: action.payload.map((name) => ({ name })),
         },
       };
       break;
@@ -41,8 +44,8 @@ export const createEventReducer = (state: CreateEventContextValues | undefined, 
     case CREATE_EVENT_ACTIONS.PREV_STEP:
       updatedState = {
         ...updatedState,
-        currentStep: updatedState.currentStep > 0 ?
-          (updatedState.currentStep - 1) as CurrentStep : 0,
+        currentStep:
+          updatedState.currentStep > 0 ? ((updatedState.currentStep - 1) as CurrentStep) : 0,
       };
       break;
     case CREATE_EVENT_ACTIONS.SET_ERRORS:

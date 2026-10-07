@@ -37,7 +37,7 @@
 
 .loading-assignment {
   @include flex-layout(column, center);
-  
+
   p {
     @include reset-spacing();
     color: $text-secondary;

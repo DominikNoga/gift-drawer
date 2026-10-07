@@ -8,12 +8,7 @@ import CreateEventPreview from '../CreateEventPreview/CreateEventPreview';
 import ErrorsList from '../ui/ErrorsList/ErrorsList';
 import BackButton from '@gd/shared/components/buttons/BackButton/BackButton';
 
-const Components = [
-  BasicDataForm,
-  AddParticipantsForm,
-  SetExclusionsForm,
-  CreateEventPreview,
-];
+const Components = [BasicDataForm, AddParticipantsForm, SetExclusionsForm, CreateEventPreview];
 
 export default function EventCreateForm() {
   const { currentStep, errors, handlePrevStep } = useCreateEventContext();
@@ -23,10 +18,10 @@ export default function EventCreateForm() {
   console.log(errors);
 
   return (
-    <Card className='event-create-form-card'>
+    <Card className="event-create-form-card">
       <BackButton onClick={handlePrevStep} isDisabled={isBackDisabled} />
       <Component />
-      {(errors && errors.length > 0) && <ErrorsList errors={errors} />}
+      {errors && errors.length > 0 && <ErrorsList errors={errors} />}
     </Card>
   );
 }

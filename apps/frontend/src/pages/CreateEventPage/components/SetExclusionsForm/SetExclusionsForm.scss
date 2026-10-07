@@ -6,9 +6,9 @@
   width: fit-content;
   border-radius: $border-radius-md;
   align-self: center;
-  box-shadow: 0 0 $spacing-2 rgba($blue-600, .1);
+  box-shadow: 0 0 $spacing-2 rgba($blue-600, 0.1);
   transition: $transition-shadow;
   @include hover-effect() {
-    box-shadow: 0 0 $spacing-2 rgba($blue-600, .3);
+    box-shadow: 0 0 $spacing-2 rgba($blue-600, 0.3);
   }
 }

@@ -20,7 +20,7 @@ export default function CreateEventPreview() {
     setIsSubmitting(true);
     try {
       const { id, organizerCode } = await createEvent(createEventData);
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       setIsSubmitting(false);
       clearFormDataCache();
       navigate(`/event/${id}/${organizerCode}`);
@@ -33,22 +33,18 @@ export default function CreateEventPreview() {
   };
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className='create-event-preview-form'>
+    <form onSubmit={(e) => handleSubmit(e)} className="create-event-preview-form">
       <FormHeader
-        title="Review your event" 
+        title="Review your event"
         subtitle="Please review the details of your event before creating it. You can go back to make any changes if needed."
       />
-      <div className='create-event-preview-form-content'>
+      <div className="create-event-preview-form-content">
         <BasicInfoSection {...createEventData} />
         <ParticipantsSection participants={createEventData.participants} />
         <ExclusionsSection exclusions={createEventData.exclusions} />
       </div>
-      <Button
-        className='event-create-form-btn'
-        btnType='primary'
-        type='submit'
-      >
-        { isSubmitting ? 'Creating Event...' : 'Create Event'}
+      <Button className="event-create-form-btn" btnType="primary" type="submit">
+        {isSubmitting ? 'Creating Event...' : 'Create Event'}
       </Button>
     </form>
   );

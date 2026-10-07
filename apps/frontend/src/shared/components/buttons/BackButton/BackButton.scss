@@ -27,7 +27,7 @@
 
 .back-btn-disabled {
   @extend .back-btn;
-  opacity: .8;
+  opacity: 0.8;
   @include hover-effect() {
     cursor: not-allowed;
     box-shadow: $shadow-md;

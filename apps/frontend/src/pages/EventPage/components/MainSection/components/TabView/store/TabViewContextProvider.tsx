@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { TabViewContext } from './TabViewContext';
 
 type Props = {
-  children: React.ReactNode
+  children: React.ReactNode;
 };
 
 export default function TabViewContextProvider({ children }: Props) {

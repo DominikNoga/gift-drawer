@@ -1,7 +1,7 @@
 import './DrawNamesModal.scss';
-import Button from "@gd/shared/components/buttons/Button/Button";
-import Modal from "@gd/shared/components/Modal/Modal";
-import { ChristmasIcons, InterfaceIcons } from "@gd/shared/constants/icons";
+import Button from '@gd/shared/components/buttons/Button/Button';
+import Modal from '@gd/shared/components/Modal/Modal';
+import { ChristmasIcons, InterfaceIcons } from '@gd/shared/constants/icons';
 import { MODAL_STATE, type ModalState } from '../../DrawNamesTab.types';
 import LoadingSpinner from '@gd/shared/components/LoadingSpinner/LoadingSpinner';
 
@@ -15,7 +15,15 @@ type Props = {
   onViewAssignment: () => void;
 };
 
-export default function DrawNamesModal({ isOpen, onModalClose, participantsQuantity, exclusionsQuantity, onDrawNames, modalState, onViewAssignment }: Props) {
+export default function DrawNamesModal({
+  isOpen,
+  onModalClose,
+  participantsQuantity,
+  exclusionsQuantity,
+  onDrawNames,
+  modalState,
+  onViewAssignment,
+}: Props) {
   return (
     <Modal
       title="Draw secret santa assignments"
@@ -39,8 +47,11 @@ function ModalContent({
   participantsQuantity,
   exclusionsQuantity,
   onDrawNames,
-  onViewAssignment
-}: Pick<Props, 'modalState' | 'participantsQuantity' | 'exclusionsQuantity' | 'onDrawNames' | 'onViewAssignment'>) {
+  onViewAssignment,
+}: Pick<
+  Props,
+  'modalState' | 'participantsQuantity' | 'exclusionsQuantity' | 'onDrawNames' | 'onViewAssignment'
+>) {
   let content;
 
   switch (modalState) {
@@ -48,11 +59,13 @@ function ModalContent({
       content = <LoadingModalContent />;
       break;
     case MODAL_STATE.IDLE:
-      content = <DrawNamesModalContent
-        participantsQuantity={participantsQuantity}
-        exclusionsQuantity={exclusionsQuantity}
-        onDrawNames={onDrawNames}
-      />;
+      content = (
+        <DrawNamesModalContent
+          participantsQuantity={participantsQuantity}
+          exclusionsQuantity={exclusionsQuantity}
+          onDrawNames={onDrawNames}
+        />
+      );
       break;
     case MODAL_STATE.SUCCESS:
       content = <SuccessModalContent onViewAssignment={onViewAssignment} />;
@@ -64,11 +77,7 @@ function ModalContent({
       content = null;
   }
 
-  return (
-    <>
-      {content}
-    </>
-  );
+  return <>{content}</>;
 }
 
 function SuccessModalContent({ onViewAssignment }: Pick<Props, 'onViewAssignment'>) {
@@ -88,7 +97,11 @@ function SuccessModalContent({ onViewAssignment }: Pick<Props, 'onViewAssignment
   );
 }
 
-function DrawNamesModalContent({ participantsQuantity, exclusionsQuantity, onDrawNames }: Pick<Props, 'participantsQuantity' | 'exclusionsQuantity' | 'onDrawNames'>) {
+function DrawNamesModalContent({
+  participantsQuantity,
+  exclusionsQuantity,
+  onDrawNames,
+}: Pick<Props, 'participantsQuantity' | 'exclusionsQuantity' | 'onDrawNames'>) {
   return (
     <>
       <section className="draw-names-modal-info">

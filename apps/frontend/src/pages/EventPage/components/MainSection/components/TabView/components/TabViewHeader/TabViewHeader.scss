@@ -9,7 +9,7 @@
     color: $text-secondary;
     border-bottom: 1px solid $gray-200;
     padding: $spacing-4;
-    @include simple-transition(background-color, .2s, transpaerent, $gray-100);
+    @include simple-transition(background-color, 0.2s, transpaerent, $gray-100);
     font-size: $font-size-xs;
 
     &.active {
@@ -19,12 +19,11 @@
     }
 
     &-icon {
-
-      @include square(.5rem);
+      @include square(0.5rem);
     }
 
     &-title {
       font-size: $font-size-base;
     }
-  } 
+  }
 }

@@ -1,10 +1,10 @@
-import FormHeader from "../../ui/FormHeader/FormHeader";
-import EventPreviewList from "../components/ui/EventPreviewList/EventPreviewList";
-import EventPreviewSection from "../components/ui/EventPreviewSection/EventPreviewSection";
+import FormHeader from '../../ui/FormHeader/FormHeader';
+import EventPreviewList from '../components/ui/EventPreviewList/EventPreviewList';
+import EventPreviewSection from '../components/ui/EventPreviewSection/EventPreviewSection';
 
 type Props = {
-  participants: { name: string }[]
-}
+  participants: { name: string }[];
+};
 
 export default function ParticipantsSection({ participants }: Props) {
   return (

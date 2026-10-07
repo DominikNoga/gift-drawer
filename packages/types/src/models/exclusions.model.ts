@@ -1,11 +1,11 @@
-import { z } from "zod";
-import { type SnakeCaseKeys } from "../utils/types.utils";
+import { z } from 'zod';
+import { type SnakeCaseKeys } from '../utils/types.utils';
 
 export const ExclusionSchema = z.object({
   id: z.string(),
   eventId: z.string(),
   participantId: z.string(),
-  excludedParticipantId: z.string()
+  excludedParticipantId: z.string(),
 });
 
 export const CreateExclusionSchema = ExclusionSchema.omit({

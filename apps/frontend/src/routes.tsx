@@ -1,9 +1,9 @@
-import { createBrowserRouter } from "react-router-dom";
-import RootLayout from "./shared/components/RootLayout/RootLayout";
-import HomePage from "./pages/HomePage";
-import CreateEventPage from "./pages/CreateEventPage";
-import EventPage from "./pages/EventPage";
-import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import { createBrowserRouter } from 'react-router-dom';
+import RootLayout from './shared/components/RootLayout/RootLayout';
+import HomePage from './pages/HomePage';
+import CreateEventPage from './pages/CreateEventPage';
+import EventPage from './pages/EventPage';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 export const ROUTES_NAMES = {
   HOME: '/',
@@ -13,7 +13,7 @@ export const ROUTES_NAMES = {
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
       {
         path: `${ROUTES_NAMES.EVENT}/:eventId/:joinCode`,
         element: <EventPage />,
-      }
+      },
     ],
-  }
+  },
 ]);

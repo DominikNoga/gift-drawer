@@ -5,4 +5,4 @@ export const ASSIGNMENT_STATES = {
   ASSIGNMENT_HIDDEN: 'ASSIGNMENT_HIDDEN',
 } as const;
 
-export type AssignmentState = typeof ASSIGNMENT_STATES[keyof typeof ASSIGNMENT_STATES];
+export type AssignmentState = (typeof ASSIGNMENT_STATES)[keyof typeof ASSIGNMENT_STATES];
