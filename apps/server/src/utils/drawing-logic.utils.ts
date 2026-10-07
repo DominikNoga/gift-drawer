@@ -214,15 +214,4 @@ export function drawSecretSanta<TParticipant extends DrawParticipant>(
   return { ok: true, assignments };
 }
 
-/** Optional helper: return a copy with drawParticipantId filled from an assignment */
-export function applyAssignment(
-  participants: Participant[],
-  assignment: Record<string, string>,
-): Participant[] {
-  return participants.map((p) => ({
-    ...p,
-    drawParticipantId: assignment[p.id] ?? null,
-  }));
-}
-
 // resources: https://www.youtube.com/watch?v=ELcgI_C1mNM (graph)

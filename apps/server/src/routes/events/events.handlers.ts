@@ -144,11 +144,3 @@ export const drawAssignments = async (
 
   return response.status(HTTP_STATUS.OK).json({ drawingResult });
 };
-
-// export const getAllEvents = () => async (request: Request, response: Response) => {
-//   const eventRows = await eventsTable().select();
-
-//   const eventsData = await Promise.all(eventRows.map(async (eventRow) => getEventData(eventRow.id, eventRow)));
-
-//   return response.status(HTTP_STATUS.OK).json(eventsData);
-// };
