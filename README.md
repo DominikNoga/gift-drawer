@@ -10,20 +10,20 @@ A Secret Santa organizer: create an event, invite participants with join codes, 
 
 ## Screenshots
 
-<!-- TODO: add images to docs/screenshots/ and uncomment the table below
-
-| Home page | Create event | Event page |
-| --- | --- | --- |
-| ![Home page](docs/screenshots/home.png) | ![Create event](docs/screenshots/create-event.png) | ![Event page](docs/screenshots/event.png) |
-
--->
+|                                                           Home page                                                            |                                                             Event page (organizer view)                                                              |
+| :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="docs/screenshots/main-page-view.png" alt="Home page with create and join cards and a list of my events" width="420"> | <img src="docs/screenshots/event-page-organizer-view.png" alt="Event page with event details and participants with copyable join codes" width="420"> |
+|                                              **Create event: basic information**                                               |                                                            **Create event: participants**                                                            |
+|              <img src="docs/screenshots/create-event.png" alt="First step of the create event form" width="420">               |                           <img src="docs/screenshots/adding-participants.png" alt="Adding participant names" width="420">                            |
+|                                                  **Create event: exclusions**                                                  |                                                          **Your assignment after the draw**                                                          |
+|       <img src="docs/screenshots/adding-exclusions.png" alt="Setting exclusion rules between participants" width="420">        |                    <img src="docs/screenshots/viewing-your-assignment.png" alt="Assigned person and their wishlist" width="420">                     |
 
 ## Features
 
 - **Create events** with a multi-step form: basic details (name, description, location, budget, date), participants and exclusions, followed by a preview. Form progress is kept in local storage.
 - **Join with a code**: every participant gets a personal join code. The organizer can see and share all codes.
 - **Wishlists**: participants add and remove wishlist items (with optional links). After the draw, everyone sees the wishlist of the person they are buying for.
-- **Exclusion rules**: prevent specific people from drawing each other (e.g. partners). The server rejects an event whose exclusions make a draw impossible and explains why.
+- **Exclusion rules**: prevent specific people from drawing each other (e.g. partners), one-way or both ways. The server rejects an event whose exclusions make a draw impossible and explains why.
 - **The draw**: the organizer draws the names, then each participant sees only their own assignment.
 
 ## Tech stack
