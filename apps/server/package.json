@@ -10,7 +10,8 @@
     "dev": "nodemon ./src/index.ts",
     "migrate": "knex migrate:latest --knexfile src/db/knex.ts",
     "create-migration": "knex migrate:make -x js --knexfile src/db/knex.ts",
-    "cm": "knex migrate:make -x js --knexfile src/db/knex.ts"
+    "cm": "knex migrate:make -x js --knexfile src/db/knex.ts",
+    "check-types": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
